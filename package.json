@@ -1,0 +1,68 @@
+{
+  "name": "kalendi-widget",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kalendi widget for React applications, created with TypeScript and TailwindCSS.",
+  "main": "./dist/index.js",
+  "scripts": {
+    "start": "react-scripts start && npx tailwindcss -i ./src/tailwind.css -o ./src/output.css --watch",
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "compile": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "kalendi",
+    "datablock",
+    "tailwindcss",
+    "tailwind",
+    "react",
+    "reactjs",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Patrick Tannoury",
+  "license": "MIT",
+  "devDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
+    "tailwindcss": "^3.4.3"
+  },
+  "peerDependencies": {
+    "@types/react": "^17.0.0 || ^18.0.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.15",
+    "@mui/material": "^5.15.15",
+    "@mui/x-date-pickers": "^7.1.1",
+    "@types/react": "^17.0.0 || ^18.0.0",
+    "@types/react-dom": "^18.2.24",
+    "dayjs": "^1.11.10"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "module": "./index.js",
+  "types": "./index.d.ts"
+}
