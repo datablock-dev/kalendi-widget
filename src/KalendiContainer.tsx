@@ -89,7 +89,8 @@ export default function KalendiContainer({ backendRoute, user_id, service_id, cl
                         service_image: item.service_image,
                         service_name: item.service_name,
                         service_price: item.service_price,
-                        service_currency: item.service_currency
+                        service_currency: item.service_currency,
+                        service_time_block: item.service_time_block
                     })
                     serviceSet.add(item.service_id)
                 }

@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react"
 import { Data } from "types"
+import PersonIcon from '@mui/icons-material/Person';
 
 export interface EmployeeView {
     backendRoute: string
@@ -28,12 +29,14 @@ export default function EmployeeView({ backendRoute, data, selectedService, sele
                                         {
                                             employee.avatar ?
                                                 <img
-                                                    className="image-round"
+                                                    className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#d4d4d4]"
                                                     src={employee.avatar ? `${backendRoute}/upload/${employee.avatar}` : ""}
                                                     alt="service_image"
                                                 />
                                                 :
-                                                <div className="image-round text-[12px] flex items-center justify-center">N/A</div>
+                                                <div className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#d4d4d4] text-[12px] flex items-center justify-center">
+                                                    <PersonIcon/>
+                                                </div>
                                         }
                                         <span>{employee.firstname} {employee.lastname}</span>
                                     </div>

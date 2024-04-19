@@ -4,11 +4,14 @@ import isBetween from "dayjs/plugin/isBetween"
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { fixTimezoneTimestamp, months, weekDays } from "../utils/time";
-import { Options, WeekView, UserAvailability, EventResponse, UserAvailabilityResponse } from "types";
+import { Options, WeekView, UserAvailability, EventResponse, UserAvailabilityResponse, Data, Services } from "types";
 
 export interface KalendiSchedule {
     backendRoute: string
+    data: Data[]
+    services: Services[]
     selectedUser: string
+    selectedService: string
     setView: Dispatch<SetStateAction<Options | null>>
     setSelectedDate: Dispatch<SetStateAction<Dayjs | null>>
 }
@@ -18,13 +21,18 @@ const timeBoxes = Array.from({length: 24}).map((_, index) => {
     return [`${hasPrefix}${index}:00`, `${hasPrefix}${index}:15`, `${hasPrefix}${index}:30`, `${hasPrefix}${index}:45`]
 }).flat(1)
 
-export default function KalendiSchedule({ backendRoute, selectedUser, setView, setSelectedDate }: KalendiSchedule) {
+export default function KalendiSchedule({ backendRoute, data, services, selectedUser, selectedService, setView, setSelectedDate }: KalendiSchedule) {
     dayjs.extend(isBetween)
     const currentDate = dayjs()
     const [weekMove, setWeekMove] = useState<number>(0)
     const [weekView, setWeekView] = useState<null | WeekView[]>(null)
     const [userAvailability, setUserAvailability] = useState<UserAvailability | null | false>(null)
     const [events, setEvents] = useState<null | EventResponse[]>(null)
+
+    const service = services.find((item) => item.service_id === selectedService)
+    console.log(service)
+
+    if(!service) return <span>...</span>
 
     useEffect(() => {
         if(!weekView){
@@ -145,7 +153,7 @@ export default function KalendiSchedule({ backendRoute, selectedUser, setView, s
                             availableSlots = availableSlots.filter((slot) => slot >= fromValueKey)
 
                             if(availableSlots.length > 0 && toValueKey){
-                                availableSlots = availableSlots.filter((slot) => slot <= toValueKey)
+                                availableSlots = availableSlots.filter((slot) => slot < toValueKey)
                             }
                         } else {
                             availableSlots = []
@@ -163,6 +171,13 @@ export default function KalendiSchedule({ backendRoute, selectedUser, setView, s
                                 if(isFullDay && dayjs(currDate).isBetween(timeFrom, timeTo, 'minute')){
                                     availableSlots = []
                                 }
+                            })
+                        }
+
+                        if(service.service_time_block){
+                            const diff = service.service_time_block / 15
+                            availableSlots = availableSlots.filter((_, index) => {
+                                return index % diff === 0;
                             })
                         }
 
