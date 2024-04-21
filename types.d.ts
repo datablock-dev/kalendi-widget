@@ -82,3 +82,42 @@ export interface UserAvailabilityResponse {
     events: EventResponse[]
     bookings: any[]
 }
+
+export interface CalendarItem {
+    VERSION: string
+    CALSCALE: "GREGORIAN"
+    METHOD: "PUBLISH"
+    BEGIN: "VEVENT"
+    SUMMARY: string // This is the title of the calendar event
+    UID: string
+    ORGANIZER?: string
+    PERIOD?: string
+    STATUS?: "CONFIRMED" | "PENDING" | "REJECTED"
+    RRULE?: {
+        FREQ: "YEARLY" | "WEEKLY" | "MONTHLY" | "DAILY"
+        INTERVAL: number
+        BYMONTH: number
+        BYMONTHDAY: number
+    }
+    LOCATION?: string
+    SEQUENCE?: string
+    GEO?: {
+        x: string
+        y: string
+    }
+    ATTENDEE?: string
+    DESCRIPTION: string
+    URL?: string
+    END: "VEVENT"
+}
+
+// Post request to backend
+export interface CalendarItemPayload {
+    title: string
+    description: string
+    employee_id: string
+    customer_id: string
+    from_timestamp: string
+    to_timestamp: string
+    ical: string
+}

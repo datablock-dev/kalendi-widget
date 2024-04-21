@@ -4,10 +4,10 @@ export interface Input {
     label: string
     type?: string
     onChangeCallBack?: (e?: any) => any
-    ref?: RefObject<null | any>
+    forwardRef?: RefObject<null | any>
 }
 
-export default function Input({ label, type, onChangeCallBack, ref }: Input){
+export default function Input({ label, type, onChangeCallBack, forwardRef }: Input){
 
     return(
         <div className="flex flex-col gap-[4px] w-[100%]">
@@ -16,7 +16,7 @@ export default function Input({ label, type, onChangeCallBack, ref }: Input){
                 className="rounded-[3px] border-[1px] border-[#787878] border-solid h-[44px] w-[100%] pl-[8px]"
                 type={type}
                 onChange={onChangeCallBack}
-                ref={ref}
+                ref={forwardRef}
             />
         </div>
     )

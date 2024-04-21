@@ -30,7 +30,6 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
     const [events, setEvents] = useState<null | EventResponse[]>(null)
 
     const service = services.find((item) => item.service_id === selectedService)
-    console.log(service)
 
     if(!service) return <span>...</span>
 
@@ -149,6 +148,9 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                             availableSlots = []
                         }
 
+                        /*
+                            If the user has specified availability (i.e. time in the day)
+                        */
                         if(fromValueKey){
                             availableSlots = availableSlots.filter((slot) => slot >= fromValueKey)
 
@@ -159,6 +161,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                             availableSlots = []
                         }
 
+                        // Filter on events
                         if(events){
                             const currDate = dayjs(day.date)
 
