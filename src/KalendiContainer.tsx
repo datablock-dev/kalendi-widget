@@ -66,7 +66,7 @@ export default function KalendiContainer({ backendRoute, user_id, service_id, cl
             if (user_id && !service_id) {
                 urlString = `${backendRoute}/public/user_data/${user_id}`
             } else if (service_id && !user_id) {
-                urlString = `${backendRoute}/public/user_data//${service_id}`
+                urlString = `${backendRoute}/public/user_data/null/${service_id}`
             } else if (service_id && user_id) {
                 urlString = `${backendRoute}/public/user_data/${user_id}/${service_id}`
             } else if (!service_id && !user_id) {

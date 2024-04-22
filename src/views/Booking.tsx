@@ -36,27 +36,41 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             if(name.length < 2) return alert('Please provide a valid name value')
 
 
-            const payload = {
-                title: '',
-                description: `Welcome ${selectedUser}`,
-                employee_id: selectedUser,
-                customer_id: undefined,
-                from_timestamp: fixTimezoneTimestamp(selectedDate.toISOString()).substring(0, 19),
-                to_timestamp: fixTimezoneTimestamp(selectedDate.add(60, 'minutes').toISOString()).substring(0, 19),
-                ical: JSONtoCal({
-                    VERSION: '2.0',
-                    CALSCALE: 'GREGORIAN',
-                    METHOD: 'PUBLISH',
-                    BEGIN: 'VEVENT',
-                    SUMMARY: `Welcome ${selectedUser}`,
-                    UID: 
-                })
+            setIsLoading(true)
+            const userService = data.find((item) => (item.user_id === selectedUser && item.service_id === selectedService))
+            if(!userService){
+                return setIsLoading(false)
             }
-            //setIsLoading(true)
+
+            console.log(service, userService)
             console.log(selectedUser, selectedService, fixTimezoneTimestamp(selectedDate.toISOString()).substring(0, 19))
 
+            const payload = {
+                user_id: selectedUser,
+                service_id: selectedService,
+                from_timestamp: fixTimezoneTimestamp(selectedDate.toISOString()).substring(0, 19),
+                to_timestamp: fixTimezoneTimestamp(selectedDate.add(60, 'minutes').toISOString()).substring(0, 19),
+                customer: {
+                    name: name,
+                    email: email
+                },
+                data: userService
+            }
+
+            const res = await fetch(`${backendRoute}/public`, { 
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            const response = await res.json()
+
+            setIsLoading(false)
+            return
         } catch (error) {
-            
+            console.error(error)
         }
     }
 
