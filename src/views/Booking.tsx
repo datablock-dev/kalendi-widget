@@ -30,8 +30,14 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
     const nameRef = useRef<null | HTMLInputElement>(null)
     const emailRef = useRef<null | HTMLInputElement>(null)
 
+    const service = services.find((item) => item.service_id === selectedService)
+    const user = data.find((item) => item.user_id === selectedUser)
+
+    if (!service || !user) return <div>Error...</div>
+
     async function bookRequest() {
         try {
+            if(!service) return
             if (!nameRef.current || !emailRef.current) return setIsClickable(false)
             const name = nameRef.current.value
             const email = emailRef.current.value
@@ -50,7 +56,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 user_id: selectedUser,
                 service_id: selectedService,
                 from_timestamp: selectedDate.format('YYYY-MM-DD HH:mm:ss'),
-                to_timestamp: selectedDate.add(60, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
+                to_timestamp: selectedDate.add(service?.service_time_block, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
                 customer: {
                     name: name,
                     email: email
@@ -86,11 +92,6 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
         setIsClickable(true)
     }
 
-    const service = services.find((item) => item.service_id === selectedService)
-    const user = data.find((item) => item.user_id === selectedUser)
-
-    if (!service || !user) return <div>Error...</div>
-
     return (
         <div className="w-[100%] h-[100%] flex flex-col">
             <div className="flex flex-col">
@@ -102,6 +103,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 <div className="flex flex-row items-center gap-[10px]">
                     <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('YYYY-MM-DD')}</span>
                     <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('HH:mm')}</span>
+                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.add(service.service_time_block, 'minutes').format('HH:mm')}</span>
                 </div>
             </div>
             <div className="flex flex-row flex-wrap gap-[10px]">
