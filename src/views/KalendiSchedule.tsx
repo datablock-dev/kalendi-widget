@@ -123,8 +123,8 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                         return(
                             <div
                                 className="w-[100%] h-[100%] min-h-[100%] flex flex-col odd:bg-[#c4c4c48a]"
-                                key={day.date.toISOString()}
-                                data-date={day.date.toISOString().split('T')[0]}
+                                key={day.date.format('YYYY-MM-DD HH:mm:ss')}
+                                data-date={day.date.format('YYYY-MM-DD')}
                             >
                                 <div className="flex flex-col items-center">
                                     <span>{day.weekDayString.substring(0, 3)}</span>
@@ -176,8 +176,6 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                         // Filters out hours that are before the current hour if the we 
                         // are in the current day                         
                         if(dayjs().isSame(day.date, 'day')){
-                            const timestamp = `${dayjs().get('hour')}:${dayjs().get('minute')}`
-                            
                             availableSlots = availableSlots.filter((slot) => {
                                 const [slotHour, slotMinute] = slot.split(':').map((val) => parseInt(val))
 
@@ -211,7 +209,6 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                         if(bookings){
                             const currDate = dayjs(day.date)
                             const time_block = service.service_time_block
-                            const YYYY_MM_DD = dayjs().toISOString().split('T')[0]
 
                             bookings.forEach((booking) => {
                                 const { from_timestamp, to_timestamp } = booking
@@ -219,10 +216,9 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                                 const [bookingDate, bookingTime] = from_timestamp.split('T')
 
                                 // Stop the loop if we are not in the same day
-                                if(bookingDate !== currDate.toISOString().split('T')[0]) return
+                                if(bookingDate !== currDate.format('YYYY-MM-DD')) return
 
                                 availableSlots = availableSlots.filter((slot) => {
-                                    console.log(slot, bookingTime.substring(0, 5))
                                     const currentSlot = dayjs().set('hour', parseInt(slot.split(':')[0])).set('minute', parseInt(slot.split(':')[1]))
                                     
                                     if(slot !== bookingTime.substring(0, 5)){
@@ -236,8 +232,8 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                         return (
                             <div
                                 className="w-[100%] h-[100%] min-h-[100%] flex flex-col"
-                                key={day.date.toISOString()}
-                                data-date={day.date.toISOString().split('T')[0]}
+                                key={day.date.format('YYYY-MM-DD HH:mm:ss')}
+                                data-date={day.date.format('YYYY-MM-DD')}
                             >
                                 <div className="flex flex-col h-[100%] items-center gap-[10px] bg-[#fff] pt-[10px]">
                                     {

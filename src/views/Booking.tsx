@@ -5,6 +5,7 @@ import { Data, Services, Users } from "types"
 import { isEmail, isAlpha } from "validator"
 import Input from "src/components/Input"
 import Button from "src/components/Button"
+import ImageIcon from '@mui/icons-material/Image';
 import { JSONtoCal } from "src/utils/ical"
 
 export interface ConfirmBookingView {
@@ -21,6 +22,9 @@ export interface ConfirmBookingView {
 export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate }: ConfirmBookingView) {
     const [isClickable, setIsClickable] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    
+    console.log(selectedDate.format('YYYY-MM-DD HH:mm'))
+    console.log(selectedDate.add(60, 'minutes').format('YYYY-MM-DD HH:mm:ss'))
 
     // Ref
     const nameRef = useRef<null | HTMLInputElement>(null)
@@ -42,14 +46,11 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 return setIsLoading(false)
             }
 
-            console.log(service, userService)
-            console.log(selectedUser, selectedService, fixTimezoneTimestamp(selectedDate.toISOString()).substring(0, 19))
-
             const payload = {
                 user_id: selectedUser,
                 service_id: selectedService,
-                from_timestamp: fixTimezoneTimestamp(selectedDate.toISOString()).substring(0, 19),
-                to_timestamp: fixTimezoneTimestamp(selectedDate.add(60, 'minutes').toISOString()).substring(0, 19),
+                from_timestamp: selectedDate.format('YYYY-MM-DD HH:mm:ss'),
+                to_timestamp: selectedDate.add(60, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
                 customer: {
                     name: name,
                     email: email
@@ -96,9 +97,12 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 <h1>Confirm your booking</h1>
                 <p>You are about to book the following...</p>
             </div>
-            <div className="flex flex-row items-center">
-                <label>Date:</label>
-                <span>{timestampToString(selectedDate)}</span>
+            <div className="flex flex-row gap-[6px] items-center mb-[10px]">
+                <label className="font-[600]">Date:</label>
+                <div className="flex flex-row items-center gap-[10px]">
+                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('YYYY-MM-DD')}</span>
+                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('HH:mm')}</span>
+                </div>
             </div>
             <div className="flex flex-row flex-wrap gap-[10px]">
                 <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
@@ -112,7 +116,9 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                                     alt="service_image"
                                 />
                                 :
-                                <div className="image-round text-[12px] flex items-center justify-center">N/A</div>
+                                <div className="image-round text-[12px] flex items-center justify-center">
+                                    <ImageIcon/>
+                                </div>
                         }
                         <span>{service.service_name}</span>
                     </div>

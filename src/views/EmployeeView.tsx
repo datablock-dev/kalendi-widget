@@ -44,8 +44,8 @@ export default function EmployeeView({ backendRoute, data, selectedService, sele
                                         className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer"
                                         data-selected={selectedUser === employee.user_id ? true : false}
                                         onClick={() => {
+                                            // Clear other settings that occurs after user selection
                                             selectedUser === employee.user_id ? setSelectedUser(null) : setSelectedUser(employee.user_id)
-
                                         }}
                                     />
                                 </div>

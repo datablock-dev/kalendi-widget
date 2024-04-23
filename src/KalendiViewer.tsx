@@ -27,7 +27,9 @@ export interface KalendiViewer {
 
 export default function KalendiViewer({ backendRoute, services, data, view, setView, selectedUser, setSelectedUser, selectedService, setSelectedService, selectedDate, setSelectedDate }: KalendiViewer) {
     
-    useEffect(() => {}, [view])
+    useEffect(() => {
+        setSelectedDate(null)
+    }, [selectedUser])
 
     return (
         <div className="overflow-y-scroll w-[100%] h-[100%] mt-[10px]">
