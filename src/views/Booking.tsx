@@ -26,19 +26,19 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
     const nameRef = useRef<null | HTMLInputElement>(null)
     const emailRef = useRef<null | HTMLInputElement>(null)
 
-    async function bookRequest(){
+    async function bookRequest() {
         try {
-            if(!nameRef.current || !emailRef.current) return setIsClickable(false)
+            if (!nameRef.current || !emailRef.current) return setIsClickable(false)
             const name = nameRef.current.value
             const email = emailRef.current.value
 
-            if(!isEmail(email)) return alert('Please provide a valid email address')
-            if(name.length < 2) return alert('Please provide a valid name value')
+            if (!isEmail(email)) return alert('Please provide a valid email address')
+            if (name.length < 2) return alert('Please provide a valid name value')
 
 
             setIsLoading(true)
             const userService = data.find((item) => (item.user_id === selectedUser && item.service_id === selectedService))
-            if(!userService){
+            if (!userService) {
                 return setIsLoading(false)
             }
 
@@ -53,11 +53,10 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 customer: {
                     name: name,
                     email: email
-                },
-                data: userService
+                }
             }
 
-            const res = await fetch(`${backendRoute}/public`, { 
+            const res = await fetch(`${backendRoute}/public`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -74,13 +73,13 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
         }
     }
 
-    function changeEvent(){
-        if(!nameRef.current || !emailRef.current) return setIsClickable(false)
+    function changeEvent() {
+        if (!nameRef.current || !emailRef.current) return setIsClickable(false)
 
         const name = nameRef.current.value
         const email = emailRef.current.value
-        if(!isEmail(email)) return setIsClickable(false)
-        if(name.length < 2) return setIsClickable(false)
+        if (!isEmail(email)) return setIsClickable(false)
+        if (name.length < 2) return setIsClickable(false)
 
 
         setIsClickable(true)
@@ -101,39 +100,41 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 <label>Date:</label>
                 <span>{timestampToString(selectedDate)}</span>
             </div>
-            <div className="flex flex-row items-center">
-                <label>Service:</label>
-                <div className="flex flex-row items-center gap-[10px]">
-                    {
-                        service.service_image ?
-                            <img
-                                className="image-round"
-                                src={service.service_image ? `${backendRoute}/upload/${service.service_image}` : ""}
-                                alt="service_image"
-                            />
-                            :
-                            <div className="image-round text-[12px] flex items-center justify-center">N/A</div>
-                    }
-                    <span>{service.service_name}</span>
+            <div className="flex flex-row flex-wrap gap-[10px]">
+                <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
+                    <label className="font-[600]">Service</label>
+                    <div className="flex flex-row items-center gap-[10px]">
+                        {
+                            service.service_image ?
+                                <img
+                                    className="image-round"
+                                    src={service.service_image ? `${backendRoute}/upload/${service.service_image}` : ""}
+                                    alt="service_image"
+                                />
+                                :
+                                <div className="image-round text-[12px] flex items-center justify-center">N/A</div>
+                        }
+                        <span>{service.service_name}</span>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
+                    <label className="font-[600]">Employee</label>
+                    <div className="flex flex-row items-center gap-[10px]">
+                        {
+                            user.avatar ?
+                                <img
+                                    className="image-round"
+                                    src={user.avatar ? `${backendRoute}/upload/${user.avatar}` : ""}
+                                    alt="user_avatar"
+                                />
+                                :
+                                <div className="image-round text-[12px] flex items-center justify-center">N/A</div>
+                        }
+                        <span>{user.firstname} {user.lastname}</span>
+                    </div>
                 </div>
             </div>
-            <div className="flex flex-row items-center">
-                <label>Employee:</label>
-                <div className="flex flex-row items-center gap-[10px]">
-                    {
-                        user.avatar ?
-                            <img
-                                className="image-round"
-                                src={user.avatar ? `${backendRoute}/upload/${user.avatar}` : ""}
-                                alt="user_avatar"
-                            />
-                            :
-                            <div className="image-round text-[12px] flex items-center justify-center">N/A</div>
-                    }
-                    <span>{user.firstname} {user.lastname}</span>
-                </div>
-            </div>
-            <div className="flex flex-row justify-between w-[100%] flex-wrap">
+            <div className="grid grid-cols-[repeat(2,calc(50%_-_5px))] gap-[10px] mt-[20px] sd:flex sd:flex-col sd:gap-[10px]">
                 <Input
                     label="Name"
                     forwardRef={nameRef}

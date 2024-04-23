@@ -177,6 +177,24 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                             })
                         }
 
+                        // Are we in current day?
+                        console.log(dayjs())                            
+                        if(dayjs().isSame(day.date, 'day')){
+                            const timestamp = `${dayjs().get('hour')}:${dayjs().get('minute')}`
+                            
+                            availableSlots = availableSlots.filter((slot) => {
+                                const [slotHour, slotMinute] = slot.split(':').map((val) => parseInt(val))
+
+                                if(dayjs().get('hour') < slotHour){
+                                    return slot
+                                } else if(dayjs().get('hour') === slotHour){
+                                    if(dayjs().get('minute') < slotMinute){
+                                        return slot
+                                    }
+                                }
+                            })
+                        }
+
                         if(service.service_time_block){
                             const diff = service.service_time_block / 15
                             availableSlots = availableSlots.filter((_, index) => {
