@@ -213,7 +213,6 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                             const time_block = service.service_time_block
                             const YYYY_MM_DD = dayjs().toISOString().split('T')[0]
 
-                            console.log(bookings)
                             bookings.forEach((booking) => {
                                 const { from_timestamp, to_timestamp } = booking
                                 const bookingSlotFrom = dayjs(fixTimezoneTimestamp(from_timestamp))
