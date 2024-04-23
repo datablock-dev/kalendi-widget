@@ -54,7 +54,7 @@ export interface Services {
     service_image: string | null
     service_price: number | null
     service_currency: string | null
-    service_time_block: number | null
+    service_time_block: number
     service_url: string | null
 }
 
@@ -81,7 +81,7 @@ export interface Data {
     service_image: string | null
     service_price: number | null,
     service_currency: string | null
-    service_time_block: number | null
+    service_time_block: number
     service_url: string | null
 }
 
@@ -107,14 +107,14 @@ export interface EventResponse {
     event_id: string
     user_id: string
     reason: string | null
-    time_from: string
-    time_to: string
+    from_timestamp: string
+    to_timestamp: string
 }
 
 export interface UserAvailabilityResponse {
     availability: UserAvailability
     events: EventResponse[]
-    bookings: any[]
+    bookings: CalendarItemPayload[]
 }
 
 export interface CalendarItem {

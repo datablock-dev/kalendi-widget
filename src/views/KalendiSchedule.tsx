@@ -28,6 +28,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
     const [weekView, setWeekView] = useState<null | WeekView[]>(null)
     const [userAvailability, setUserAvailability] = useState<UserAvailability | null | false>(null)
     const [events, setEvents] = useState<null | EventResponse[]>(null)
+    const [bookings, setBookings] = useState<null | UserAvailabilityResponse['bookings']>(null)
 
     const service = services.find((item) => item.service_id === selectedService)
 
@@ -65,6 +66,10 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                 setUserAvailability(data.availability)
             } else {
                 setUserAvailability(false)
+            }
+
+            if(data.bookings.length > 0){
+                setBookings(data.bookings)
             }
 
             if(data.events){
@@ -161,24 +166,15 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                             availableSlots = []
                         }
 
-                        // Filter on events
-                        if(events){
-                            const currDate = dayjs(day.date)
-
-                            events.forEach((event) => {
-                                const timeFrom = dayjs(fixTimezoneTimestamp(event.time_from))
-                                const timeTo = dayjs(fixTimezoneTimestamp(event.time_to))
-
-                                const isFullDay = timeTo.diff(timeFrom, 'hour') > 24 ? true : false
-
-                                if(isFullDay && dayjs(currDate).isBetween(timeFrom, timeTo, 'minute')){
-                                    availableSlots = []
-                                }
+                        if(service.service_time_block){
+                            const diff = service.service_time_block / 15
+                            availableSlots = availableSlots.filter((_, index) => {
+                                return index % diff === 0;
                             })
                         }
 
-                        // Are we in current day?
-                        console.log(dayjs())                            
+                        // Filters out hours that are before the current hour if the we 
+                        // are in the current day                         
                         if(dayjs().isSame(day.date, 'day')){
                             const timestamp = `${dayjs().get('hour')}:${dayjs().get('minute')}`
                             
@@ -195,12 +191,48 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                             })
                         }
 
-                        if(service.service_time_block){
-                            const diff = service.service_time_block / 15
-                            availableSlots = availableSlots.filter((_, index) => {
-                                return index % diff === 0;
+                        // Filter on events
+                        if(events){
+                            const currDate = dayjs(day.date)
+
+                            events.forEach((event) => {
+                                const timeFrom = dayjs(fixTimezoneTimestamp(event.from_timestamp))
+                                const timeTo = dayjs(fixTimezoneTimestamp(event.to_timestamp))
+
+                                const isFullDay = timeTo.diff(timeFrom, 'hour') > 24 ? true : false
+
+                                if(isFullDay && dayjs(currDate).isBetween(timeFrom, timeTo, 'minute')){
+                                    availableSlots = []
+                                }
                             })
                         }
+
+                        // Filter out slots that are already booked
+                        if(bookings){
+                            const currDate = dayjs(day.date)
+                            const time_block = service.service_time_block
+                            const YYYY_MM_DD = dayjs().toISOString().split('T')[0]
+
+                            console.log(bookings)
+                            bookings.forEach((booking) => {
+                                const { from_timestamp, to_timestamp } = booking
+                                const bookingSlotFrom = dayjs(fixTimezoneTimestamp(from_timestamp))
+                                const [bookingDate, bookingTime] = from_timestamp.split('T')
+
+                                // Stop the loop if we are not in the same day
+                                if(bookingDate !== currDate.toISOString().split('T')[0]) return
+
+                                availableSlots = availableSlots.filter((slot) => {
+                                    console.log(slot, bookingTime.substring(0, 5))
+                                    const currentSlot = dayjs().set('hour', parseInt(slot.split(':')[0])).set('minute', parseInt(slot.split(':')[1]))
+                                    
+                                    if(slot !== bookingTime.substring(0, 5)){
+                                        return slot
+                                    }
+                                })
+                            })
+                        }
+
 
                         return (
                             <div
