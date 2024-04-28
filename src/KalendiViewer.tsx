@@ -52,6 +52,7 @@ export default function KalendiViewer({ backendRoute, services, data, view, setV
                     <EmployeeView
                         backendRoute={backendRoute}
                         data={data}
+                        setView={setView}
                         selectedService={selectedService}
                         selectedUser={selectedUser}
                         setSelectedUser={setSelectedUser}

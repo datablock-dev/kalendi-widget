@@ -22,7 +22,7 @@ const root = ReactDOM.createRoot(document.getElementById('root')!); // Use non-n
 root.render(
   <React.StrictMode>
     <KalendiContainer 
-        backendRoute='http://localhost:6969'
+      backendRoute='http://localhost:6969'
     />
   </React.StrictMode>
 );

@@ -1,16 +1,17 @@
 import { Dispatch, SetStateAction } from "react"
-import { Data } from "types"
+import { Data, Options } from "types"
 import PersonIcon from '@mui/icons-material/Person';
 
 export interface EmployeeView {
     backendRoute: string
     data: Data[]
+    setView: Dispatch<SetStateAction<Options | null>>
     selectedService: string | null
     selectedUser: string | null
     setSelectedUser: Dispatch<SetStateAction<string | null>>
 }
 
-export default function EmployeeView({ backendRoute, data, selectedService, selectedUser, setSelectedUser }: EmployeeView) {
+export default function EmployeeView({ backendRoute, data, setView, selectedService, selectedUser, setSelectedUser }: EmployeeView) {
 
     return (
         <div>
@@ -46,6 +47,7 @@ export default function EmployeeView({ backendRoute, data, selectedService, sele
                                         onClick={() => {
                                             // Clear other settings that occurs after user selection
                                             selectedUser === employee.user_id ? setSelectedUser(null) : setSelectedUser(employee.user_id)
+                                            setView('book')
                                         }}
                                     />
                                 </div>

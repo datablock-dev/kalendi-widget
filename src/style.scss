@@ -72,38 +72,6 @@
     grid-template-columns: repeat(5, calc(100%/5));
 }
 
-$main: #44b9fc;
-$sec:#154e7d;
-$little-cursor: white;
-
-#outer{
-  height: 100px;
-  width: 100px;
-  border-radius: 15px;
-  background-color: #fff;
-}
-#middle{
-  height: 60px;
-  width: 60px;
-  margin:auto;
-  position: relative;
-  top: 20px;
-  border-radius: 50%;
-  background-image: linear-gradient(150deg, transparent 50%, $sec 50%),linear-gradient(90deg, $sec 50%, $little-cursor 50%);
-    animation: rotation 1200ms infinite linear;
-  transform-origin: 50% 50%;
-  animation-timing-function: ease;
-}
-#inner{
-  height: 48px;
-  width: 48px;
-  background-color: #fff;
-  margin:auto;
-  position: relative;
-  top:6px;
-  border-radius: 50%;
-}
-
 @keyframes rotation {
 from {
   -webkit-transform: rotate(270deg);

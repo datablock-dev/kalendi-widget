@@ -160,6 +160,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 callBack={bookRequest}
                 isClickable={isClickable}
                 isLoading={isLoading}
+                loadingColor="#fff"
             />
         </div>
     )
