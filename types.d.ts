@@ -40,6 +40,10 @@ export type TimeBoxMinutes =
 
 export type TimeBox = `${TimeBoxHours}:${TimeBoxMinutes}`
 
+export interface CustomerData {
+    name: string
+    email: string
+}
 export interface KalendiContainerProps {
     backendRoute: string
     user_id?: string

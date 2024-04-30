@@ -1,7 +1,7 @@
-import { useRef, useState } from "react"
+import { Dispatch, SetStateAction, useRef, useState } from "react"
 import { Dayjs } from "dayjs"
 import { fixTimezoneTimestamp, timestampToString } from "src/utils/time"
-import { Data, Services, Users } from "types"
+import { CustomerData, Data, Options, Services, Users } from "types"
 import { isEmail, isAlpha } from "validator"
 import Input from "src/components/Input"
 import Button from "src/components/Button"
@@ -17,14 +17,16 @@ export interface ConfirmBookingView {
     selectedUser: string
     selectedService: string
     selectedDate: Dayjs
+    setView: Dispatch<SetStateAction<Options | null>>
+    setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
 }
 
-export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate }: ConfirmBookingView) {
+export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, setCustomerData }: ConfirmBookingView) {
     const [isClickable, setIsClickable] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     
-    console.log(selectedDate.format('YYYY-MM-DD HH:mm'))
-    console.log(selectedDate.add(60, 'minutes').format('YYYY-MM-DD HH:mm:ss'))
+    //console.log(selectedDate.format('YYYY-MM-DD HH:mm'))
+    //console.log(selectedDate.add(60, 'minutes').format('YYYY-MM-DD HH:mm:ss'))
 
     // Ref
     const nameRef = useRef<null | HTMLInputElement>(null)
@@ -71,9 +73,12 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 },
                 body: JSON.stringify(payload)
             })
-            const response = await res.json()
 
+            setCustomerData({name: name,
+                email: email
+            })
             setIsLoading(false)
+            setView('confirmation') // Trigger the confirmation view
             return
         } catch (error) {
             console.error(error)
@@ -94,10 +99,6 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
 
     return (
         <div className="w-[100%] h-[100%] flex flex-col">
-            <div className="flex flex-col">
-                <h1>Confirm your booking</h1>
-                <p>You are about to book the following...</p>
-            </div>
             <div className="flex flex-row gap-[6px] items-center mb-[10px]">
                 <label className="font-[600]">Date:</label>
                 <div className="flex flex-row items-center gap-[10px]">

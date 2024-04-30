@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, useEffect } from "react"
-import { Data, Options, Services } from "types"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { CustomerData, Data, Options, Services } from "types"
 import { Dayjs } from "dayjs"
 
 // Views
@@ -7,6 +7,7 @@ import KalendiSchedule from "./views/KalendiSchedule"
 import ServiceView from "./views/ServiceView"
 import ConfirmBookingView from "./views/Booking"
 import EmployeeView from "./views/EmployeeView"
+import Final from "./views/Final"
 
 export interface KalendiViewer {
     backendRoute: string
@@ -26,7 +27,8 @@ export interface KalendiViewer {
 }
 
 export default function KalendiViewer({ backendRoute, services, data, view, setView, selectedUser, setSelectedUser, selectedService, setSelectedService, selectedDate, setSelectedDate }: KalendiViewer) {
-    
+    const [customerData, setCustomerData] = useState<null | CustomerData>(null)
+
     useEffect(() => {
         setSelectedDate(null)
     }, [selectedUser])
@@ -74,17 +76,36 @@ export default function KalendiViewer({ backendRoute, services, data, view, setV
                 />
             }
             {
-                (view === "date-selected" && selectedService && selectedUser && selectedDate && services && data) &&
-                <ConfirmBookingView
-                    backendRoute={backendRoute}
-                    // Data
-                    data={data}
-                    services={services}
-                    // Select states
-                    selectedUser={selectedUser}
-                    selectedService={selectedService}
-                    selectedDate={selectedDate}
-                />
+                (selectedService && selectedUser && selectedDate && services && data) &&
+                <>
+                    {
+                        view === "date-selected" &&
+                        <ConfirmBookingView
+                            backendRoute={backendRoute}
+                            // Data
+                            data={data}
+                            services={services}
+                            // Select states
+                            selectedUser={selectedUser}
+                            selectedService={selectedService}
+                            selectedDate={selectedDate}
+                            setView={setView}
+                            setCustomerData={setCustomerData}
+                        />
+                    }
+                    {
+                        (view === "confirmation" && customerData) &&
+                        <Final
+                            backendRoute={backendRoute}
+                            customerData={customerData}
+                            data={data}
+                            services={services}
+                            selectedUser={selectedUser}
+                            selectedService={selectedService}
+                            selectedDate={selectedDate}
+                        />
+                    }
+                </>
             }
         </div>
     )
