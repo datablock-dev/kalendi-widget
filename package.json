@@ -1,6 +1,6 @@
 {
   "name": "kalendi-widget",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "private": false,
   "description": "Kalendi widget for React applications, created with TypeScript and TailwindCSS.",
   "main": "index.js",
