@@ -1,3 +1,5 @@
+'use client';
+
 import './style.css';
 import './tailwind.css';
 import React, { useEffect, useState } from "react"

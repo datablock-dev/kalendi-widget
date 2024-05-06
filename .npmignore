@@ -1,6 +1,6 @@
 /dist/
 /public/
-/src/
+/build/
 /node_modules/
 index.ts
 tailwind.config.js

@@ -1,0 +1,1 @@
+export { default as KalendiContainer } from './src/KalendiContainer'
