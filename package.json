@@ -3,7 +3,7 @@
   "version": "1.2.4",
   "private": false,
   "description": "Kalendi widget for React applications, created with TypeScript and TailwindCSS.",
-  "main": "./build/index.js",
+  "main": "build/index.js",
   "scripts": {
     "start": "react-scripts start && npx tailwindcss -i ./src/tailwind.css -o ./src/output.css --watch",
     "build": "webpack",
