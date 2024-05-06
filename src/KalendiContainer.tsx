@@ -5,7 +5,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import KalendiViewer from './KalendiViewer';
 import { Options, Services, Users, Data, KalendiContainerProps } from 'types';
 import { Dayjs } from 'dayjs';
-import Snackbar from '@mui/material/Snackbar';
 
 export default function KalendiContainer({ backendRoute, user_id, service_id, closeCallback, header }: KalendiContainerProps): JSX.Element {
     const [services, setServices] = useState<null | Services[]>(null)
@@ -99,9 +98,6 @@ export default function KalendiContainer({ backendRoute, user_id, service_id, cl
 
     return (
         <div className="kalendi-container">
-            <Snackbar
-
-            />
             <div
                 className="kalendi-widget-wrapper"
                 data-loading={isLoading}
