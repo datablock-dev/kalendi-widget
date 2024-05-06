@@ -7,8 +7,10 @@ module.exports = {
     output: {
         filename: "index.js",
         path: path.resolve('build'),
-        libraryTarget: "umd",
-        umdNamedDefine: true
+        library: 'YourLibraryName', // Name of your library (global variable name)
+        libraryTarget: 'umd', // Universal Module Definition
+        umdNamedDefine: true,
+        globalObject: 'this',
     },
     module: {
         rules: [
@@ -34,6 +36,7 @@ module.exports = {
             src: path.resolve(__dirname, 'src/'), // Create alias for 'src' directory
         },
     },
+    devtool: 'source-map',
     plugins: [
         new LoaderOptionsPlugin({
             options: {
