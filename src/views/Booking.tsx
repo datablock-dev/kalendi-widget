@@ -1,12 +1,10 @@
 import { Dispatch, SetStateAction, useRef, useState } from "react"
 import { Dayjs } from "dayjs"
-import { fixTimezoneTimestamp, timestampToString } from "src/utils/time"
-import { CustomerData, Data, Options, Services, Users } from "types"
-import { isEmail, isAlpha } from "validator"
-import Input from "src/components/Input"
-import Button from "src/components/Button"
+import { CustomerData, Data, Options, Services } from "types"
+import { isEmail } from "validator"
+import Input from "../components/Input"
+import Button from "../components/Button"
 import ImageIcon from '@mui/icons-material/Image';
-import { JSONtoCal } from "src/utils/ical"
 
 export interface ConfirmBookingView {
     backendRoute: string

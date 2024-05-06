@@ -1,4 +1,5 @@
 import './style.css';
+import './tailwind.css';
 import React, { useEffect, useState } from "react"
 import KalendiNavbar from './KalendiNavbar';
 import CloseIcon from '@mui/icons-material/Close';

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from "react"
-import ServiceItem from "src/components/ServiceItem"
+import ServiceItem from "../components/ServiceItem"
 import { Options, Services, Data } from "types"
 
 export interface ServiceView {
