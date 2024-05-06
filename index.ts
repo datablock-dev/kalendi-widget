@@ -9,4 +9,3 @@
 'use client';
 
 export { default as KalendiContainer } from './src/KalendiContainer'
-export * from './src/KalendiContainer'
