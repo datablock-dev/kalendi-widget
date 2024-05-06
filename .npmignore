@@ -1,5 +1,8 @@
 /dist/
 /public/
+/src/
+/node_modules/
+tailwind.config.js
 webpack.config.js
 babel.config.js
 postcss.config.js
