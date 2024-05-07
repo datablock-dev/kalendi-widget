@@ -1,10 +1,14 @@
-/dist/
 /public/
 /build/
 /node_modules/
 /src/
-index.ts
 tailwind.config.js
 webpack.config.js
 babel.config.js
 postcss.config.js
+rollup.config.js
+
+# Index files
+index.d.ts
+index.js
+index.ts

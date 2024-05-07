@@ -8,4 +8,4 @@ export interface EmployeeView {
     selectedUser: string | null;
     setSelectedUser: Dispatch<SetStateAction<string | null>>;
 }
-export default function EmployeeView({ backendRoute, data, setView, selectedService, selectedUser, setSelectedUser }: EmployeeView): import("react").JSX.Element;
+export default function EmployeeView({ backendRoute, data, setView, selectedService, selectedUser, setSelectedUser }: EmployeeView): import("react/jsx-runtime").JSX.Element;

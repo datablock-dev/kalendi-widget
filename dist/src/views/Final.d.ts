@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { Dayjs } from "dayjs";
 import { CustomerData, Data, Services } from "types";
 interface Final {
@@ -10,5 +9,5 @@ interface Final {
     selectedDate: Dayjs;
     customerData: CustomerData;
 }
-export default function Final({ backendRoute, data, services, selectedUser, selectedService, selectedDate, customerData }: Final): import("react").JSX.Element;
+export default function Final({ backendRoute, data, services, selectedUser, selectedService, selectedDate, customerData }: Final): import("react/jsx-runtime").JSX.Element;
 export {};

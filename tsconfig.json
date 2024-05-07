@@ -12,8 +12,8 @@
 
     /* Language and Environment */
     "target": "es5",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "lib": ["es2020", "dom"],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
-    "jsx": "preserve",                                /* Specify what JSX code is generated. */
+    "lib": ["DOM.Iterable", "DOM", "ESNext"],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+    "jsx": "react-jsx",                                /* Specify what JSX code is generated. */
     // "experimentalDecorators": true,                   /* Enable experimental support for legacy experimental decorators. */
     // "emitDecoratorMetadata": true,                    /* Emit design-type metadata for decorated declarations in source files. */
     // "jsxFactory": "",                                 /* Specify the JSX factory function used when targeting React JSX emit, e.g. 'React.createElement' or 'h'. */
@@ -33,6 +33,7 @@
       "@components/*": ["./src/components/*"],
       "@utilities/*": ["./src/utils/*"],
       "@views/*": ["./src/views/*"],
+      "@types/*": ["types.ts"]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
@@ -115,6 +116,9 @@
     "tailwind.config.js",
     "webpack.config.js",
     "babel.config.js",
-    "postcss.config.js"
+    "postcss.config.js",
+    "rollup.config.js",
+    "./src/index.tsx",
+    "./dist/**/*" 
   ]
 }

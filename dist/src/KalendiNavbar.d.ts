@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Dayjs } from "dayjs";
-import { Options, Data, Services, Users } from "types";
+import { Options, Data, Services, Users } from "../types";
 export interface KalendiNavbar {
     backendRoute: string;
     service_id?: string;
@@ -16,4 +16,4 @@ export interface KalendiNavbar {
     selectedDate: Dayjs | null;
     users: Users[] | false | null;
 }
-export default function KalendiNavbar({ backendRoute, service_id, services, data, header, view, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, selectedDate, users }: KalendiNavbar): import("react").JSX.Element;
+export default function KalendiNavbar({ backendRoute, service_id, services, data, header, view, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, selectedDate, users }: KalendiNavbar): import("react/jsx-runtime").JSX.Element;

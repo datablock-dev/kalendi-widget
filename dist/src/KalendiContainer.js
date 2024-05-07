@@ -1,4 +1,15 @@
-'use client';
+"use client";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,9 +46,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import './style.css';
 import './tailwind.css';
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import KalendiNavbar from './KalendiNavbar';
 import CloseIcon from '@mui/icons-material/Close';
 import KalendiViewer from './KalendiViewer';
@@ -139,27 +151,11 @@ export default function KalendiContainer(_a) {
             });
         });
     }
-    return (<div className="kalendi-container">
-            <div className="kalendi-widget-wrapper" data-loading={isLoading}>
-                <div className='absolute flex justify-center items-center right-[20px] top-[20px] rounded-[50%] w-[30px] h-[30px] hover:cursor-pointer hover:opacity-80 hover:bg-[#d4d4d4]' onClick={closeCallback}>
-                    <CloseIcon />
-                </div>
-                {isLoading &&
-            <svg className="animate-spin" style={{ fill: "#000" }} xmlns="http://www.w3.org/2000/svg" height="80" width="80" viewBox="0 -960 960 960">
-                        <path d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q17 0 28.5 11.5T520-840q0 17-11.5 28.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-17 11.5-28.5T840-520q17 0 28.5 11.5T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Z"/>
-                    </svg>}
-                {(!isLoading && data && services) &&
-            <>
-                        <KalendiNavbar backendRoute={backendRoute} service_id={service_id} services={services} data={data} header={header} 
-            // Select states
-            selectedService={selectedService} setSelectedService={setSelectedService} selectedUser={selectedUser} setSelectedUser={setSelectedUser} selectedDate={selectedDate} users={users} 
-            // Views
-            view={view} setView={setView}/>
-                        <KalendiViewer backendRoute={backendRoute} services={services} data={data} view={view} setView={setView} selectedUser={selectedUser} setSelectedUser={setSelectedUser} selectedService={selectedService} setSelectedService={setSelectedService} selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
-                    </>}
-            </div>
-            <a className='absolute bottom-[10px]' href="https://datablock.dev">
-                Powered by Kalendi
-            </a>
-        </div>);
+    return (_jsxs("div", __assign({ className: "kalendi-container" }, { children: [_jsxs("div", __assign({ className: "kalendi-widget-wrapper", "data-loading": isLoading }, { children: [_jsx("div", __assign({ className: 'absolute flex justify-center items-center right-[20px] top-[20px] rounded-[50%] w-[30px] h-[30px] hover:cursor-pointer hover:opacity-80 hover:bg-[#d4d4d4]', onClick: closeCallback }, { children: _jsx(CloseIcon, {}) })), isLoading &&
+                        _jsx("svg", __assign({ className: "animate-spin", style: { fill: "#000" }, xmlns: "http://www.w3.org/2000/svg", height: "80", width: "80", viewBox: "0 -960 960 960" }, { children: _jsx("path", { d: "M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q17 0 28.5 11.5T520-840q0 17-11.5 28.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-17 11.5-28.5T840-520q17 0 28.5 11.5T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Z" }) })), (!isLoading && data && services) &&
+                        _jsxs(_Fragment, { children: [_jsx(KalendiNavbar, { backendRoute: backendRoute, service_id: service_id, services: services, data: data, header: header, 
+                                    // Select states
+                                    selectedService: selectedService, setSelectedService: setSelectedService, selectedUser: selectedUser, setSelectedUser: setSelectedUser, selectedDate: selectedDate, users: users, 
+                                    // Views
+                                    view: view, setView: setView }), _jsx(KalendiViewer, { backendRoute: backendRoute, services: services, data: data, view: view, setView: setView, selectedUser: selectedUser, setSelectedUser: setSelectedUser, selectedService: selectedService, setSelectedService: setSelectedService, selectedDate: selectedDate, setSelectedDate: setSelectedDate })] })] })), _jsx("a", __assign({ className: 'absolute bottom-[10px]', href: "https://datablock.dev" }, { children: "Powered by Kalendi" }))] })));
 }

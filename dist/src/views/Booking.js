@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,6 +45,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useRef, useState } from "react";
 import { isEmail } from "validator";
 import Input from "../components/Input";
@@ -51,7 +63,7 @@ export default function ConfirmBookingView(_a) {
     var service = services.find(function (item) { return item.service_id === selectedService; });
     var user = data.find(function (item) { return item.user_id === selectedUser; });
     if (!service || !user)
-        return <div>Error...</div>;
+        return _jsx("div", { children: "Error..." });
     function bookRequest() {
         return __awaiter(this, void 0, void 0, function () {
             var name_1, email, userService, payload, res, error_1;
@@ -120,43 +132,11 @@ export default function ConfirmBookingView(_a) {
             return setIsClickable(false);
         setIsClickable(true);
     }
-    return (<div className="w-[100%] h-[100%] flex flex-col">
-            <div className="flex flex-row gap-[6px] items-center mb-[10px]">
-                <label className="font-[600]">Date:</label>
-                <div className="flex flex-row items-center gap-[10px]">
-                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('YYYY-MM-DD')}</span>
-                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('HH:mm')}</span>
-                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.add(service.service_time_block, 'minutes').format('HH:mm')}</span>
-                </div>
-            </div>
-            <div className="flex flex-row flex-wrap gap-[10px]">
-                <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
-                    <label className="font-[600]">Service</label>
-                    <div className="flex flex-row items-center gap-[10px]">
-                        {service.service_image ?
-            <img className="image-round" src={service.service_image ? "".concat(backendRoute, "/upload/").concat(service.service_image) : ""} alt="service_image"/>
-            :
-                <div className="image-round text-[12px] flex items-center justify-center">
-                                    <ImageIcon />
-                                </div>}
-                        <span>{service.service_name}</span>
-                    </div>
-                </div>
-                <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
-                    <label className="font-[600]">Employee</label>
-                    <div className="flex flex-row items-center gap-[10px]">
-                        {user.avatar ?
-            <img className="image-round" src={user.avatar ? "".concat(backendRoute, "/upload/").concat(user.avatar) : ""} alt="user_avatar"/>
-            :
-                <div className="image-round text-[12px] flex items-center justify-center">N/A</div>}
-                        <span>{user.firstname} {user.lastname}</span>
-                    </div>
-                </div>
-            </div>
-            <div className="grid grid-cols-[repeat(2,calc(50%_-_5px))] gap-[10px] mt-[20px] sd:flex sd:flex-col sd:gap-[10px]">
-                <Input label="Name" forwardRef={nameRef} onChangeCallBack={changeEvent}/>
-                <Input label="Email" type="Email" forwardRef={emailRef} onChangeCallBack={changeEvent}/>
-            </div>
-            <Button text="Book" callBack={bookRequest} isClickable={isClickable} isLoading={isLoading} loadingColor="#fff"/>
-        </div>);
+    return (_jsxs("div", __assign({ className: "w-[100%] h-[100%] flex flex-col" }, { children: [_jsxs("div", __assign({ className: "flex flex-row gap-[6px] items-center mb-[10px]" }, { children: [_jsx("label", __assign({ className: "font-[600]" }, { children: "Date:" })), _jsxs("div", __assign({ className: "flex flex-row items-center gap-[10px]" }, { children: [_jsx("span", __assign({ className: "bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid" }, { children: selectedDate.format('YYYY-MM-DD') })), _jsx("span", __assign({ className: "bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid" }, { children: selectedDate.format('HH:mm') })), _jsx("span", __assign({ className: "bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid" }, { children: selectedDate.add(service.service_time_block, 'minutes').format('HH:mm') }))] }))] })), _jsxs("div", __assign({ className: "flex flex-row flex-wrap gap-[10px]" }, { children: [_jsxs("div", __assign({ className: "flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]" }, { children: [_jsx("label", __assign({ className: "font-[600]" }, { children: "Service" })), _jsxs("div", __assign({ className: "flex flex-row items-center gap-[10px]" }, { children: [service.service_image ?
+                                        _jsx("img", { className: "image-round", src: service.service_image ? "".concat(backendRoute, "/upload/").concat(service.service_image) : "", alt: "service_image" })
+                                        :
+                                            _jsx("div", __assign({ className: "image-round text-[12px] flex items-center justify-center" }, { children: _jsx(ImageIcon, {}) })), _jsx("span", { children: service.service_name })] }))] })), _jsxs("div", __assign({ className: "flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]" }, { children: [_jsx("label", __assign({ className: "font-[600]" }, { children: "Employee" })), _jsxs("div", __assign({ className: "flex flex-row items-center gap-[10px]" }, { children: [user.avatar ?
+                                        _jsx("img", { className: "image-round", src: user.avatar ? "".concat(backendRoute, "/upload/").concat(user.avatar) : "", alt: "user_avatar" })
+                                        :
+                                            _jsx("div", __assign({ className: "image-round text-[12px] flex items-center justify-center" }, { children: "N/A" })), _jsxs("span", { children: [user.firstname, " ", user.lastname] })] }))] }))] })), _jsxs("div", __assign({ className: "grid grid-cols-[repeat(2,calc(50%_-_5px))] gap-[10px] mt-[20px] sd:flex sd:flex-col sd:gap-[10px]" }, { children: [_jsx(Input, { label: "Name", forwardRef: nameRef, onChangeCallBack: changeEvent }), _jsx(Input, { label: "Email", type: "Email", forwardRef: emailRef, onChangeCallBack: changeEvent })] })), _jsx(Button, { text: "Book", callBack: bookRequest, isClickable: isClickable, isLoading: isLoading, loadingColor: "#fff" })] })));
 }

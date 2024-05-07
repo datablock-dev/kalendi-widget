@@ -15,4 +15,4 @@ export interface KalendiViewer {
     selectedDate: Dayjs | null;
     setSelectedDate: Dispatch<SetStateAction<Dayjs | null>>;
 }
-export default function KalendiViewer({ backendRoute, services, data, view, setView, selectedUser, setSelectedUser, selectedService, setSelectedService, selectedDate, setSelectedDate }: KalendiViewer): import("react").JSX.Element;
+export default function KalendiViewer({ backendRoute, services, data, view, setView, selectedUser, setSelectedUser, selectedService, setSelectedService, selectedDate, setSelectedDate }: KalendiViewer): import("react/jsx-runtime").JSX.Element;

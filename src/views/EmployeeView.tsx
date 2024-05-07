@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import { Data, Options } from "types"
 import PersonIcon from '@mui/icons-material/Person';
 

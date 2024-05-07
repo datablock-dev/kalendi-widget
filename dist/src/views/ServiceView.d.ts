@@ -10,4 +10,4 @@ export interface ServiceView {
     setSelectedUser: Dispatch<SetStateAction<string | null>>;
     data: Data[];
 }
-export default function ServiceView({ backendRoute, services, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, data }: ServiceView): import("react").JSX.Element;
+export default function ServiceView({ backendRoute, services, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, data }: ServiceView): import("react/jsx-runtime").JSX.Element;

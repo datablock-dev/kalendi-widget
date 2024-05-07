@@ -11,4 +11,4 @@ export interface ConfirmBookingView {
     setView: Dispatch<SetStateAction<Options | null>>;
     setCustomerData: Dispatch<SetStateAction<CustomerData | null>>;
 }
-export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, setCustomerData }: ConfirmBookingView): import("react").JSX.Element;
+export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, setCustomerData }: ConfirmBookingView): import("react/jsx-runtime").JSX.Element;

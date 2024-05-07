@@ -6,6 +6,5 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-'use client';
 
 export { default as KalendiContainer } from './src/KalendiContainer'

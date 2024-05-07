@@ -7,4 +7,4 @@ export interface ServiceItem {
     setSelectedService: Dispatch<SetStateAction<string | null>>;
     setView: Dispatch<SetStateAction<Options | null>>;
 }
-export default function ServiceItem({ service, backendRoute, selectedService, setSelectedService, setView }: ServiceItem): import("react").JSX.Element;
+export default function ServiceItem({ service, backendRoute, selectedService, setSelectedService, setView }: ServiceItem): import("react/jsx-runtime").JSX.Element;

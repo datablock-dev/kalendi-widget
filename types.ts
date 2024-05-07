@@ -1,3 +1,5 @@
+import { Dayjs } from "dayjs"
+
 export type Options = 
     | "service" 
     | "employee" 

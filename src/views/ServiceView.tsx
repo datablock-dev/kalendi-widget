@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from "react"
+import React, { Dispatch, SetStateAction, useEffect } from "react"
 import ServiceItem from "../components/ServiceItem"
 import { Options, Services, Data } from "types"
 

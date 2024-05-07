@@ -1,3 +1,5 @@
+import React from "react"
+
 export interface Button {
     children?: React.ReactNode
     text?: string

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import { Dayjs } from "dayjs"
 import { CustomerData, Data, Options, Services } from "types"
 import ImageIcon from '@mui/icons-material/Image';
