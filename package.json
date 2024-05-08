@@ -98,6 +98,6 @@
       "last 1 safari version"
     ]
   },
-  "module": "./index.js",
-  "types": "./index.d.ts"
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts"
 }
