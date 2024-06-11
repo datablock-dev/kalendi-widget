@@ -1,35 +1,35 @@
-import babel from 'rollup-plugin-babel';
-import resolve from '@rollup/plugin-node-resolve';
-import external from 'rollup-plugin-peer-deps-external';
-import { terser } from 'rollup-plugin-terser';
-import postcss from 'rollup-plugin-postcss';
+const babel = require('@rollup/plugin-babel')
+const resolve = require('@rollup/plugin-node-resolve')
+const external = require('rollup-plugin-peer-deps-external')
+const terser = require('@rollup/plugin-terser')
+const postcss = require('rollup-plugin-postcss')
+const typescript = require('@rollup/plugin-typescript')
 
-export default [
-  {
-    input: './index.ts',
-    output: [
-      {
-        file: 'dist/index.js',
-        format: 'cjs',
-      },
-      {
-        file: 'dist/index.es.js',
-        format: 'es',
-        exports: 'named',
-      }
-    ],
-    plugins: [
-      postcss({
-        plugins: [],
-        minimize: true,
-      }),
-      babel({
-        exclude: 'node_modules/**',
-        presets: ['@babel/preset-react', '@babel/preset']
-      }),
-      external(),
-      resolve(),
-      terser(),
-    ]
-  }
-];
+module.exports = {
+  input: './index.ts',
+  output: [
+    {
+      file: 'dist/index.js',
+      format: 'cjs',
+    },
+    {
+      file: 'dist/index.es.js',
+      format: 'es',
+      exports: 'named',
+    }
+  ],
+  plugins: [
+    postcss({
+      plugins: [],
+      minimize: true,
+    }),
+    babel({
+      exclude: 'node_modules/**',
+      presets: ['@babel/preset-react', "@babel/preset-typescript"]
+    }),
+    external(),
+    resolve(),
+    terser(),
+    typescript()
+  ]
+}
