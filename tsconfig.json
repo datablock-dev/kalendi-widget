@@ -33,7 +33,8 @@
       "@components/*": ["./src/components/*"],
       "@utilities/*": ["./src/utils/*"],
       "@views/*": ["./src/views/*"],
-      "@types/*": ["types.ts"]
+      "@types/*": ["types.d.ts"],
+      "@src/*": ["./src/*"]
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */

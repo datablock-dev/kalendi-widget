@@ -7,4 +7,6 @@
  */
 
 
-export { default as KalendiContainer } from './src/KalendiContainer'
+export { KalendiContainer } from './src/KalendiContainer'
+import './style.css'
+import './tailwind.css'

@@ -8,21 +8,16 @@
 
 'use client';
 
-export { default as KalendiContainer } from './KalendiContainer'
+export { KalendiContainer } from './KalendiContainer'
 export * from './KalendiContainer'
-
-
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import KalendiContainer from './KalendiContainer';
 import './style.css'
 import './tailwind.css'
 
-const root = ReactDOM.createRoot(document.getElementById('root')!); // Use non-null assertion operator (!) or check if getElementById returns null
-root.render(
-  <React.StrictMode>
-    <KalendiContainer 
-      backendRoute='http://localhost:6969'
-    />
-  </React.StrictMode>
-);
+//const root = ReactDOM.createRoot(document.getElementById('root')!); // Use non-null assertion operator (!) or check if getElementById returns null
+//root.render(
+//  <React.StrictMode>
+//    <KalendiContainer 
+//      backendRoute='http://localhost:6969'
+//    />
+//  </React.StrictMode>
+//);

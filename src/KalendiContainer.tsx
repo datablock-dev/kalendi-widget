@@ -10,7 +10,7 @@ import KalendiViewer from './KalendiViewer';
 import { Options, Services, Users, Data, KalendiContainerProps } from '../types';
 import { Dayjs } from 'dayjs';
 
-export default function KalendiContainer({ backendRoute, user_id, service_id, closeCallback, header }: KalendiContainerProps): JSX.Element {
+export function KalendiContainer({ backendRoute, user_id, service_id, closeCallback, header }: KalendiContainerProps): JSX.Element {
     const [services, setServices] = useState<null | Services[]>(null)
     const [users, setUsers] = useState<null | false | Users[]>(null)
     const [userServices, setUserServices] = useState(null)
