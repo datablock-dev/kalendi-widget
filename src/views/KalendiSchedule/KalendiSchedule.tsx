@@ -3,7 +3,7 @@ import dayjs, { Dayjs } from "dayjs"
 import isBetween from "dayjs/plugin/isBetween"
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { fixTimezoneTimestamp, months, weekDays } from "../utils/time";
+import { fixTimezoneTimestamp, months, weekDays } from "../../utils/time";
 import { Options, WeekView, UserAvailability, EventResponse, UserAvailabilityResponse, Data, Services, TimeBox } from "types";
 
 export interface KalendiSchedule {
@@ -21,7 +21,7 @@ const timeBoxes = Array.from({length: 24}).map((_, index) => {
     return [`${hasPrefix}${index}:00`, `${hasPrefix}${index}:15`, `${hasPrefix}${index}:30`, `${hasPrefix}${index}:45`]
 }).flat(1)
 
-export default function KalendiSchedule({ backendRoute, data, services, selectedUser, selectedService, setView, setSelectedDate }: KalendiSchedule) {
+export function KalendiSchedule({ backendRoute, data, services, selectedUser, selectedService, setView, setSelectedDate }: KalendiSchedule) {
     dayjs.extend(isBetween)
     const currentDate = dayjs()
     const [weekMove, setWeekMove] = useState<number>(0)

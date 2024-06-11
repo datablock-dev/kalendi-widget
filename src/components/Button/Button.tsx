@@ -10,7 +10,7 @@ export interface Button {
     loadingColor?: string
 }
 
-export default function Button({ children, text, style, callBack, isClickable = true, isLoading = false, loadingColor }: Button){
+export function Button({ children, text, style, callBack, isClickable = true, isLoading = false, loadingColor }: Button){
     return(
         <button 
             className={ isClickable ? 

@@ -1,8 +1,10 @@
+'use client';
+
 import React, { Dispatch, SetStateAction } from "react";
 import { Dayjs } from "dayjs";
 import CategoryIcon from '@mui/icons-material/Category';
 import PersonIcon from '@mui/icons-material/Person';
-import { Options, Data, Services, Users } from "../types";
+import { Options, Data, Services, Users } from "../../../types";
 import CloseIcon from '@mui/icons-material/Close';
 
 export interface KalendiNavbar {
@@ -22,7 +24,7 @@ export interface KalendiNavbar {
     users: Users[] | false | null
 }
 
-export default function KalendiNavbar({ backendRoute, service_id, services, data, header, view, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, selectedDate, users }: KalendiNavbar) {
+export function KalendiNavbar({ backendRoute, service_id, services, data, header, view, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, selectedDate, users }: KalendiNavbar) {
 
     return (
         <>

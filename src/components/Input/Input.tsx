@@ -7,7 +7,7 @@ export interface Input {
     forwardRef?: RefObject<null | any>
 }
 
-export default function Input({ label, type, onChangeCallBack, forwardRef }: Input){
+export function Input({ label, type, onChangeCallBack, forwardRef }: Input){
 
     return(
         <div className="flex flex-col gap-[4px] w-[100%]">

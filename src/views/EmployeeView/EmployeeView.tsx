@@ -11,8 +11,7 @@ export interface EmployeeView {
     setSelectedUser: Dispatch<SetStateAction<string | null>>
 }
 
-export default function EmployeeView({ backendRoute, data, setView, selectedService, selectedUser, setSelectedUser }: EmployeeView) {
-
+export function EmployeeView({ backendRoute, data, setView, selectedService, selectedUser, setSelectedUser }: EmployeeView) {
     return (
         <div>
             <div className="list">

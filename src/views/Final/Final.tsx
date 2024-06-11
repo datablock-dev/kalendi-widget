@@ -15,7 +15,7 @@ interface Final {
     customerData: CustomerData,
 }
 
-export default function Final({ backendRoute, data, services, selectedUser, selectedService, selectedDate, customerData }: Final) {
+export function Final({ backendRoute, data, services, selectedUser, selectedService, selectedDate, customerData }: Final) {
     const service = services.find((item) => item.service_id === selectedService)
     const user = data.find((item) => item.user_id === selectedUser)
 

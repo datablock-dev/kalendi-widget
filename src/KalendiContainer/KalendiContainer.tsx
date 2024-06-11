@@ -1,13 +1,8 @@
-"use client";
-
-import './style.css';
-import './tailwind.css';
-import React from "react"
-import { useEffect, useState } from "react"
-import KalendiNavbar from './KalendiNavbar';
+import React, { useEffect, useState } from "react"
+import { KalendiNavbar } from "../components/KalendiNavbar";
+import { KalendiViewer } from '../components/KalendiViewer';
 import CloseIcon from '@mui/icons-material/Close';
-import KalendiViewer from './KalendiViewer';
-import { Options, Services, Users, Data, KalendiContainerProps } from '../types';
+import { Options, Services, Users, Data, KalendiContainerProps } from '../../types';
 import { Dayjs } from 'dayjs';
 
 export function KalendiContainer({ backendRoute, user_id, service_id, closeCallback, header }: KalendiContainerProps): JSX.Element {
