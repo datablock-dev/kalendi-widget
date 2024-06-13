@@ -35,16 +35,12 @@ module.exports = [
       resolve(),
       terser(),
       typescript({ tsconfig: './tsconfig.json' }),
-      typescriptPaths.typescriptPaths(),
     ]
   },
   {
     input: 'types.d.ts',
     output: [{ file: 'dist/types.d.ts', format: "esm" }],
     external: [/\.css$/],
-    plugins: [
-      dts.dts(),
-      typescriptPaths.typescriptPaths(),
-    ],
+    plugins: [dts.dts(),],
   },
 ]

@@ -1,1 +1,1 @@
-export * as default from './src/KalendiContainer'
+export * from './src/KalendiContainer'

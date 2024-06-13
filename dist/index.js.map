@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["../../index.ts"],"sourcesContent":["export * from './src/KalendiContainer'\n"],"names":["__exportStar","require","exports"],"mappings":"qFAAsCA,aAAAC,QAAA,0BAAAC"}
