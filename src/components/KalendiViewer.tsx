@@ -1,13 +1,13 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { CustomerData, Data, Options, Services } from "types"
+import { CustomerData, Data, Options, Services } from "../../types"
 import { Dayjs } from "dayjs"
 
 // Views
-import KalendiSchedule from "@views/KalendiSchedule"
-import ServiceView from "@views/ServiceView"
-import ConfirmBookingView from "@views/Booking"
-import EmployeeView from "@views/EmployeeView"
-import Final from "@views/Final"
+import KalendiSchedule from "../views/KalendiSchedule"
+import ServiceView from "../views/ServiceView"
+import ConfirmBookingView from "../views/Booking"
+import EmployeeView from "../views/EmployeeView"
+import Final from "../views/Final"
 
 export interface KalendiViewer {
     backendRoute: string

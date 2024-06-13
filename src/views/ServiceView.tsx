@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect } from "react"
-import { ServiceItem } from "@components/ServiceItem"
-import { Options, Services, Data } from "types"
+import { ServiceItem } from "../components/ServiceItem"
+import { Options, Services, Data } from "../../types"
 
 export interface ServiceView {
     backendRoute: string
