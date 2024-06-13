@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useRef, useState } from "react"
 import { Dayjs } from "dayjs"
-import { CustomerData, Data, Options, Services } from "types"
+import { CustomerData, Data, Options, Services } from "@types"
 import { isEmail } from "validator"
-import { Input } from "../../components/Input"
-import { Button } from "../../components/Button"
+import Input from "@components/Input"
+import Button from "@components/Button"
 import ImageIcon from '@mui/icons-material/Image';
 
 export interface ConfirmBookingView {
@@ -19,7 +19,7 @@ export interface ConfirmBookingView {
     setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
 }
 
-export function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, setCustomerData }: ConfirmBookingView) {
+export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, setCustomerData }: ConfirmBookingView) {
     const [isClickable, setIsClickable] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     

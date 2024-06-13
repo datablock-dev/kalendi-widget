@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect } from "react"
-import { ServiceItem } from "../../components/ServiceItem"
+import { ServiceItem } from "@components/ServiceItem"
 import { Options, Services, Data } from "types"
 
 export interface ServiceView {
@@ -13,7 +13,7 @@ export interface ServiceView {
     data: Data[]
 }
 
-export function ServiceView({ backendRoute, services, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, data }: ServiceView) {
+export default function ServiceView({ backendRoute, services, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, data }: ServiceView) {
 
     useEffect(() => {
         
