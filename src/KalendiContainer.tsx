@@ -2,8 +2,20 @@ import React, { useEffect, useState } from "react"
 import KalendiNavbar from "./components/KalendiNavbar";
 import KalendiViewer from './components/KalendiViewer';
 import CloseIcon from '@mui/icons-material/Close';
-import { Options, Services, Users, Data, KalendiContainerProps } from '../types';
+import { Options, Services, Users, Data } from '../types';
 import { Dayjs } from 'dayjs';
+import 'style.css'
+import 'tailwind.css'
+
+interface KalendiContainerProps {
+    backendRoute: string
+    user_id?: string
+    service_id?: string
+    header?: string
+    closeCallback?: (e?: any) => any
+    // Styling
+}
+
 
 export function KalendiContainer({ backendRoute, user_id, service_id, closeCallback, header }: KalendiContainerProps): JSX.Element {
     const [services, setServices] = useState<null | Services[]>(null)

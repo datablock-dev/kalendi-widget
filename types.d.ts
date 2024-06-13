@@ -46,14 +46,6 @@ export interface CustomerData {
     name: string
     email: string
 }
-export interface KalendiContainerProps {
-    backendRoute: string
-    user_id?: string
-    service_id?: string
-    header?: string
-    closeCallback?: (e?: any) => any
-    // Styling
-}
 
 export interface Services {
     service_id: string

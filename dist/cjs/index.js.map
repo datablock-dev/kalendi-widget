@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["../../../src/index.ts"],"sourcesContent":["export * as default from './KalendiContainer'\n"],"names":["exports","default","tslib_1","__importStar","require"],"mappings":"kHAAAA,QAA6CC,QAAAC,EAAAC,aAAAC,QAAA"}
