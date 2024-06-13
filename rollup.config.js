@@ -4,53 +4,41 @@ const peerDepsExternal = require('rollup-plugin-peer-deps-external')
 const terser = require('@rollup/plugin-terser')
 const postcss = require('rollup-plugin-postcss')
 const typescript = require('@rollup/plugin-typescript')
-const dts = require("rollup-plugin-dts")
 const commonjs = require('@rollup/plugin-commonjs')
-const packageJson = require("./package.json");
+const preserveDirectives = require('rollup-plugin-preserve-directives')
+
+const plugins = [
+  postcss(),
+  peerDepsExternal(),
+  resolve(),
+  terser.default({
+    compress: {
+      directives: false
+    }
+  }),
+  typescript({
+    tsconfig: './tsconfig.json'
+  }),
+  commonjs(),
+  preserveDirectives.preserveDirectives()
+  //babel({
+  //  exclude: 'node_modules/**',
+  //  presets: ['@babel/preset-react', "@babel/preset-typescript"]
+  //}),
+]
 
 module.exports = [
   {
-    input: './src/index.ts',
+    input: "src/index.ts",
+    plugins: plugins,
+    external: ['react', 'react-dom', /\.css$/],
     output: [
       {
-        file: packageJson.main,
-        format: "cjs",
-        sourcemap: true,
-        exports: 'named'
+        dir: "dist",
+        format: "es",
+        exports: "named",
+        preserveModules: true, // Keep directory structure and files
       },
-      {
-        file: packageJson.module,
-        format: "esm",
-        sourcemap: true,
-        exports: 'named'
-      },
-    ],
-    plugins: [
-      postcss({
-        plugins: [],
-        minimize: true,
-      }),
-      //babel({
-      //  exclude: 'node_modules/**',
-      //  presets: ['@babel/preset-react', "@babel/preset-typescript"]
-      //}),
-      peerDepsExternal(),
-      resolve(),
-      terser(),
-      commonjs(),
-      typescript({ tsconfig: './tsconfig.json' }),
-    ],
-    external: ['react', 'react-dom']
-  },
-  {
-    input: './src/index.ts',
-    output: [{ file: 'dist/types.d.ts', format: "es" }],
-    plugins: [dts.default()],
-    external: [/\.css$/],
-  },
+    ]
+  }
 ]
-
-/*
-
-
-*/

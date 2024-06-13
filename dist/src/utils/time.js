@@ -1,0 +1,1 @@
+var a=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],e=["January","February","March","April","May","June","July"," August","September","October","November","December"];function r(a){var e=a.split("T"),r=e[0],u=e[1];return"".concat(r," ").concat(u.replace("Z",""))}export{r as fixTimezoneTimestamp,e as months,a as weekDays};

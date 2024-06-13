@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
-import { Options, Services } from "../../types"
 import ImageIcon from '@mui/icons-material/Image';
+import { Options, Services } from "../"
 export interface ServiceItem {
     service: Services
     backendRoute: string
