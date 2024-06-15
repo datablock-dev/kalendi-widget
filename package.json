@@ -2,9 +2,11 @@
   "name": "kalendi-widget",
   "version": "1.4.0",
   "author": "Patrick Tannoury",
-  "main": "dist/src/index.js",
-  "module": "dist/src/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "bin": {
+    "kalendi-widget": "./index.js"
+  },
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.7",
     "@chromatic-com/storybook": "^1.5.0",
@@ -51,7 +53,9 @@
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "@mui/x-date-pickers": "^7.1.1",
+    "@types/prompts": "^2.4.9",
     "autoprefixer": "^10.4.19",
+    "commander": "^12.1.0",
     "dayjs": "^1.11.10",
     "validator": "^13.12.0"
   },

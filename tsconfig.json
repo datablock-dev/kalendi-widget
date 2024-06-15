@@ -3,24 +3,23 @@
     "strict": true,
     "skipLibCheck": true,
     "jsx": "react",
-    "module": "esnext",
+    "module": "NodeNext",
     "declaration": true,
-    "declarationDir": "dist",
+    "declarationDir": "./",
     "sourceMap": true,
-    "outDir": "dist",
-    "moduleResolution": "node",
-    "emitDeclarationOnly": true,
+    "outDir": "./",
+    "moduleResolution": "NodeNext",
+    //"emitDeclarationOnly": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "rootDir": "./"
   },
-  "include": ["src"],
+  "include": ["index.ts"],
   "exclude": [
     "dist",
     "node_modules",
     "src/**/*.test.tsx",
     "src/**/*.stories.tsx",
-    "tempaltes/**/*"
   ]
 }
