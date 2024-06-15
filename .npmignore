@@ -2,12 +2,14 @@
 /build/
 /node_modules/
 tailwind.config.js
+tsconfig.json
 webpack.config.js
 babel.config.js
 postcss.config.js
 rollup.config.js
+bun.lockb
+/.storybook/
 
 # Index files
 index.d.ts
-index.js
 index.ts
