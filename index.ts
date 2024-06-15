@@ -58,18 +58,20 @@ async function getDirChoices() {
         {
             type: 'select',
             name: 'choice',
-            message: 'What do you want to add?',
+            message: 'Please select a directory or path to add the Kalendi Widget',
             choices: choices,
         },
     ]);
 
     if (choice === 0) {
         const pwd = process.cwd()
-        const templatePath = path.resolve(pwd, ...pathArray)
+        const templatePath = path.resolve(pwd, ...pathArray) // The base path (i.e. where the directory will be created)
         console.log(`Generating Kalendi Widget at ${templatePath}`);
 
-        copyDirectory(templatePath)
+        const srcPath = path.resolve(__dirname, 'src') // Get the path to the src directory with all the files
+        fs.mkdirSync(path.resolve(templatePath, 'Kalendi-Widget'), { recursive: true }) // Create the directory
 
+        copyDirectory(templatePath, srcPath)
     } else {
         if (choices[choice]) {
             pathArray.push(choices[choice] as string)
@@ -78,19 +80,20 @@ async function getDirChoices() {
     }
 }
 
-function copyDirectory(templatePath: string) {
-    const srcPath = path.resolve(__dirname, 'src') // Get the path to the src directory with all the files
-    fs.mkdirSync(path.resolve(templatePath, 'Kalendi-Widget'), { recursive: true })
-    const entries = fs.readdirSync(srcPath, { withFileTypes: true })
+function copyDirectory(templatePath: string, sourcePath: string) {
+    const entries = fs.readdirSync(sourcePath, { withFileTypes: true })
 
+    // Loop through all files in the directory
     for (const entry of entries) {
-        const srcPath = path.join(source, entry.name);
-        const destPath = path.join(destination, entry.name);
+        const itemPath = path.join(sourcePath, entry.name) // The path of the current Item (a File or a Directory)
+        const destPath = path.join(templatePath, entry.name); // Where it will go
 
         if (entry.isDirectory()) {
-            copyDirectory(srcPath, destPath);
+            copyDirectory(templatePath, itemPath);
         } else {
-            fs.copyFileSync(srcPath, destPath);
+            console.log("FILE PATH: ", itemPath)
+            console.log("DESTINATION: ", destPath)
+            fs.copyFileSync(itemPath, destPath);
         }
     }
 }
