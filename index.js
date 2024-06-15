@@ -30,19 +30,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const commander_1 = require("commander");
-const zod_1 = require("zod");
 const prompts_1 = __importDefault(require("prompts"));
 process.on("SIGINT", () => process.exit(0));
 process.on("SIGTERM", () => process.exit(0));
 const pathArray = new Array();
-const addOptionsSchema = zod_1.z.object({
-    components: zod_1.z.array(zod_1.z.string()).optional(),
-    yes: zod_1.z.boolean(),
-    overwrite: zod_1.z.boolean(),
-    cwd: zod_1.z.string(),
-    all: zod_1.z.boolean(),
-    path: zod_1.z.string().optional(),
-});
 const add = new commander_1.Command();
 add.name("add");
 add.description('Generate a new template or component');

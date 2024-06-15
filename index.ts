@@ -2,23 +2,12 @@
 import * as fs from "fs"
 import * as path from 'path'
 import { Command } from "commander"
-import { z } from "zod"
 import prompts from "prompts"
 
 process.on("SIGINT", () => process.exit(0))
 process.on("SIGTERM", () => process.exit(0))
 
 const pathArray: string[] = new Array()
-
-const addOptionsSchema = z.object({
-    components: z.array(z.string()).optional(),
-    yes: z.boolean(),
-    overwrite: z.boolean(),
-    cwd: z.string(),
-    all: z.boolean(),
-    path: z.string().optional(),
-})
-
 const add = new Command()
 
 add.name("add")
