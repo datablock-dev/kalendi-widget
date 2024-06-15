@@ -5,13 +5,11 @@ import { CustomerData, Data, Options, Services } from "../"
 import { Dayjs } from "dayjs"
 
 // Views
-import { 
-    KalendiSchedule, 
-    ServiceView, 
-    ConfirmBookingView, 
-    EmployeeView, 
-    Final 
-} from "../views";
+import KalendiSchedule from "../views/KalendiSchedule";
+import ServiceView from "../views/ServiceView";
+import ConfirmBookingView from "../views/Booking";
+import EmployeeView from "../views/EmployeeView";
+import Final from "../views/Final";
 
 export interface KalendiViewer {
     backendRoute: string
@@ -30,7 +28,7 @@ export interface KalendiViewer {
     setSelectedDate: Dispatch<SetStateAction<Dayjs | null>>
 }
 
-export function KalendiViewer({ backendRoute, services, data, view, setView, selectedUser, setSelectedUser, selectedService, setSelectedService, selectedDate, setSelectedDate }: KalendiViewer) {
+export default function KalendiViewer({ backendRoute, services, data, view, setView, selectedUser, setSelectedUser, selectedService, setSelectedService, selectedDate, setSelectedDate }: KalendiViewer) {
     const [customerData, setCustomerData] = useState<null | CustomerData>(null)
 
     useEffect(() => {

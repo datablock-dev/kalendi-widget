@@ -9,7 +9,7 @@ export interface ServiceItem {
     setView: Dispatch<SetStateAction<Options | null>>
 }
 
-export function ServiceItem({ service, backendRoute, selectedService, setSelectedService, setView }: ServiceItem){
+export default function ServiceItem({ service, backendRoute, selectedService, setSelectedService, setView }: ServiceItem){
     return (
         <div
             className="list-item justify-between"

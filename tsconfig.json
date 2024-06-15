@@ -13,18 +13,14 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
-    "rootDir": "./src",
-    "paths": {}
+    "rootDir": "./"
   },
   "include": ["src"],
   "exclude": [
-    "tailwind.config.js",
-    "webpack.config.js",
-    "babel.config.js",
-    "postcss.config.js",
-    "rollup.config.js",
-    "./dist/**/*",
     "dist",
-    "node_modules"
+    "node_modules",
+    "src/**/*.test.tsx",
+    "src/**/*.stories.tsx",
+    "tempaltes/**/*"
   ]
 }

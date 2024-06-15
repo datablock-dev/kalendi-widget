@@ -24,7 +24,7 @@ export interface KalendiNavbar {
     users: Users[] | false | null
 }
 
-export function KalendiNavbar({ backendRoute, service_id, services, data, header, view, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, selectedDate, users }: KalendiNavbar) {
+export default function KalendiNavbar({ backendRoute, service_id, services, data, header, view, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, selectedDate, users }: KalendiNavbar) {
 
     return (
         <>
