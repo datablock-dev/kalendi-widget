@@ -1,6 +1,6 @@
 {
   "name": "kalendi-widget",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "author": "Patrick Tannoury",
   "main": "./index.js",
   "types": "./index.d.ts",
