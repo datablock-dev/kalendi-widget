@@ -42,8 +42,6 @@ function generateTemplate(outputPath: string) {
 }
 
 async function getDirChoices() {
-    console.log(pathArray)
-
     const choices = fs.readdirSync(path.resolve(process.cwd(), ...pathArray)).map((item) => {
         const currPath = path.resolve(path.resolve(process.cwd(), ...pathArray), item)
         const fileStats = fs.lstatSync(currPath)
@@ -52,7 +50,6 @@ async function getDirChoices() {
     }).filter((item) => item !== undefined)
 
     choices.unshift('Current Path')
-    console.log(choices)
 
     const { choice } = await prompts.prompt([
         {
@@ -71,7 +68,7 @@ async function getDirChoices() {
         const srcPath = path.resolve(__dirname, 'src') // Get the path to the src directory with all the files
         fs.mkdirSync(path.resolve(templatePath, 'Kalendi-Widget'), { recursive: true }) // Create the directory
 
-        copyDirectory(templatePath, srcPath)
+        copyDirectory(path.join(templatePath, 'Kalendi-Widget'), srcPath)
     } else {
         if (choices[choice]) {
             pathArray.push(choices[choice] as string)
@@ -88,11 +85,13 @@ function copyDirectory(templatePath: string, sourcePath: string) {
         const itemPath = path.join(sourcePath, entry.name) // The path of the current Item (a File or a Directory)
         const destPath = path.join(templatePath, entry.name); // Where it will go
 
+        //console.log(itemPath, destPath)
+
         if (entry.isDirectory()) {
-            copyDirectory(templatePath, itemPath);
+            //console.log(itemPath, destPath)
+            fs.mkdirSync(path.resolve(templatePath, entry.name), { recursive: true }) // Create the directory
+            copyDirectory(destPath, itemPath);
         } else {
-            console.log("FILE PATH: ", itemPath)
-            console.log("DESTINATION: ", destPath)
             fs.copyFileSync(itemPath, destPath);
         }
     }

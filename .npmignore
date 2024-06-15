@@ -1,7 +1,6 @@
 /public/
 /build/
 /node_modules/
-/src/
 tailwind.config.js
 webpack.config.js
 babel.config.js

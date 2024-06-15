@@ -34,6 +34,7 @@ const zod_1 = require("zod");
 const prompts_1 = __importDefault(require("prompts"));
 process.on("SIGINT", () => process.exit(0));
 process.on("SIGTERM", () => process.exit(0));
+const pathArray = new Array();
 const addOptionsSchema = zod_1.z.object({
     components: zod_1.z.array(zod_1.z.string()).optional(),
     yes: zod_1.z.boolean(),
@@ -49,73 +50,62 @@ add.command('add');
 add.action(async () => {
     const message = `Where do you want to generate this component? 
         Your current location is: ${process.cwd()}`;
-    let choices = ['Template', 'Component'];
-    const { type } = await prompts_1.default.prompt([
-        {
-            type: 'select',
-            name: 'type',
-            message: 'What do you want to add?',
-            choices: ['Template', 'Component'],
-        },
-    ]);
-    if (choices[type] === 'Template') {
-        let choices = ['Backend', 'Frontend', 'Server'];
-        const { templateType } = await prompts_1.default.prompt([
-            {
-                type: 'select',
-                name: 'templateType',
-                message: 'Select template type:',
-                choices: ['Backend', 'Frontend', 'Server'],
-            },
-        ]);
-        const choice = choices[templateType];
-        const { outputPath } = await prompts_1.default.prompt([
-            {
-                type: 'text',
-                name: 'outputPath',
-                message: message,
-                //validate: (input: string) => {
-                //    if (fs.existsSync(path.resolve(input))) {
-                //        return true;
-                //    }
-                //    return 'Path does not exist. Please enter a valid path.';
-                //},
-            },
-        ]);
-        console.log(outputPath);
-        // Logic to generate the template
-        generateTemplate(choice, outputPath);
-    }
-    else if (type === 'Component') {
-        const { outputPath } = await prompts_1.default.prompt([
-            {
-                type: 'text',
-                name: 'outputPath',
-                message: `Where do you want to generate this component? Your current location is: ${process.cwd()}`,
-                validate: (input) => {
-                    if (fs.existsSync(path.resolve(input))) {
-                        return true;
-                    }
-                    return 'Path does not exist. Please enter a valid path.';
-                },
-            },
-        ]);
-        // Logic to generate the component
-        generateComponent(outputPath);
-    }
+    getDirChoices();
 });
-function generateTemplate(templateType, outputPath) {
+function generateTemplate(outputPath) {
     const pwd = process.cwd();
     const templatePath = path.resolve(pwd, outputPath);
-    console.log(`Generating ${templateType} template at ${templatePath}`);
+    console.log(`Generating Kalendi Widget at ${templatePath}`);
     // Add logic to generate the specified template at the given path
     // Example: create files and directories based on the template type
 }
-function generateComponent(outputPath) {
-    const pwd = process.cwd();
-    console.log(`Generating component at ${outputPath}`);
-    // Add logic to generate the component at the given path
-    // Example: create component files and directories
+async function getDirChoices() {
+    const choices = fs.readdirSync(path.resolve(process.cwd(), ...pathArray)).map((item) => {
+        const currPath = path.resolve(path.resolve(process.cwd(), ...pathArray), item);
+        const fileStats = fs.lstatSync(currPath);
+        if (fileStats.isDirectory() && item.substring(0, 1) !== '.' && item !== 'node_modules')
+            return item;
+    }).filter((item) => item !== undefined);
+    choices.unshift('Current Path');
+    const { choice } = await prompts_1.default.prompt([
+        {
+            type: 'select',
+            name: 'choice',
+            message: 'Please select a directory or path to add the Kalendi Widget',
+            choices: choices,
+        },
+    ]);
+    if (choice === 0) {
+        const pwd = process.cwd();
+        const templatePath = path.resolve(pwd, ...pathArray); // The base path (i.e. where the directory will be created)
+        console.log(`Generating Kalendi Widget at ${templatePath}`);
+        const srcPath = path.resolve(__dirname, 'src'); // Get the path to the src directory with all the files
+        fs.mkdirSync(path.resolve(templatePath, 'Kalendi-Widget'), { recursive: true }); // Create the directory
+        copyDirectory(path.join(templatePath, 'Kalendi-Widget'), srcPath);
+    }
+    else {
+        if (choices[choice]) {
+            pathArray.push(choices[choice]);
+            getDirChoices();
+        }
+    }
+}
+function copyDirectory(templatePath, sourcePath) {
+    const entries = fs.readdirSync(sourcePath, { withFileTypes: true });
+    // Loop through all files in the directory
+    for (const entry of entries) {
+        const itemPath = path.join(sourcePath, entry.name); // The path of the current Item (a File or a Directory)
+        const destPath = path.join(templatePath, entry.name); // Where it will go
+        //console.log(itemPath, destPath)
+        if (entry.isDirectory()) {
+            //console.log(itemPath, destPath)
+            fs.mkdirSync(path.resolve(templatePath, entry.name), { recursive: true }); // Create the directory
+            copyDirectory(destPath, itemPath);
+        }
+        else {
+            fs.copyFileSync(itemPath, destPath);
+        }
+    }
 }
 async function main() {
     //const packageInfo = await getPackageInfo()
