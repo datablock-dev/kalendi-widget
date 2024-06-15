@@ -3,10 +3,8 @@
   "version": "1.6.2",
   "author": "Patrick Tannoury",
   "main": "./index.js",
-  "types": "./index.d.ts",
-  "bin": {
-    "kalendi-widget": "./index.js"
-  },
+  "exports": "./index.js",
+  "bin": "./index.js",
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.7",
     "@chromatic-com/storybook": "^1.5.0",
