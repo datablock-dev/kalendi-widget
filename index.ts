@@ -40,6 +40,10 @@ async function getDirChoices() {
 
     choices.unshift('Current Path')
 
+    if(pathArray.length > 0){
+        choices.push('Back')
+    }
+
     const { choice } = await prompts.prompt([
         {
             type: 'select',
@@ -58,6 +62,9 @@ async function getDirChoices() {
         fs.mkdirSync(path.resolve(templatePath, 'Kalendi-Widget'), { recursive: true }) // Create the directory
 
         copyDirectory(path.join(templatePath, 'Kalendi-Widget'), srcPath)
+    } else if(choice === (choices.length - 1) && choices[choices.length - 1] === "Back"){
+        pathArray.pop()
+        getDirChoices()
     } else {
         if (choices[choice]) {
             pathArray.push(choices[choice] as string)
