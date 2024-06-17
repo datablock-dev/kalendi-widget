@@ -25,10 +25,10 @@ export default function ServiceItem({ service, backendRoute, selectedService, se
                         />
                         :
                         <div className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#d4d4d4] text-[12px] flex items-center justify-center">
-                            <ImageIcon/>
+                            <ImageIcon style={{ fill: "#000" }}/>
                         </div>
                 }
-                <span>{service.service_name}</span>
+                <span className="text-[#000]">{service.service_name}</span>
             </div>
             <div
                 className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] data-[selected=true]:border-[#141414] hover:bg-[#d4d4d4] hover:cursor-pointer"

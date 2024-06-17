@@ -108,7 +108,10 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
     }
 
     return (
-        <div className="flex items-center relative justify-center top-[0px] left-[0px] w-[100vw] h-[100vh] bg-[rgba(0,0,0,.4)] z-10000">
+        <div 
+            className="flex fixed items-center justify-center top-[0px] left-[0px] w-[100vw] h-[100vh] z-10000"
+            style={{position: 'fixed'}}
+        >
             <div
                 className="kalendi-widget-wrapper"
                 data-loading={isLoading}
@@ -174,6 +177,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
             >
                 Powered by Kalendi
             </a>
+            <div className="bg-[rgba(0,0,0,.4)] blur-[4px] w-[100%] h-[100%]"/>
         </div>
     )
 }

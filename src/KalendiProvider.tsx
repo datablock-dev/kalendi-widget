@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useContext, createContext, useState, ReactElement, FC } from "react";
+import React, { useContext, createContext, useState, ReactElement, FC, useEffect } from "react";
 import { KalendiContainer } from "./KalendiContainer";
 
 // Define the context type
@@ -25,6 +25,14 @@ interface KalendiProvider {
 // Define the provider component
 export default function KalendiProvider({ children, backendRoute, user_id, service_id, header, closeCallback }: KalendiProvider){
     const [isKalendiVisible, setIsKalendiVisible] = useState<boolean>(false);
+
+    useEffect(() => {
+        if(isKalendiVisible){
+            document.body.style.overflow = "hidden"
+        } else {
+            document.body.style.overflow = ""
+        }
+    }, [isKalendiVisible])
 
     return (
         <KalendiContext.Provider value={{ isKalendiVisible: isKalendiVisible, setIsKalendiVisible: setIsKalendiVisible }}>

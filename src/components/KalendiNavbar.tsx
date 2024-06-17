@@ -29,14 +29,14 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
     return (
         <>
             <div className="w-[100%]">
-                <h3 className="font-[600] text-[24px] mb-[10px]">{header || "Book an Appointment"}</h3>
+                <h3 className="font-[600] text-[24px] text-[#000] mb-[10px]">{header || "Book an Appointment"}</h3>
                 <div className="flex flex-col">
                     <div className="flex flex-row items-center gap-[10px] flex-wrap">
                         {
                             (selectedService && view !== "confirmation") &&
                             <div className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] select-none data-[selected=true]:bg-[#d4d4d4] max-w-fit flex flex-row gap-[10px] items-center">
                                 <CategoryIcon />
-                                <span>{services.find((item) => item.service_id === selectedService)?.service_name}</span>
+                                <span className="text-[#000]">{services.find((item) => item.service_id === selectedService)?.service_name}</span>
                                 <div
                                     className="w-[20px] h-[20px] flex items-center justify-center rounded-[50%] hover:bg-[#d4d4d4] hover:cursor-pointer"
                                     onClick={() => {
@@ -62,7 +62,7 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                             view !== "confirmation" &&
                             <>
                                 <div
-                                    className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] hover:cursor-pointer hover:bg-[#d4d4d4] select-none data-[selected=true]:bg-[#d4d4d4]"
+                                    className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] hover:cursor-pointer hover:bg-[#d4d4d4] select-none data-[selected=true]:bg-[#d4d4d4] text-[#000]"
                                     onClick={() => { view !== 'service' ? setView('service') : undefined }}
                                     data-selected={view === "service" ? true : false}
                                 >
@@ -71,7 +71,7 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                 {
                                     selectedService &&
                                     <div
-                                        className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] hover:cursor-pointer hover:bg-[#d4d4d4] select-none data-[selected=true]:bg-[#d4d4d4]"
+                                        className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] hover:cursor-pointer hover:bg-[#d4d4d4] select-none data-[selected=true]:bg-[#d4d4d4] text-[#000]"
                                         onClick={() => { view !== 'employee' ? setView('employee') : undefined }}
                                         data-selected={view === "employee" ? true : false}
                                     >
@@ -81,7 +81,7 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                 {
                                     (selectedService && selectedUser) &&
                                     <div
-                                        className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] hover:cursor-pointer hover:bg-[#d4d4d4] select-none data-[selected=true]:bg-[#d4d4d4]"
+                                        className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] hover:cursor-pointer hover:bg-[#d4d4d4] select-none data-[selected=true]:bg-[#d4d4d4] text-[#000]"
                                         onClick={() => { view !== 'book' ? setView('book') : undefined }}
                                         data-selected={view === "book" ? true : false}
                                     >
@@ -91,7 +91,7 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                 {
                                     (selectedDate && selectedService && selectedUser) &&
                                     <div
-                                        className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] hover:cursor-pointer hover:bg-[#d4d4d4] select-none data-[selected=true]:bg-[#d4d4d4]"
+                                        className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] hover:cursor-pointer hover:bg-[#d4d4d4] select-none data-[selected=true]:bg-[#d4d4d4] text-[#000]"
                                         onClick={() => { view !== "date-selected" ? setView("date-selected") : undefined }}
                                         data-selected={view === "date-selected" ? true : false}
                                     >
