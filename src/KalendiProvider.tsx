@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useContext, createContext, useState, ReactElement, FC } from "react";
 import { KalendiContainer } from "./KalendiContainer";
 
