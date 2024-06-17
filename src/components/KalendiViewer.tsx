@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { CustomerData, Data, Options, Services } from "../"
+import { CustomerData, Data, Options, Services } from "../types"
 import { Dayjs } from "dayjs"
 
 // Views

@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useRef, useState } from "react"
 import { Dayjs } from "dayjs"
-import { CustomerData, Data, Options, Services } from ".."
+import { CustomerData, Data, Options, Services } from "../types"
 import { isEmail } from "validator"
 import Input from "../components/Input"
 import Button from "../components/Button"

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import KalendiNavbar from "./components/KalendiNavbar";
 import KalendiViewer from "./components/KalendiViewer";
 import CloseIcon from '@mui/icons-material/Close';
-import { Options, Services, Users, Data } from '.';
+import { Options, Services, Users, Data } from './types';
 import { Dayjs } from 'dayjs';
 
 interface KalendiContainerProps {
@@ -103,6 +103,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
             console.error(error)
             setIsLoading(false)
             setData(false)
+            closeCallback
         }
     }
 

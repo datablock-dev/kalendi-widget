@@ -4,7 +4,7 @@ import isBetween from "dayjs/plugin/isBetween"
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { fixTimezoneTimestamp, months, weekDays } from "../utils/time";
-import { Options, WeekView, UserAvailability, EventResponse, UserAvailabilityResponse, Data, Services, TimeBox } from "..";
+import { Options, WeekView, UserAvailability, EventResponse, UserAvailabilityResponse, Data, Services, TimeBox } from "../types";
 
 export interface KalendiSchedule {
     backendRoute: string
