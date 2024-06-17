@@ -28,6 +28,7 @@ const plugins = [
 ]
 
 module.exports = [
+  /*
   {
     input: 'src/index.ts', // adjust the path to your entry TypeScript file
     output: {
@@ -43,19 +44,18 @@ module.exports = [
       }),
     ],
   }
-  /*
+  */
   {
     input: "src/index.ts",
     plugins: plugins,
     external: ['react', 'react-dom', /\.css$/],
     output: [
       {
-        dir: "dist",
+        dir: "src",
         format: "es",
         exports: "named",
         preserveModules: true, // Keep directory structure and files
       },
     ]
   }
-  */
 ]

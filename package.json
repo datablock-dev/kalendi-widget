@@ -73,7 +73,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build",
-    "build": "bunx tailwindcss -i ./src/tailwind.css -o ./src/tailwind.css -m && rollup -c",
+    "build:rollup": "bunx tailwindcss -i ./src/tailwind.css -o ./src/tailwind.css -m && rollup -c",
+    "build": "bunx tailwindcss -i ./src/tailwind.css -o ./src/tailwind.css -m && tsc",
     "style": "bunx tailwindcss -i ./src/tailwind.css -o ./src/tailwind.css --watch"
   }
 }
