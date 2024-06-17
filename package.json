@@ -74,6 +74,6 @@
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build",
     "build": "rollup -c --bundleConfigAsCjs",
-    "style": "bunx tailwindcss -i ./src/tailwind.css -o ./src/style.css --watch"
+    "style": "bunx tailwindcss -i ./src/tailwind.css -o ./src/tailwind.css --watch"
   }
 }

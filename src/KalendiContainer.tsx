@@ -16,7 +16,7 @@ interface KalendiContainerProps {
     // Styling
 }
 
-export function KalendiContainer({ backendRoute, user_id, service_id, closeCallback, header }: KalendiContainerProps): JSX.Element {
+export function KalendiContainer({ backendRoute, user_id, service_id, closeCallback, header }: KalendiContainerProps) {
     const [services, setServices] = useState<null | Services[]>(null)
     const [users, setUsers] = useState<null | false | Users[]>(null)
     const [userServices, setUserServices] = useState(null)
@@ -107,7 +107,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
     }
 
     return (
-        <div className="kalendi-container">
+        <div className="flex items-center relative justify-center top-[0px] left-[0px] w-[100vw] h-[100vh] bg-[rgba(0,0,0,.4)] z-10000">
             <div
                 className="kalendi-widget-wrapper"
                 data-loading={isLoading}

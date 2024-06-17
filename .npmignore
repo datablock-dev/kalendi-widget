@@ -1,5 +1,6 @@
 /public/
 /build/
+/test/
 /node_modules/
 tailwind.config.js
 tsconfig.json
@@ -9,7 +10,8 @@ postcss.config.js
 rollup.config.js
 bun.lockb
 /.storybook/
+/src/test/
 
 # Index files
-index.d.ts
-index.ts
+./index.d.ts
+./index.ts

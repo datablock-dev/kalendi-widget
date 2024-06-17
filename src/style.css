@@ -1,17 +1,4 @@
 /* Widget styling */
-.kalendi-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-  justify-content: center;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 10000;
-}
-
 .kalendi-widget-wrapper {
   position: absolute;
   z-index: 10001;
@@ -67,36 +54,6 @@
 
 .week-grid {
   grid-template-columns: repeat(5, 20%);
-}
-
-#outer {
-  height: 100px;
-  width: 100px;
-  border-radius: 15px;
-  background-color: #fff;
-}
-
-#middle {
-  height: 60px;
-  width: 60px;
-  margin: auto;
-  position: relative;
-  top: 20px;
-  border-radius: 50%;
-  background-image: linear-gradient(150deg, transparent 50%, #154e7d 50%), linear-gradient(90deg, #154e7d 50%, white 50%);
-  animation: rotation 1200ms infinite linear;
-  transform-origin: 50% 50%;
-  animation-timing-function: ease;
-}
-
-#inner {
-  height: 48px;
-  width: 48px;
-  background-color: #fff;
-  margin: auto;
-  position: relative;
-  top: 6px;
-  border-radius: 50%;
 }
 
 @keyframes rotation {

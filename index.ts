@@ -22,26 +22,29 @@ add.action(async () => {
     getDirChoices()
 });
 
-function generateTemplate(outputPath: string) {
-    const pwd = process.cwd()
-    const templatePath = path.resolve(pwd, outputPath)
-    console.log(`Generating Kalendi Widget at ${templatePath}`);
-    // Add logic to generate the specified template at the given path
-    // Example: create files and directories based on the template type
-}
-
 async function getDirChoices() {
     const choices = fs.readdirSync(path.resolve(process.cwd(), ...pathArray)).map((item) => {
         const currPath = path.resolve(path.resolve(process.cwd(), ...pathArray), item)
         const fileStats = fs.lstatSync(currPath)
 
-        if (fileStats.isDirectory() && item.substring(0, 1) !== '.' && item !== 'node_modules') return item
+        if (fileStats.isDirectory() && item.substring(0, 1) !== '.' && item !== 'node_modules'){
+            return {
+                title: item,
+                value: item
+            }
+        }
     }).filter((item) => item !== undefined)
 
-    choices.unshift('Current Path')
+    choices.unshift({
+        title: 'Current Path',
+        value: 'Current Path'
+    })
 
     if(pathArray.length > 0){
-        choices.push('Back')
+        choices.push({
+            value: '..',
+            title: '..'
+        })
     }
 
     const { choice } = await prompts.prompt([
@@ -53,7 +56,8 @@ async function getDirChoices() {
         },
     ]);
 
-    if (choice === 0) {
+
+    if (choice === "Current Path") {
         const pwd = process.cwd()
         const templatePath = path.resolve(pwd, ...pathArray) // The base path (i.e. where the directory will be created)
         console.log(`Generating Kalendi Widget at ${templatePath}`);
@@ -62,14 +66,12 @@ async function getDirChoices() {
         fs.mkdirSync(path.resolve(templatePath, 'Kalendi-Widget'), { recursive: true }) // Create the directory
 
         copyDirectory(path.join(templatePath, 'Kalendi-Widget'), srcPath)
-    } else if(choice === (choices.length - 1) && choices[choices.length - 1] === "Back"){
+    } else if(choice === ".."){
         pathArray.pop()
         getDirChoices()
     } else {
-        if (choices[choice]) {
-            pathArray.push(choices[choice] as string)
-            getDirChoices()
-        }
+        pathArray.push(choice)
+        getDirChoices()
     }
 }
 
