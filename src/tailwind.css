@@ -829,6 +829,10 @@ video {
   background-color: rgba(0,0,0,.4);
 }
 
+.bg-\[rgba\(0\2c 0\2c 0\2c \.8\)\] {
+  background-color: rgba(0,0,0,.8);
+}
+
 .bg-\[repeating-linear-gradient\(45deg\2c \#606dbc\2c \#606dbc_10px\2c \#465298_10px\2c \#465298_20px\)\] {
   background-image: repeating-linear-gradient(45deg,#606dbc,#606dbc 10px,#465298 10px,#465298 20px);
 }

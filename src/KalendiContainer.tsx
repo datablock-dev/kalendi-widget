@@ -179,7 +179,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
             >
                 Powered by Kalendi
             </a>
-            <div className="bg-[rgba(0,0,0,.4)] blur-[4px] w-[100%] h-[100%]"/>
+            <div className="bg-[rgba(0,0,0,.8)] w-[100%] h-[100%]"/>
         </div>
     )
 }
