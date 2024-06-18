@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import { KalendiContainer } from "./KalendiContainer";
 
 // Define the context type
@@ -42,8 +42,22 @@ export default function KalendiProvider({ children, backendRoute, user_id, servi
     useEffect(() => {
         if(isKalendiVisible){
             document.body.style.overflow = "hidden"
+            window.addEventListener('keydown', escapeClick)
         } else {
+            window.removeEventListener('keydown', escapeClick)
             document.body.style.overflow = ""
+        }
+
+        return(() => {
+            window.removeEventListener('keydown', escapeClick)
+        })
+    }, [isKalendiVisible])
+
+    const escapeClick = useCallback((event: KeyboardEvent) => {
+        const key = event.key
+
+        if(key === "Escape"){
+            setIsKalendiVisible(false)
         }
     }, [isKalendiVisible])
 
