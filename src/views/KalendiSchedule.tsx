@@ -96,14 +96,14 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                     data-selectable={weekMove > 0 ? true : false}
                     onClick={() => { changeWeek('left') }}
                 >
-                    <KeyboardArrowLeftIcon style={{fill: "#000"}}/> Previous Week
+                    <KeyboardArrowLeftIcon sx={{fill: "#000"}}/> Previous Week
                 </div>
                 <div
                     className="flex flex-row items-center gap-[6px] rounded-[3px] data-[selectable=true]:hover:cursor-pointer data-[selectable=false]:hover:cursor-not-allowed data-[selectable=true]:hover:bg-[#d4d4d4] border-[#787878] border-[1px] border-solid px-[12px] text-[#000]"
                     data-selectable={weekMove < 10 ? true : false}
                     onClick={() => { changeWeek('right') }}
                 >
-                    Next Week <KeyboardArrowRightIcon style={{fill: "#000"}}/>
+                    Next Week <KeyboardArrowRightIcon sx={{fill: "#000"}}/>
                 </div>
             </div>
             {
@@ -259,7 +259,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                                     {
                                         (!isNonBookable && availableSlots.length === 0 && !isBefore) &&
                                         <div>
-                                            <span className="text-wrap">No available slots</span>
+                                            <span className="text-wrap text-[#000]">No available slots</span>
                                         </div>
                                     }
                                     {

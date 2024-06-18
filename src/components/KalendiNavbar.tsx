@@ -35,7 +35,7 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                         {
                             (selectedService && view !== "confirmation") &&
                             <div className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] select-none data-[selected=true]:bg-[#d4d4d4] max-w-fit flex flex-row gap-[10px] items-center">
-                                <CategoryIcon style={{fill: "#000"}}/>
+                                <CategoryIcon sx={{fill: "#000"}}/>
                                 <span className="text-[#000]">{services.find((item) => item.service_id === selectedService)?.service_name}</span>
                                 <div
                                     className="w-[20px] h-[20px] flex items-center justify-center rounded-[50%] hover:bg-[#d4d4d4] hover:cursor-pointer"
@@ -45,14 +45,14 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         setView('service')
                                     }}
                                 >
-                                    <CloseIcon fontSize={"small"} />
+                                    <CloseIcon sx={{fill: "#000"}} fontSize={"small"} />
                                 </div>
                             </div>
                         }
                         {
                             (selectedUser && users && view !== "confirmation") &&
                             <div className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] select-none data-[selected=true]:bg-[#d4d4d4] max-w-fit flex flex-row gap-[10px] items-center">
-                                <PersonIcon style={{fill: "#000"}}/>
+                                <PersonIcon sx={{fill: "#000"}}/>
                                 <span className="text-[#000]">{users.find((item) => item.user_id === selectedUser)?.firstname} {users.find((item) => item.user_id === selectedUser)?.lastname}</span>
                             </div>
                         }

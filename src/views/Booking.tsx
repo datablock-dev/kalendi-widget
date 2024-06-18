@@ -118,7 +118,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                                 />
                                 :
                                 <div className="image-round text-[12px] flex items-center justify-center">
-                                    <ImageIcon style={{fill: "#000"}}/>
+                                    <ImageIcon sx={{fill: "#000"}}/>
                                 </div>
                         }
                         <span className="text-[#000]">{service.service_name}</span>
