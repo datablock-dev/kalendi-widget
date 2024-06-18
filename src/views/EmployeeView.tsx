@@ -38,7 +38,7 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                                                     <PersonIcon/>
                                                 </div>
                                         }
-                                        <span>{employee.firstname} {employee.lastname}</span>
+                                        <span className="color-[#000]">{employee.firstname} {employee.lastname}</span>
                                     </div>
                                     <div
                                         className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer"

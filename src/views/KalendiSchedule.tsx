@@ -92,18 +92,18 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
         <div className="h-[100%] w-[100%]">
             <div className="flex flex-row justify-between w-[100%] h-[40px] mb-[10px]">
                 <div
-                    className="flex flex-row items-center gap-[6px] rounded-[3px] data-[selectable=true]:hover:cursor-pointer data-[selectable=false]:hover:cursor-not-allowed border-[#787878] border-[1px] border-solid px-[12px]"
+                    className="flex flex-row items-center gap-[6px] rounded-[3px] data-[selectable=true]:hover:cursor-pointer data-[selectable=false]:hover:cursor-not-allowed border-[#787878] border-[1px] border-solid px-[12px] text-[#000]"
                     data-selectable={weekMove > 0 ? true : false}
                     onClick={() => { changeWeek('left') }}
                 >
-                    <KeyboardArrowLeftIcon/> Previous Week
+                    <KeyboardArrowLeftIcon style={{fill: "#000"}}/> Previous Week
                 </div>
                 <div
-                    className="flex flex-row items-center gap-[6px] rounded-[3px] data-[selectable=true]:hover:cursor-pointer data-[selectable=false]:hover:cursor-not-allowed data-[selectable=true]:hover:bg-[#d4d4d4] border-[#787878] border-[1px] border-solid px-[12px]"
+                    className="flex flex-row items-center gap-[6px] rounded-[3px] data-[selectable=true]:hover:cursor-pointer data-[selectable=false]:hover:cursor-not-allowed data-[selectable=true]:hover:bg-[#d4d4d4] border-[#787878] border-[1px] border-solid px-[12px] text-[#000]"
                     data-selectable={weekMove < 10 ? true : false}
                     onClick={() => { changeWeek('right') }}
                 >
-                    Next Week <KeyboardArrowRightIcon/>
+                    Next Week <KeyboardArrowRightIcon style={{fill: "#000"}}/>
                 </div>
             </div>
             {
@@ -127,8 +127,8 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                                 data-date={day.date.format('YYYY-MM-DD')}
                             >
                                 <div className="flex flex-col items-center">
-                                    <span>{day.weekDayString.substring(0, 3)}</span>
-                                    <span>{day.dayOfMonth}</span>
+                                    <span className="text-[#000]">{day.weekDayString.substring(0, 3)}</span>
+                                    <span className="text-[#000]">{day.dayOfMonth}</span>
                                 </div>
                             </div>
                         )
@@ -251,7 +251,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                                                         setView('date-selected')
                                                     }}
                                                 >
-                                                    <span>{time}</span>
+                                                    <span className="text-[#000]">{time}</span>
                                                 </div>
                                             )
                                         })

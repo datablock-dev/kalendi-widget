@@ -98,16 +98,16 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
     return (
         <div className="w-[100%] h-[100%] flex flex-col">
             <div className="flex flex-row gap-[6px] items-center mb-[10px]">
-                <label className="font-[600]">Date:</label>
+                <label className="font-[600] text-[#000]">Date:</label>
                 <div className="flex flex-row items-center gap-[10px]">
-                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('YYYY-MM-DD')}</span>
-                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('HH:mm')}</span>
-                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.add(service.service_time_block, 'minutes').format('HH:mm')}</span>
+                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">{selectedDate.format('YYYY-MM-DD')}</span>
+                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">{selectedDate.format('HH:mm')}</span>
+                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">{selectedDate.add(service.service_time_block, 'minutes').format('HH:mm')}</span>
                 </div>
             </div>
             <div className="flex flex-row flex-wrap gap-[10px]">
                 <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
-                    <label className="font-[600]">Service</label>
+                    <label className="font-[600] text-[#000]">Service</label>
                     <div className="flex flex-row items-center gap-[10px]">
                         {
                             service.service_image ?
@@ -118,14 +118,14 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                                 />
                                 :
                                 <div className="image-round text-[12px] flex items-center justify-center">
-                                    <ImageIcon/>
+                                    <ImageIcon style={{fill: "#000"}}/>
                                 </div>
                         }
-                        <span>{service.service_name}</span>
+                        <span className="text-[#000]">{service.service_name}</span>
                     </div>
                 </div>
                 <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
-                    <label className="font-[600]">Employee</label>
+                    <label className="font-[600] text-[#000]">Employee</label>
                     <div className="flex flex-row items-center gap-[10px]">
                         {
                             user.avatar ?
@@ -135,9 +135,9 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                                     alt="user_avatar"
                                 />
                                 :
-                                <div className="image-round text-[12px] flex items-center justify-center">N/A</div>
+                                <div className="image-round text-[12px] flex items-center justify-center text-[#000]">N/A</div>
                         }
-                        <span>{user.firstname} {user.lastname}</span>
+                        <span className="text-[#000]">{user.firstname} {user.lastname}</span>
                     </div>
                 </div>
             </div>

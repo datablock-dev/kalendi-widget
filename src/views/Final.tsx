@@ -23,21 +23,21 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
 
     return (
         <div className="w-[100%] h-[100%] flex flex-col">
-            <p className="whitespace-pre-line text-[18px]">
-                Dear <span className="font-[600]">{customerData.name}</span>,
+            <p className="whitespace-pre-line text-[18px] text-[#000]">
+                Dear <span className="font-[600] text-[#000]">{customerData.name}</span>,
                 <br /><br />
                 We are thrilled to confirm that your booking has been successfully processed. Please review the details below to ensure that everything aligns with your request:
             </p>
             <div className="flex flex-col items-center mx-[20px]">
                 <div className="flex flex-row items-center gap-[10px]">
-                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('YYYY-MM-DD')}</span>
-                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('HH:mm')}</span>
-                    <span>to</span>
-                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.add(service.service_time_block, 'minutes').format('HH:mm')}</span>
+                    <span className="text-[#000] bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('YYYY-MM-DD')}</span>
+                    <span className="text-[#000] bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('HH:mm')}</span>
+                    <span className="text-[#000]">to</span>
+                    <span className="text-[#000] bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.add(service.service_time_block, 'minutes').format('HH:mm')}</span>
                 </div>
                 <div className="flex flex-col flex-wrap gap-[10px] my-[10px] w-fit">
                     <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[300px] py-[10px]">
-                        <label className="font-[600]">Service</label>
+                        <label className="font-[600] text-[#000]">Service</label>
                         <div className="flex flex-row items-center gap-[10px]">
                             {
                                 service.service_image ?
@@ -48,14 +48,14 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
                                     />
                                     :
                                     <div className="image-round text-[12px] flex items-center justify-center">
-                                        <ImageIcon />
+                                        <ImageIcon style={{fill: "#000"}}/>
                                     </div>
                             }
-                            <span>{service.service_name}</span>
+                            <span className="text-[#000]">{service.service_name}</span>
                         </div>
                     </div>
                     <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[300px] py-[10px]">
-                        <label className="font-[600]">Employee</label>
+                        <label className="font-[600] text-[#000]">Employee</label>
                         <div className="flex flex-row items-center gap-[10px]">
                             {
                                 user.avatar ?
@@ -65,14 +65,14 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
                                         alt="user_avatar"
                                     />
                                     :
-                                    <div className="image-round text-[12px] flex items-center justify-center">N/A</div>
+                                    <div className="image-round text-[12px] flex items-center justify-center text-[#000]">N/A</div>
                             }
-                            <span>{user.firstname} {user.lastname}</span>
+                            <span className="text-[#000]">{user.firstname} {user.lastname}</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <p>
+            <p className="text-[#000]">
                 A confirmation email has been sent to the email address provided during booking.<br />
                 If you do not see it in your inbox, please check your spam or junk folder.
 
