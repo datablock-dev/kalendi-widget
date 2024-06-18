@@ -120,7 +120,9 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
                     className='absolute flex justify-center items-center right-[20px] top-[20px] rounded-[50%] w-[30px] h-[30px] hover:cursor-pointer hover:opacity-80 hover:bg-[#d4d4d4]'
                     onClick={closeCallback}
                 >
-                    <CloseIcon/>
+                    <CloseIcon
+                        style={{fill: '#000'}}
+                    />
                 </div>
                 {
                     isLoading &&
