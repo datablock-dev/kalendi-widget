@@ -75,10 +75,34 @@ async function getDirChoices() {
     if (choice === "Current Path") {
         const pwd = process.cwd();
         const templatePath = path.resolve(pwd, ...pathArray); // The base path (i.e. where the directory will be created)
-        console.log(`Generating Kalendi Widget at ${templatePath}`);
-        const srcPath = path.resolve(__dirname, 'src'); // Get the path to the src directory with all the files
-        fs.mkdirSync(path.resolve(templatePath, 'Kalendi-Widget'), { recursive: true }); // Create the directory
-        copyDirectory(path.join(templatePath, 'Kalendi-Widget'), srcPath);
+        // If the Kalendi-Widget already exists in current path
+        const pathIfDirectoryExists = path.join(templatePath, 'Kalendi-Widget');
+        if (fs.existsSync(pathIfDirectoryExists)) {
+            const { value } = await prompts_1.default.prompt({
+                type: 'toggle',
+                name: 'value',
+                message: 'Kalendi-Widget seems to already exist in the path. You are about to overwrite the existing component, are you sure about this choice?',
+                initial: true,
+                active: 'yes',
+                inactive: 'no'
+            });
+            if (value) { // User clicked on yes
+                fs.rmSync(pathIfDirectoryExists, { recursive: true, force: true });
+                console.log(`Generating Kalendi Widget at ${templatePath}`);
+                const srcPath = path.resolve(__dirname, 'src'); // Get the path to the src directory with all the files
+                fs.mkdirSync(path.resolve(templatePath, 'Kalendi-Widget'), { recursive: true }); // Create the directory
+                copyDirectory(path.join(templatePath, 'Kalendi-Widget'), srcPath);
+            }
+            else {
+                getDirChoices();
+            }
+        }
+        else {
+            console.log(`Generating Kalendi Widget at ${templatePath}`);
+            const srcPath = path.resolve(__dirname, 'src'); // Get the path to the src directory with all the files
+            fs.mkdirSync(path.resolve(templatePath, 'Kalendi-Widget'), { recursive: true }); // Create the directory
+            copyDirectory(path.join(templatePath, 'Kalendi-Widget'), srcPath);
+        }
     }
     else if (choice === "..") {
         pathArray.pop();
