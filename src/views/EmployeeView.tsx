@@ -35,7 +35,7 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                                                 />
                                                 :
                                                 <div className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#d4d4d4] text-[12px] flex items-center justify-center">
-                                                    <PersonIcon/>
+                                                    <PersonIcon sx={{fill: "#000"}}/>
                                                 </div>
                                         }
                                         <span className="color-[#000]">{employee.firstname} {employee.lastname}</span>

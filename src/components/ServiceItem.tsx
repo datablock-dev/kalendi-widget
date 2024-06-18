@@ -25,7 +25,7 @@ export default function ServiceItem({ service, backendRoute, selectedService, se
                         />
                         :
                         <div className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#d4d4d4] text-[12px] flex items-center justify-center">
-                            <ImageIcon style={{ fill: "#000" }}/>
+                            <ImageIcon sx={{ fill: "#000" }}/>
                         </div>
                 }
                 <span className="text-[#000]">{service.service_name}</span>
