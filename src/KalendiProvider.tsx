@@ -1,16 +1,20 @@
 'use client';
 
-import React, { useContext, createContext, useState, ReactElement, FC, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { KalendiContainer } from "./KalendiContainer";
 
 // Define the context type
-interface MyContextType {
-    isKalendiVisible: boolean;
-    setIsKalendiVisible: React.Dispatch<React.SetStateAction<boolean>>;
+interface KalendiContext {
+    isKalendiVisible: boolean
+    setIsKalendiVisible: React.Dispatch<React.SetStateAction<boolean>>
+    user_id: string | undefined
+    setUserID: React.Dispatch<React.SetStateAction<string | undefined>>
+    service_id: string | undefined
+    setServiceID: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 // Create the context
-export const KalendiContext = createContext<MyContextType | null>(null);
+export const KalendiContext = createContext<KalendiContext | null>(null);
 
 interface KalendiProvider {
     children: React.ReactNode
@@ -18,13 +22,22 @@ interface KalendiProvider {
     user_id?: string
     service_id?: string
     header?: string
-    closeCallback?: (e?: any) => any
-    // Styling
 }
 
 // Define the provider component
-export default function KalendiProvider({ children, backendRoute, user_id, service_id, header, closeCallback }: KalendiProvider){
-    const [isKalendiVisible, setIsKalendiVisible] = useState<boolean>(false);
+export default function KalendiProvider({ children, backendRoute, user_id, service_id, header }: KalendiProvider){
+    const [isKalendiVisible, setIsKalendiVisible] = useState<boolean>(false)
+    const [userID, setUserID] = useState<string | undefined>(user_id)
+    const [serviceID, setServiceID] = useState<string | undefined>(service_id)
+
+    const context: KalendiContext = {
+        isKalendiVisible: isKalendiVisible, 
+        setIsKalendiVisible: setIsKalendiVisible,
+        user_id: userID, 
+        setUserID: setUserID,
+        service_id: serviceID,
+        setServiceID: setServiceID
+    }
 
     useEffect(() => {
         if(isKalendiVisible){
@@ -35,15 +48,15 @@ export default function KalendiProvider({ children, backendRoute, user_id, servi
     }, [isKalendiVisible])
 
     return (
-        <KalendiContext.Provider value={{ isKalendiVisible: isKalendiVisible, setIsKalendiVisible: setIsKalendiVisible }}>
+        <KalendiContext.Provider value={context}>
             {children}
             <>
                 {
                     isKalendiVisible &&
                     <KalendiContainer 
                         backendRoute={backendRoute}
-                        user_id={user_id}
-                        service_id={service_id}
+                        user_id={userID}
+                        service_id={serviceID}
                         header={header}
                         closeCallback={() => { setIsKalendiVisible(false) }}
                     />
