@@ -1,4 +1,4 @@
-import { CalendarItem } from "../";
+import { CalendarItem } from "../types";
 
 export function JSONtoCal(jsonObject: CalendarItem) {
     let finalString = ''	
