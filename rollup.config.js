@@ -28,23 +28,22 @@ const plugins = [
 ]
 
 module.exports = [
-  /*
+  
   {
     input: 'src/index.ts', // adjust the path to your entry TypeScript file
     output: {
-      file: 'src/bundle.tsx', // output file
+      file: 'src/bundle.ts', // output file
       format: 'es', // or 'cjs', 'umd', etc.
     },
     plugins: [
       postcss(),
       peerDepsExternal(),
       resolve(),
-      typescript({
-        jsx: 'react', // or 'react' if you want to preserve JSX in the output
-      }),
+      typescript({ tsconfig: './src/tsconfig.json' }),
     ],
   }
-  */
+  
+  /*
   {
     input: "src/index.ts",
     plugins: plugins,
@@ -58,4 +57,5 @@ module.exports = [
       },
     ]
   }
+  */
 ]
