@@ -13,7 +13,7 @@ interface ServiceView {
     data: Data[]
 }
 
-export default function ServiceView({ backendRoute, services, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, data }: ServiceView): React.ReactNode {
+export default function ServiceView({ backendRoute, services, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, data }: ServiceView){
 
     useEffect(() => {
         
