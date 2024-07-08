@@ -114,6 +114,8 @@ export interface UserAvailabilityResponse {
     availability: UserAvailability
     events: EventResponse[]
     bookings: CalendarItemPayload[]
+    service?: Services
+    weekToAvailability: [string, string]
 }
 
 export interface CalendarItem {
