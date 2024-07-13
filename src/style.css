@@ -30,7 +30,6 @@
 }
 .kalendi-widget-wrapper .list {
   display: flex;
-  flex-direction: column;
   gap: 10px;
 }
 .kalendi-widget-wrapper .list .list-item {

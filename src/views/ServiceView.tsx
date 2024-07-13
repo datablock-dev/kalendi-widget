@@ -21,7 +21,7 @@ export default function ServiceView({ backendRoute, services, setView, selectedS
 
     return (
         <div className="">
-            <div className="list">
+            <div className="flex flex-col list">
                 {
                     // If no user has been selected
                     (services && !selectedUser) &&

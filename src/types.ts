@@ -116,6 +116,8 @@ export interface UserAvailabilityResponse {
     bookings: CalendarItemPayload[]
     service?: Services
     weekToAvailability: [string, string]
+    user_id: string
+    firstAvailableSlot: string | null
 }
 
 export interface CalendarItem {

@@ -600,13 +600,16 @@ video {
   margin-bottom: 10px;
 }
 
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .mb-\[10px\] {
   margin-bottom: 10px;
+}
+
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
+.mt-20 {
+  margin-top: 5rem;
 }
 
 .mt-\[10px\] {
@@ -615,6 +618,10 @@ video {
 
 .mt-\[20px\] {
   margin-top: 20px;
+}
+
+.block {
+  display: block;
 }
 
 .flex {
@@ -663,6 +670,11 @@ video {
 
 .h-\[calc\(100\%_-_100px\)\] {
   height: calc(100% - 100px);
+}
+
+.h-fit {
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .min-h-\[100\%\] {
@@ -747,6 +759,10 @@ video {
   justify-content: space-between;
 }
 
+.gap-14 {
+  gap: 3.5rem;
+}
+
 .gap-\[10px\] {
   gap: 10px;
 }
@@ -805,6 +821,11 @@ video {
   border-color: rgb(212 212 212 / var(--tw-border-opacity));
 }
 
+.bg-\[\#000\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
 .bg-\[\#141414\] {
   --tw-bg-opacity: 1;
   background-color: rgb(20 20 20 / var(--tw-bg-opacity));
@@ -853,6 +874,11 @@ video {
   padding-right: 4px;
 }
 
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
 .py-\[10px\] {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -861,6 +887,11 @@ video {
 .py-\[4px\] {
   padding-top: 4px;
   padding-bottom: 4px;
+}
+
+.py-\[6px\] {
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 .py-\[8px\] {
@@ -876,8 +907,16 @@ video {
   padding-top: 10px;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .text-\[12px\] {
   font-size: 12px;
+}
+
+.text-\[14px\] {
+  font-size: 14px;
 }
 
 .text-\[18px\] {
@@ -901,9 +940,23 @@ video {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
+.text-\[\#e4e4e4\] {
+  --tw-text-opacity: 1;
+  color: rgb(228 228 228 / var(--tw-text-opacity));
+}
+
 .text-\[\#fff\] {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-\[\#\#4f4f4f\] {
+  color: ##4f4f4f;
+}
+
+.text-\[\#4f4f4f\] {
+  --tw-text-opacity: 1;
+  color: rgb(79 79 79 / var(--tw-text-opacity));
 }
 
 .filter {
@@ -974,6 +1027,10 @@ video {
     display: flex;
   }
 
+  .sd\:hidden {
+    display: none;
+  }
+
   .sd\:w-\[100\%\] {
     width: 100%;
   }
@@ -996,11 +1053,27 @@ video {
 }
 
 @media (min-width: 800px) {
+  .md\:hidden {
+    display: none;
+  }
+
   .md\:w-\[300px\] {
     width: 300px;
   }
 
   .md\:w-\[min\(calc\(50\%_-_5px\)\2c 500px\)\] {
     width: min(calc(50% - 5px),500px);
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
+  }
+
+  .md\:items-center {
+    align-items: center;
+  }
+
+  .md\:gap-\[6px\] {
+    gap: 6px;
   }
 }

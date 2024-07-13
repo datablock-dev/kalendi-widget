@@ -31,7 +31,7 @@ export default function ServiceItem({ service, backendRoute, selectedService, se
                 }
                 <div className="flex flex-col">
                     <span className="text-[#000] font-[600]">{service.service_name}</span>
-                    <span className="text-[#e4e4e4] text-[14px]">{formatMonetaryValue(service.service_price || 0, ' ')} {service.service_currency}</span>
+                    <span className="text-[#4f4f4f] text-[14px]">{formatMonetaryValue(service.service_price || 0, ' ')} {service.service_currency}</span>
                 </div>
             </div>
             <div

@@ -1,6 +1,9 @@
-import React, { Dispatch, SetStateAction } from "react"
-import { Data, Options } from "../types"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Data, Options, UserAvailabilityResponse } from "../types"
 import PersonIcon from '@mui/icons-material/Person';
+import axios, { AxiosResponse } from "axios";
+import dayjs from "dayjs";
+import { dateToTimestamp } from "../utils/time";
 
 export interface EmployeeView {
     backendRoute: string
@@ -11,12 +14,55 @@ export interface EmployeeView {
     setSelectedUser: Dispatch<SetStateAction<string | null>>
 }
 
-export default function EmployeeView({ backendRoute, data, setView, selectedService, selectedUser, setSelectedUser }: EmployeeView){
-    console.log(data)
-    
+interface AvailabilityObject {
+    user_id: string
+    service_id?: string
+    date: string | null
+}
+
+export default function EmployeeView({ backendRoute, data, setView, selectedService, selectedUser, setSelectedUser }: EmployeeView) {
+    const [availability, setAvailability] = useState<null | false | AvailabilityObject[]>(null)
+
+    useEffect(() => {
+        if (availability === null) {
+            fetchAvailability()
+        }
+
+        async function fetchAvailability() {
+            try {
+                const users = data.filter((item) => item.service_id === selectedService)
+                const date_from = dateToTimestamp(dayjs().day(1)).split(' ')[0]
+                const date_to = dateToTimestamp(dayjs().day(5)).split(' ')[0]
+
+                const promiseArray = new Array()
+                users.forEach((user) => {
+                    const url = `${backendRoute}/public/availability/${user.user_id}/${selectedService}/${date_from}/${date_to}`
+                    promiseArray.push(axios.get(url))
+                })
+
+                const res = await Promise.all(promiseArray) as AxiosResponse<UserAvailabilityResponse>[]
+
+                const availabilityData = res.map((response) => response.data).map((data) => {
+                    return {
+                        user_id: data.user_id,
+                        service_id: data.service?.service_id,
+                        date: data.firstAvailableSlot
+                    }
+                })
+
+                setAvailability(availabilityData)
+            } catch (error) {
+                console.error(error)
+                setAvailability(false)
+            }
+        }
+
+        console.log(availability)
+    }, [availability])
+
     return (
         <div>
-            <div className="list">
+            <div className="flex flex-col list">
                 {
                     data
                         .filter((item) => item.service_id === selectedService)
@@ -24,7 +70,7 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                         .map((employee) => {
                             return (
                                 <div
-                                    className="list-item justify-between"
+                                    className="flex flex-row justify-between border-[1px] border-solid border-[#787878] rounded-[3px] py-[6px] px-[12px] items-center"
                                     key={employee.user_id}
                                 >
                                     <div className="flex flex-row items-center gap-[10px]">
@@ -37,16 +83,37 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                                                 />
                                                 :
                                                 <div className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#d4d4d4] text-[12px] flex items-center justify-center">
-                                                    <PersonIcon sx={{fill: "#000"}}/>
+                                                    <PersonIcon sx={{ fill: "#000" }} />
                                                 </div>
                                         }
                                         <div className="flex flex-col">
                                             <span className="color-[#000] font-[600]">{employee.firstname} {employee.lastname}</span>
-                                            <span className="text-[#e4e4e4] text-[14px]">{employee.title}</span>
+                                            <span className="text-[#4f4f4f] text-[14px]">{employee.title}</span>
+                                            <FirstAvilableSlot
+                                                availability={availability}
+                                                employee={employee}
+                                                className="md:hidden"
+                                            />
                                         </div>
                                     </div>
+                                    <div className="flex flex-row items-center gap-[10px] sd:hidden">
+                                        <FirstAvilableSlot
+                                            availability={availability}
+                                            employee={employee}
+                                            className="sd:hidden"
+                                        />
+                                        <div
+                                            className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer"
+                                            data-selected={selectedUser === employee.user_id ? true : false}
+                                            onClick={() => {
+                                                // Clear other settings that occurs after user selection
+                                                selectedUser === employee.user_id ? setSelectedUser(null) : setSelectedUser(employee.user_id)
+                                                setView('book')
+                                            }}
+                                        />
+                                    </div>
                                     <div
-                                        className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer"
+                                        className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer md:hidden"
                                         data-selected={selectedUser === employee.user_id ? true : false}
                                         onClick={() => {
                                             // Clear other settings that occurs after user selection
@@ -60,5 +127,40 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                 }
             </div>
         </div>
+    )
+}
+
+interface FirstAvilableSlot {
+    availability: AvailabilityObject[] | null | false
+    employee: Data
+    className?: string
+}
+
+function FirstAvilableSlot({ availability, employee, className }: FirstAvilableSlot){
+    return(
+        <>
+        {
+            (availability && availability.find((item) => item.user_id === employee.user_id)) ?
+                <div className={"flex md:flex-row md:items-center md:gap-[6px] sd:flex-col " + className}>
+                    <span className="h-fit">First available slot: </span>
+                    <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">
+                        {availability.find((item) => item.user_id === employee.user_id)?.date}
+                    </span>
+                </div>
+                :
+                <div className="flex items-center justify-center">
+                    <svg
+                        className="animate-spin"
+                        style={{ fill: "#000" }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                        viewBox="0 -960 960 960"
+                    >
+                        <path d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q17 0 28.5 11.5T520-840q0 17-11.5 28.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-17 11.5-28.5T840-520q17 0 28.5 11.5T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Z" />
+                    </svg>
+                </div>
+        }
+        </>
     )
 }
