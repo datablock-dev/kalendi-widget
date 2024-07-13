@@ -22,6 +22,7 @@ interface KalendiProvider {
     user_id?: string
     service_id?: string
     header?: string
+    // Stripe
 }
 
 // Define the provider component
