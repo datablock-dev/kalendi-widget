@@ -2,24 +2,27 @@
 
 import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react"
 import ServiceItem from "../components/ServiceItem"
-import { Options, Services, Data, PaymentConnector, StripePaymentIntent } from "../types"
+import { Options, Services, Data, PaymentConnector, StripePaymentIntent, CustomerData } from "../types"
 import { AddressElement, Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import KalendiStripe from "../utils/connectors/stripe"
 import { formatMonetaryValue } from "../utils/string"
+import axios, { AxiosResponse } from "axios"
+import Button from "../components/Button"
+import { Dayjs } from "dayjs"
 
-interface ServiceView {
+interface PaymentView {
     backendRoute: string
+    selectedDate: Dayjs
+    setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
     services: Services[]
     setView: Dispatch<SetStateAction<Options | null>>
     selectedService: string | null
-    setSelectedService: Dispatch<SetStateAction<string | null>>
     selectedUser: string | null
-    setSelectedUser: Dispatch<SetStateAction<string | null>>
     data: Data[]
     paymentConnector: PaymentConnector
 }
 
-export default function ServiceView({ backendRoute, services, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, data, paymentConnector }: ServiceView) {
+export default function PaymentView({ backendRoute, selectedDate, setCustomerData, services, setView, selectedService, selectedUser, data, paymentConnector }: PaymentView) {
     const KALENDI_STRIPE = new KalendiStripe(paymentConnector.key, backendRoute)
     const stripePromise = KALENDI_STRIPE.loadStripe()
 
@@ -27,24 +30,24 @@ export default function ServiceView({ backendRoute, services, setView, selectedS
     const [paymentIntent, setPaymentIntent] = useState<null | StripePaymentIntent>(null)
 
     useEffect(() => {
-        if(!clientSecret){
+        if (!clientSecret) {
             getPaymentIntent()
         }
 
-        async function getPaymentIntent(){
+        async function getPaymentIntent() {
             try {
                 const url = new URL(backendRoute + "/public/payment-intent")
-                const body = JSON.stringify({ 
-                    service_id: selectedService
-                })
+                const payload = {
+                    service_id: selectedService,
+                    customer_email: data.find((item: any) => item.user_id === selectedUser)?.email
+                }
 
-                const res = await fetch(url, { 
-                    method: 'POST',
-                    body: body
-                })
-                const data = await res.json()
+                const res = await axios.post(url.toString(), payload) as AxiosResponse<StripePaymentIntent>
 
-                console.log(data)
+                console.log(res.data)
+
+                setPaymentIntent(res.data)
+                setClientSecret({ clientSecret: res.data.client_secret })
             } catch (error) {
                 console.error(error)
             }
@@ -53,36 +56,43 @@ export default function ServiceView({ backendRoute, services, setView, selectedS
 
     return (
         <div className="w-[100%] h-[100%] flex flex-col">
-            <div className="flex flex-row gap-[6px] items-center mb-[10px]">
-                <label className="font-[600] text-[#000]">Date:</label>
-            </div>
-            <div className="flex flex-row flex-wrap gap-[10px]">
-                {
-                    (stripePromise && clientSecret) ?
+            {
+                (stripePromise !== null && clientSecret && paymentIntent) ?
                     <Elements
                         stripe={stripePromise}
                         options={clientSecret}
                     >
-                        <Checkout/>
+                        <Checkout
+                            paymentIntent={paymentIntent}
+                            setView={setView}
+                        />
                     </Elements>
                     :
                     <div>
 
                     </div>
 
-                }
-            </div>
+            }
         </div>
     )
 }
 
-function Checkout() {
+interface Checkout {
+    paymentIntent: StripePaymentIntent
+    setView: Dispatch<SetStateAction<Options | null>>
+}
+
+function Checkout({ paymentIntent, setView }: Checkout) {
+    const [isClickable, setIsClickable] = useState<boolean>(true)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
     // Stripe
     const stripe = useStripe()
     const elements = useElements()
 
     async function pay(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+        setIsLoading(true)
         if (!stripe || !elements) return
 
         const { error: submitError } = await elements.submit()
@@ -101,15 +111,19 @@ function Checkout() {
             // `clientSecret` from the created PaymentIntent
             clientSecret
         })
-        .then((res) => {})
-        .catch((err) => {
-            console.error(err.message)
-        })
+            .then((res) => {
+                setIsLoading(false)
+                setView('confirmation')
+            })
+            .catch((err) => {
+                setIsLoading(false)
+                console.error(err.message)
+            })
     }
 
     return (
         <form
-            className="flex-col gap-14 w-[100%]"
+            className="flex flex-col gap-[14px] w-[100%] overflow-y-auto"
             onSubmit={pay}
         >
             <AddressElement
@@ -125,12 +139,16 @@ function Checkout() {
             <PaymentElement
                 id="payment-element"
             />
-            <button
-                className="text-center bg-[#000] color-[#fff] w-[100%] block brd-radius-3 py-12 fw-600 inter brd-none mt-20 hover:cursor-pointer hover:opacity-80"
+            <Button
+                text="Pay"
+                isClickable={isClickable}
+                isLoading={isLoading}
+                loadingColor="#fff"
+                style={{ width: '100%' }}
             >
                 Pay
                 <span className="ml-10">{formatMonetaryValue(paymentIntent.amount / 100, ' ')} SEK</span>
-            </button>
+            </Button>
         </form>
     )
 }

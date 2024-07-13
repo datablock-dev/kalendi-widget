@@ -10,6 +10,7 @@ import ServiceView from "../views/ServiceView";
 import ConfirmBookingView from "../views/Booking";
 import EmployeeView from "../views/EmployeeView";
 import Final from "../views/Final";
+import PaymentView from "../views/Payment";
 
 export interface KalendiViewer {
     backendRoute: string
@@ -96,6 +97,23 @@ export default function KalendiViewer({ backendRoute, services, data, view, setV
                             selectedDate={selectedDate}
                             setView={setView}
                             setCustomerData={setCustomerData}
+                            hasPaymentConnector={paymentConnector?.key ? true : false}
+                        />
+                    }
+                    {
+                        (view === "pay" && paymentConnector) &&
+                        <PaymentView
+                            backendRoute={backendRoute}
+                            // Data
+                            data={data}
+                            services={services}
+                            // Select states
+                            selectedUser={selectedUser}
+                            selectedService={selectedService}
+                            selectedDate={selectedDate}
+                            setView={setView}
+                            setCustomerData={setCustomerData}
+                            paymentConnector={paymentConnector}
                         />
                     }
                     {

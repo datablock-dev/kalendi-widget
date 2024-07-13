@@ -17,9 +17,10 @@ export interface ConfirmBookingView {
     selectedDate: Dayjs
     setView: Dispatch<SetStateAction<Options | null>>
     setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
+    hasPaymentConnector: boolean
 }
 
-export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, setCustomerData }: ConfirmBookingView) {
+export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, setCustomerData, hasPaymentConnector }: ConfirmBookingView) {
     const [isClickable, setIsClickable] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -31,6 +32,10 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
     const user = data.find((item) => item.user_id === selectedUser)
 
     if (!service || !user) return <div>Error...</div>
+
+    function goToPayment(){
+        setView('pay')
+    }
 
     async function bookRequest() {
         try {
@@ -90,6 +95,23 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
 
 
         setIsClickable(true)
+    }
+
+    // This function determines the sort of action when button is clicked
+    function buttonCallback(){
+        const servicePrice = data.find((item) => item.service_id === selectedService)?.service_price
+        
+        if(hasPaymentConnector && servicePrice !== 0){
+            return {
+                callBack: goToPayment,
+                text: 'Pay'
+            }
+        } else {
+            return {
+                callBack: bookRequest,
+                text: 'Book'
+            }
+        }
     }
 
     return (
@@ -152,8 +174,8 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 />
             </div>
             <Button
-                text="Book"
-                callBack={bookRequest}
+                text={buttonCallback().text}
+                callBack={buttonCallback().callBack}
                 isClickable={isClickable}
                 isLoading={isLoading}
                 loadingColor="#fff"

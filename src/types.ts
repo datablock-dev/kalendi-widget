@@ -5,7 +5,8 @@ export type Options =
     | "employee" 
     | "book" 
     | "date-selected"
-    | "stripe" 
+    | "stripe"  // Maybe shouldnt be used?
+    | 'pay'
     | "confirmation"
 
 export type TimeBoxHours = 
