@@ -101,9 +101,10 @@ export default function KalendiViewer({ backendRoute, services, data, view, setV
                         />
                     }
                     {
-                        (view === "pay" && paymentConnector) &&
+                        (view === "pay" && paymentConnector && customerData) &&
                         <PaymentView
                             backendRoute={backendRoute}
+                            customerData={customerData}
                             // Data
                             data={data}
                             services={services}

@@ -13,16 +13,17 @@ import { Dayjs } from "dayjs"
 interface PaymentView {
     backendRoute: string
     selectedDate: Dayjs
+    customerData: CustomerData
     setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
     services: Services[]
     setView: Dispatch<SetStateAction<Options | null>>
-    selectedService: string | null
-    selectedUser: string | null
+    selectedService: string
+    selectedUser: string
     data: Data[]
     paymentConnector: PaymentConnector
 }
 
-export default function PaymentView({ backendRoute, selectedDate, setCustomerData, services, setView, selectedService, selectedUser, data, paymentConnector }: PaymentView) {
+export default function PaymentView({ backendRoute, selectedDate, customerData, setCustomerData, services, setView, selectedService, selectedUser, data, paymentConnector }: PaymentView) {
     const KALENDI_STRIPE = new KalendiStripe(paymentConnector.key, backendRoute)
     const stripePromise = KALENDI_STRIPE.loadStripe()
 
@@ -63,8 +64,15 @@ export default function PaymentView({ backendRoute, selectedDate, setCustomerDat
                         options={clientSecret}
                     >
                         <Checkout
+                            backendRoute={backendRoute}
                             paymentIntent={paymentIntent}
                             setView={setView}
+                            customerData={customerData}
+                            data={data}
+                            services={services}
+                            selectedService={selectedService}
+                            selectedDate={selectedDate}
+                            selectedUser={selectedUser}
                         />
                     </Elements>
                     :
@@ -78,11 +86,18 @@ export default function PaymentView({ backendRoute, selectedDate, setCustomerDat
 }
 
 interface Checkout {
+    backendRoute: string
     paymentIntent: StripePaymentIntent
     setView: Dispatch<SetStateAction<Options | null>>
+    customerData: CustomerData
+    data: Data[]
+    services: Services[]
+    selectedService: string
+    selectedDate: Dayjs
+    selectedUser: string
 }
 
-function Checkout({ paymentIntent, setView }: Checkout) {
+function Checkout({ backendRoute, paymentIntent, setView, customerData, data, services, selectedService, selectedDate, selectedUser }: Checkout) {
     const [isClickable, setIsClickable] = useState<boolean>(true)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -113,12 +128,42 @@ function Checkout({ paymentIntent, setView }: Checkout) {
         })
             .then((res) => {
                 setIsLoading(false)
+                bookRequest()
                 setView('confirmation')
             })
             .catch((err) => {
                 setIsLoading(false)
                 console.error(err.message)
             })
+    }
+
+    async function bookRequest() {
+        try {
+            setIsLoading(true)
+            const service = services.find((item) => item.service_id === selectedService)
+            const userService = data.find((item) => (item.user_id === selectedUser && item.service_id === selectedService))
+            if (!userService || !service) {
+                return setIsLoading(false)
+            }
+
+            const payload = {
+                user_id: selectedUser,
+                service_id: selectedService,
+                from_timestamp: selectedDate.format('YYYY-MM-DD HH:mm:ss'),
+                to_timestamp: selectedDate.add(service?.service_time_block, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
+                customer: {
+                    name: customerData.name,
+                    email: customerData.email
+                }
+            }
+
+            await axios.post(`${backendRoute}/public`, payload)
+            setIsLoading(false)
+            setView('confirmation') // Trigger the confirmation view
+            return
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (

@@ -34,6 +34,17 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
     if (!service || !user) return <div>Error...</div>
 
     function goToPayment(){
+        if (!nameRef.current || !emailRef.current) return setIsClickable(false)
+        const name = nameRef.current.value
+        const email = emailRef.current.value
+
+        if (!isEmail(email)) return alert('Please provide a valid email address')
+
+
+        setCustomerData({
+            name: name,
+            email: email
+        })
         setView('pay')
     }
 
