@@ -2,6 +2,7 @@
 
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { KalendiContainer } from "./KalendiContainer";
+import { PaymentConnector } from "./types";
 
 // Define the context type
 interface KalendiContext {
@@ -23,10 +24,11 @@ interface KalendiProvider {
     service_id?: string
     header?: string
     // Stripe
+    paymentConnector?: PaymentConnector
 }
 
 // Define the provider component
-export default function KalendiProvider({ children, backendRoute, user_id, service_id, header }: KalendiProvider){
+export default function KalendiProvider({ children, backendRoute, user_id, service_id, header, paymentConnector }: KalendiProvider){
     const [isKalendiVisible, setIsKalendiVisible] = useState<boolean>(false)
     const [userID, setUserID] = useState<string | undefined>(user_id)
     const [serviceID, setServiceID] = useState<string | undefined>(service_id)
@@ -73,6 +75,7 @@ export default function KalendiProvider({ children, backendRoute, user_id, servi
                         user_id={userID}
                         service_id={serviceID}
                         header={header}
+                        paymentConnector={paymentConnector}
                         closeCallback={() => { setIsKalendiVisible(false) }}
                     />
                 }

@@ -22,9 +22,6 @@ export interface ConfirmBookingView {
 export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, setCustomerData }: ConfirmBookingView) {
     const [isClickable, setIsClickable] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    
-    //console.log(selectedDate.format('YYYY-MM-DD HH:mm'))
-    //console.log(selectedDate.add(60, 'minutes').format('YYYY-MM-DD HH:mm:ss'))
 
     // Ref
     const nameRef = useRef<null | HTMLInputElement>(null)

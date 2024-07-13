@@ -156,3 +156,80 @@ export interface CalendarItemPayload {
     to_timestamp: string
     ical: string
 }
+
+
+export interface PaymentConnector {
+    provider: PaymentProvider
+    key: string
+}
+export type PaymentProvider = 'stripe'
+
+export interface StripePaymentIntent {
+    id: string,
+    object: "payment_intent",
+    amount: number,
+    amount_capturable: number,
+    amount_details: {
+        tip: {}
+    },
+    amount_received: number,
+    application: null,
+    application_fee_amount: null,
+    automatic_payment_methods: {
+        enabled: boolean
+    },
+    canceled_at: null,
+    cancellation_reason: null,
+    capture_method: "automatic",
+    client_secret: string,
+    confirmation_method: "automatic",
+    created: number,
+    currency: "sek",
+    customer: null,
+    description: null,
+    invoice: null,
+    last_payment_error: null,
+    latest_charge: null,
+    livemode: boolean,
+    metadata: { [key: string]: any },
+    next_action: null,
+    on_behalf_of: null,
+    payment_method: null,
+    payment_method_options: {
+        card: {
+            installments: null,
+            mandate_options: null,
+            network: null,
+            request_three_d_secure: "automatic"
+        },
+        link: {
+            persistent_token: null
+        }
+    },
+    payment_method_types: [
+        "card",
+        "link"
+    ],
+    processing: null,
+    receipt_email: null,
+    review: null,
+    setup_future_usage: null,
+    shipping: null | {
+        address: {
+            city: string | null
+            country: string | null
+            line1: string | null
+            line2: string | null
+            postal_code: string | null
+            state: string | null
+        }
+        carrier: null | string
+        name: string | null
+    },
+    source: null,
+    statement_descriptor: null,
+    statement_descriptor_suffix: null,
+    status: "requires_payment_method" | "succeeded" | string,
+    transfer_data: null,
+    transfer_group: null
+}

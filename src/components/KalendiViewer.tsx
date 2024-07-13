@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { CustomerData, Data, Options, Services } from "../types"
+import { CustomerData, Data, Options, PaymentConnector, Services } from "../types"
 import { Dayjs } from "dayjs"
 
 // Views
@@ -26,9 +26,12 @@ export interface KalendiViewer {
     setSelectedService: Dispatch<SetStateAction<string | null>>
     selectedDate: Dayjs | null
     setSelectedDate: Dispatch<SetStateAction<Dayjs | null>>
+
+    // Payments
+    paymentConnector?: PaymentConnector
 }
 
-export default function KalendiViewer({ backendRoute, services, data, view, setView, selectedUser, setSelectedUser, selectedService, setSelectedService, selectedDate, setSelectedDate }: KalendiViewer) {
+export default function KalendiViewer({ backendRoute, services, data, view, setView, selectedUser, setSelectedUser, selectedService, setSelectedService, selectedDate, setSelectedDate, paymentConnector }: KalendiViewer) {
     const [customerData, setCustomerData] = useState<null | CustomerData>(null)
 
     useEffect(() => {

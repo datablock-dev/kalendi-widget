@@ -12,6 +12,8 @@ export interface EmployeeView {
 }
 
 export default function EmployeeView({ backendRoute, data, setView, selectedService, selectedUser, setSelectedUser }: EmployeeView){
+    console.log(data)
+    
     return (
         <div>
             <div className="list">
@@ -38,7 +40,10 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                                                     <PersonIcon sx={{fill: "#000"}}/>
                                                 </div>
                                         }
-                                        <span className="color-[#000]">{employee.firstname} {employee.lastname}</span>
+                                        <div className="flex flex-col">
+                                            <span className="color-[#000] font-[600]">{employee.firstname} {employee.lastname}</span>
+                                            <span className="text-[#e4e4e4] text-[14px]">{employee.title}</span>
+                                        </div>
                                     </div>
                                     <div
                                         className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer"

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import KalendiNavbar from "./components/KalendiNavbar";
 import KalendiViewer from "./components/KalendiViewer";
 import CloseIcon from '@mui/icons-material/Close';
-import { Options, Services, Users, Data } from './types';
+import { Options, Services, Users, Data, PaymentConnector } from './types';
 import { Dayjs } from 'dayjs';
 
 interface KalendiContainerProps {
@@ -14,9 +14,10 @@ interface KalendiContainerProps {
     header?: string
     closeCallback?: (e?: any) => any
     // Styling
+    paymentConnector?: PaymentConnector
 }
 
-export function KalendiContainer({ backendRoute, user_id, service_id, closeCallback, header }: KalendiContainerProps) {
+export function KalendiContainer({ backendRoute, user_id, service_id, closeCallback, header, paymentConnector }: KalendiContainerProps) {
     const [services, setServices] = useState<null | Services[]>(null)
     const [users, setUsers] = useState<null | false | Users[]>(null)
     const [userServices, setUserServices] = useState(null)
@@ -167,6 +168,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
                             setSelectedService={setSelectedService}
                             selectedDate={selectedDate}
                             setSelectedDate={setSelectedDate}
+                            paymentConnector={paymentConnector}
                         />
                     </>
                 }

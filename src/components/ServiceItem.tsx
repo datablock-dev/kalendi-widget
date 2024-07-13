@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react"
 import ImageIcon from '@mui/icons-material/Image';
 import { Options, Services } from "../types"
+import { formatMonetaryValue } from "../utils/string";
 export interface ServiceItem {
     service: Services
     backendRoute: string
@@ -9,7 +10,7 @@ export interface ServiceItem {
     setView: Dispatch<SetStateAction<Options | null>>
 }
 
-export default function ServiceItem({ service, backendRoute, selectedService, setSelectedService, setView }: ServiceItem){
+export default function ServiceItem({ service, backendRoute, selectedService, setSelectedService, setView }: ServiceItem){    
     return (
         <div
             className="list-item justify-between"
@@ -28,7 +29,10 @@ export default function ServiceItem({ service, backendRoute, selectedService, se
                             <ImageIcon sx={{ fill: "#000" }}/>
                         </div>
                 }
-                <span className="text-[#000]">{service.service_name}</span>
+                <div className="flex flex-col">
+                    <span className="text-[#000] font-[600]">{service.service_name}</span>
+                    <span className="text-[#e4e4e4] text-[14px]">{formatMonetaryValue(service.service_price || 0, ' ')} {service.service_currency}</span>
+                </div>
             </div>
             <div
                 className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] data-[selected=true]:border-[#141414] hover:bg-[#d4d4d4] hover:cursor-pointer"
