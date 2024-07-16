@@ -9,6 +9,7 @@ import { formatMonetaryValue } from "../utils/string"
 import axios, { AxiosResponse } from "axios"
 import Button from "../components/Button"
 import { Dayjs } from "dayjs"
+import { loadStripe } from "@stripe/stripe-js"
 
 interface PaymentView {
     backendRoute: string
@@ -24,8 +25,9 @@ interface PaymentView {
 }
 
 export default function PaymentView({ backendRoute, selectedDate, customerData, setCustomerData, services, setView, selectedService, selectedUser, data, paymentConnector }: PaymentView) {
-    const KALENDI_STRIPE = new KalendiStripe(paymentConnector.key, backendRoute)
-    const stripePromise = KALENDI_STRIPE.loadStripe()
+    //const KALENDI_STRIPE = new KalendiStripe(paymentConnector.key, backendRoute)
+    //const stripePromise = KALENDI_STRIPE.loadStripe()
+    const stripePromise = loadStripe(paymentConnector.key)
 
     const [clientSecret, setClientSecret] = useState<null | { clientSecret: StripePaymentIntent['client_secret'] }>(null)
     const [paymentIntent, setPaymentIntent] = useState<null | StripePaymentIntent>(null)
