@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import KalendiNavbar from "./components/KalendiNavbar";
 import KalendiViewer from "./components/KalendiViewer";
 import CloseIcon from '@mui/icons-material/Close';
-import { Options, Services, Users, Data, PaymentConnector } from './types';
+import { Options, Services, Users, Data, PaymentConnector, CustomerData } from './types';
 import { Dayjs } from 'dayjs';
 
 interface KalendiContainerProps {
@@ -29,6 +29,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
     const [selectedService, setSelectedService] = useState<null | string>(service_id || null)
     const [selectedUser, setSelectedUser] = useState<null | string>(user_id || null) // The user_id
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null)
+    const [customerData, setCustomerData] = useState<null | CustomerData>(null)
 
     if (!backendRoute) throw new TypeError("backendRoute prop must be provided!")
 
@@ -155,6 +156,10 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
                             // Views
                             view={view}
                             setView={setView}
+                            paymentConnector={paymentConnector}
+                            // CustomerData
+                            customerData={customerData}
+                            setCustomerData={setCustomerData}
                         />
                         <KalendiViewer
                             backendRoute={backendRoute}
@@ -169,6 +174,9 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
                             selectedDate={selectedDate}
                             setSelectedDate={setSelectedDate}
                             paymentConnector={paymentConnector}
+                            // CustomerData
+                            customerData={customerData}
+                            setCustomerData={setCustomerData}
                         />
                     </>
                 }

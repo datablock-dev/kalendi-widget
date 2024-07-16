@@ -5,9 +5,10 @@ export interface Input {
     type?: string
     onChangeCallBack?: (e?: any) => any
     forwardRef?: RefObject<null | any>
+    defaultValue?: string
 }
 
-export default function Input({ label, type, onChangeCallBack, forwardRef }: Input){
+export default function Input({ label, type, onChangeCallBack, forwardRef, defaultValue }: Input){
 
     return(
         <div className="flex flex-col gap-[4px] w-[100%]">
@@ -17,6 +18,7 @@ export default function Input({ label, type, onChangeCallBack, forwardRef }: Inp
                 type={type}
                 onChange={onChangeCallBack}
                 ref={forwardRef}
+                defaultValue={defaultValue}
             />
         </div>
     )

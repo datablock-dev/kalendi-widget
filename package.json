@@ -75,7 +75,7 @@
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 3000",
     "build:storybook": "storybook build",
     "build:rollup": "bunx tailwindcss -i ./src/tailwind.css -o ./src/tailwind.css -m && rollup -c",
     "build": "bunx tailwindcss -i ./src/input.tailwind.css -o ./src/tailwind.css && tsc",

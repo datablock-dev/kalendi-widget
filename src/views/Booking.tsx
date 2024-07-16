@@ -5,6 +5,7 @@ import { isEmail } from "validator"
 import Input from "../components/Input"
 import Button from "../components/Button"
 import ImageIcon from '@mui/icons-material/Image';
+import axios from "axios"
 
 export interface ConfirmBookingView {
     backendRoute: string
@@ -16,11 +17,12 @@ export interface ConfirmBookingView {
     selectedService: string
     selectedDate: Dayjs
     setView: Dispatch<SetStateAction<Options | null>>
+    customerData: null | CustomerData
     setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
     hasPaymentConnector: boolean
 }
 
-export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, setCustomerData, hasPaymentConnector }: ConfirmBookingView) {
+export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, customerData, setCustomerData, hasPaymentConnector }: ConfirmBookingView) {
     const [isClickable, setIsClickable] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -75,19 +77,10 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                     email: email
                 }
             }
+            
+            await axios.post(`${backendRoute}/public`, payload)
 
-            const res = await fetch(`${backendRoute}/public`, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-
-            setCustomerData({name: name,
-                email: email
-            })
+            setCustomerData({ name: name, email: email })
             setIsLoading(false)
             setView('confirmation') // Trigger the confirmation view
             return
@@ -176,12 +169,14 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                     label="Name"
                     forwardRef={nameRef}
                     onChangeCallBack={changeEvent}
+                    defaultValue={customerData ? customerData.name : undefined}
                 />
                 <Input
                     label="Email"
                     type="Email"
                     forwardRef={emailRef}
                     onChangeCallBack={changeEvent}
+                    defaultValue={customerData ? customerData.email : undefined}
                 />
             </div>
             <Button

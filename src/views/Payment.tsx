@@ -45,8 +45,6 @@ export default function PaymentView({ backendRoute, selectedDate, customerData, 
 
                 const res = await axios.post(url.toString(), payload) as AxiosResponse<StripePaymentIntent>
 
-                console.log(res.data)
-
                 setPaymentIntent(res.data)
                 setClientSecret({ clientSecret: res.data.client_secret })
             } catch (error) {

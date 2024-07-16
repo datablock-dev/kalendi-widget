@@ -30,10 +30,11 @@ export interface KalendiViewer {
 
     // Payments
     paymentConnector?: PaymentConnector
+    customerData: null | CustomerData
+    setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
 }
 
-export default function KalendiViewer({ backendRoute, services, data, view, setView, selectedUser, setSelectedUser, selectedService, setSelectedService, selectedDate, setSelectedDate, paymentConnector }: KalendiViewer) {
-    const [customerData, setCustomerData] = useState<null | CustomerData>(null)
+export default function KalendiViewer({ backendRoute, services, data, view, setView, selectedUser, setSelectedUser, selectedService, setSelectedService, selectedDate, setSelectedDate, paymentConnector, customerData, setCustomerData }: KalendiViewer) {
 
     useEffect(() => {
         setSelectedDate(null)
@@ -96,6 +97,7 @@ export default function KalendiViewer({ backendRoute, services, data, view, setV
                             selectedService={selectedService}
                             selectedDate={selectedDate}
                             setView={setView}
+                            customerData={customerData}
                             setCustomerData={setCustomerData}
                             hasPaymentConnector={paymentConnector?.key ? true : false}
                         />

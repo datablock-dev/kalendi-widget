@@ -4,7 +4,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { Dayjs } from "dayjs";
 import CategoryIcon from '@mui/icons-material/Category';
 import PersonIcon from '@mui/icons-material/Person';
-import { Options, Data, Services, Users } from "../types";
+import { Options, Data, Services, Users, CustomerData, PaymentConnector } from "../types";
 import CloseIcon from '@mui/icons-material/Close';
 
 export interface KalendiNavbar {
@@ -22,9 +22,12 @@ export interface KalendiNavbar {
     setSelectedService: Dispatch<SetStateAction<string | null>>
     selectedDate: Dayjs | null
     users: Users[] | false | null
+    paymentConnector?: PaymentConnector
+    customerData: null | CustomerData
+    setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
 }
 
-export default function KalendiNavbar({ backendRoute, service_id, services, data, header, view, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, selectedDate, users }: KalendiNavbar) {
+export default function KalendiNavbar({ backendRoute, service_id, services, data, header, view, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, selectedDate, users, paymentConnector, customerData, setCustomerData }: KalendiNavbar) {
 
     return (
         <>
@@ -98,7 +101,16 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         Confirm Booking
                                     </div>
                                 }
-
+                                {
+                                    (selectedDate && selectedService && selectedUser && customerData && paymentConnector?.key ) &&
+                                    <div
+                                        className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] hover:cursor-pointer hover:bg-[#d4d4d4] select-none data-[selected=true]:bg-[#d4d4d4] text-[#000]"
+                                        onClick={() => { view !== 'pay' ? setView('pay') : undefined }}
+                                        data-selected={view === "pay" ? true : false}
+                                    >
+                                        Pay
+                                    </div>
+                                }
                             </>
                         }
                     </div>
