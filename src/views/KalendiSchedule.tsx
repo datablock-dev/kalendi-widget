@@ -35,22 +35,21 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
 
     const service = services.find((item) => item.service_id === selectedService)
 
-    if (!service) return <span>...</span>
-
     useEffect(() => {
         if (!weekView) {
             setWeekView(createWeekView(currentDate, weekMove))
         } else if (weekView) {
-            if (weekMove !== weekView[0].weekFromCurrentWeek) {
+            if (userAvailability === null && selectedUser) {
+                fetchAvailability(weekView)
+            } else if (weekMove !== weekView[0].weekFromCurrentWeek) {
                 setWeekView(createWeekView(currentDate, weekMove))
                 fetchAvailability(createWeekView(currentDate, weekMove))
             }
         }
 
-        if (userAvailability === null && selectedUser && weekView) {
-            fetchAvailability(weekView)
-        }
     }, [currentDate, weekMove])
+
+    if (!service) return <span>...</span>
 
     async function fetchAvailability(weekView: WeekView[], date_from: string | null = null, date_to: string | null = null) {
         try {
