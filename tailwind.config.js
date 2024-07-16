@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {},
     screens: {
-      'sd': { 'max': '800px'},
-      'md': { 'min': '800px' }
+      'kalendi-sd': { 'max': '800px'},
+      'kalendi-md': { 'min': '800px' }
     }
   },
   plugins: [],

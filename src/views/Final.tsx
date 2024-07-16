@@ -36,7 +36,7 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
                     <span className="text-[#000] bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.add(service.service_time_block, 'minutes').format('HH:mm')}</span>
                 </div>
                 <div className="flex flex-col flex-wrap gap-[10px] my-[10px] w-fit">
-                    <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[300px] py-[10px]">
+                    <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid kalendi-sd:w-[100%] kalendi-md:w-[300px] py-[10px]">
                         <label className="font-[600] text-[#000]">Service</label>
                         <div className="flex flex-row items-center gap-[10px]">
                             {
@@ -54,7 +54,7 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
                             <span className="text-[#000]">{service.service_name}</span>
                         </div>
                     </div>
-                    <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[300px] py-[10px]">
+                    <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid kalendi-sd:w-[100%] kalendi-md:w-[300px] py-[10px]">
                         <label className="font-[600] text-[#000]">Employee</label>
                         <div className="flex flex-row items-center gap-[10px]">
                             {

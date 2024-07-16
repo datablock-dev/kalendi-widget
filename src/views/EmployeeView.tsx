@@ -92,15 +92,15 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                                             <FirstAvilableSlot
                                                 availability={availability}
                                                 employee={employee}
-                                                className="md:hidden"
+                                                className="kalendi-md:hidden"
                                             />
                                         </div>
                                     </div>
-                                    <div className="flex flex-row items-center gap-[10px] sd:hidden">
+                                    <div className="flex flex-row items-center gap-[10px] kalendi-sd:hidden">
                                         <FirstAvilableSlot
                                             availability={availability}
                                             employee={employee}
-                                            className="sd:hidden"
+                                            className="kalendi-sd:hidden"
                                         />
                                         <div
                                             className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer"
@@ -113,7 +113,7 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                                         />
                                     </div>
                                     <div
-                                        className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer md:hidden"
+                                        className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer kalendi-md:hidden"
                                         data-selected={selectedUser === employee.user_id ? true : false}
                                         onClick={() => {
                                             // Clear other settings that occurs after user selection
@@ -141,7 +141,7 @@ function FirstAvilableSlot({ availability, employee, className }: FirstAvilableS
         <>
         {
             (availability && availability.find((item) => item.user_id === employee.user_id)) ?
-                <div className={"flex md:flex-row md:items-center md:gap-[6px] sd:flex-col " + className}>
+                <div className={"flex kalendi-md:flex-row kalendi-md:items-center kalendi-md:gap-[6px] kalendi-sd:flex-col " + className}>
                     <span className="h-fit">First available slot: </span>
                     <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">
                         {availability.find((item) => item.user_id === employee.user_id)?.date}

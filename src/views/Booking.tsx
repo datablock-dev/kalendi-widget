@@ -136,7 +136,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 </div>
             </div>
             <div className="flex flex-row flex-wrap gap-[10px]">
-                <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
+                <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid kalendi-sd:w-[100%] kalendi-md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
                     <label className="font-[600] text-[#000]">Service</label>
                     <div className="flex flex-row items-center gap-[10px]">
                         {
@@ -154,7 +154,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                         <span className="text-[#000]">{service.service_name}</span>
                     </div>
                 </div>
-                <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid sd:w-[100%] md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
+                <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid kalendi-sd:w-[100%] kalendi-md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
                     <label className="font-[600] text-[#000]">Employee</label>
                     <div className="flex flex-row items-center gap-[10px]">
                         {
@@ -171,7 +171,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                     </div>
                 </div>
             </div>
-            <div className="grid grid-cols-[repeat(2,calc(50%_-_5px))] gap-[10px] mt-[20px] sd:flex sd:flex-col sd:gap-[10px]">
+            <div className="grid grid-cols-[repeat(2,calc(50%_-_5px))] gap-[10px] mt-[20px] kalendi-sd:flex kalendi-sd:flex-col kalendi-sd:gap-[10px]">
                 <Input
                     label="Name"
                     forwardRef={nameRef}

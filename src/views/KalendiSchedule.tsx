@@ -371,7 +371,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                                     {
                                         (!isNonBookable && availableSlots.length === 0 && !isBefore) &&
                                         <div className="flex justify-center">
-                                            <span className="text-wrap text-[#000] sd:text-[14px] sd:text-center select-none">No available slots</span>
+                                            <span className="text-wrap text-[#000] kalendi-sd:text-[14px] kalendi-sd:text-center select-none">No available slots</span>
                                         </div>
                                     }
                                     {
