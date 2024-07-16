@@ -3,7 +3,7 @@
 import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react"
 import ServiceItem from "../components/ServiceItem"
 import { Options, Services, Data, PaymentConnector, StripePaymentIntent, CustomerData } from "../types"
-import { AddressElement, Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import { AddressElement, Elements, ExpressCheckoutElement, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import KalendiStripe from "../utils/connectors/stripe"
 import { formatMonetaryValue } from "../utils/string"
 import axios, { AxiosResponse } from "axios"
@@ -24,11 +24,9 @@ interface PaymentView {
     paymentConnector: PaymentConnector
 }
 
-export default function PaymentView({ backendRoute, selectedDate, customerData, setCustomerData, services, setView, selectedService, selectedUser, data, paymentConnector }: PaymentView) {
-    //const KALENDI_STRIPE = new KalendiStripe(paymentConnector.key, backendRoute)
-    //const stripePromise = KALENDI_STRIPE.loadStripe()
-    const stripePromise = loadStripe(paymentConnector.key)
+const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY as string)
 
+export default function PaymentView({ backendRoute, selectedDate, customerData, setCustomerData, services, setView, selectedService, selectedUser, data, paymentConnector }: PaymentView) {
     const [clientSecret, setClientSecret] = useState<null | { clientSecret: StripePaymentIntent['client_secret'] }>(null)
     const [paymentIntent, setPaymentIntent] = useState<null | StripePaymentIntent>(null)
 
@@ -77,9 +75,19 @@ export default function PaymentView({ backendRoute, selectedDate, customerData, 
                     </Elements>
                     :
                     <div>
-
+                        <div className="flex items-center justify-center">
+                            <svg
+                                className="animate-spin fill-[#000]"
+                                style={{ fill: "#000" }}
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="24"
+                                width="24"
+                                viewBox="0 -960 960 960"
+                            >
+                                <path d="M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 31.5-155.5t86-127Q252-817 325-848.5T480-880q17 0 28.5 11.5T520-840q0 17-11.5 28.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-17 11.5-28.5T840-520q17 0 28.5 11.5T880-480q0 82-31.5 155t-86 127.5q-54.5 54.5-127 86T480-80Z" />
+                            </svg>
+                        </div>
                     </div>
-
             }
         </div>
     )
@@ -171,16 +179,6 @@ function Checkout({ backendRoute, paymentIntent, setView, customerData, data, se
             className="flex flex-col gap-[14px] w-[100%] overflow-y-auto"
             onSubmit={pay}
         >
-            <AddressElement
-                options={{
-                    mode: 'shipping',
-                    allowedCountries: ['SE'],
-                    autocomplete: process.env.AUTOCOMPLETE_API_KEY ? {
-                        mode: 'google_maps_api',
-                        apiKey: process.env.AUTOCOMPLETE_API_KEY
-                    } : undefined
-                }}
-            />
             <PaymentElement
                 id="payment-element"
             />
