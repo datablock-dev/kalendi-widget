@@ -46,11 +46,24 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
 
         if (!isEmail(email)) return alert('Please provide a valid email address')
 
-
-        setCustomerData({
+        const customerData: { [key: string]: any } = {
             name: name,
             email: email
-        })
+        }
+
+        if (refArray.length > 0 && context?.informationInputs?.inputs) {
+            refArray.forEach((ref, index) => {
+                if (!ref.current) return
+                const key = context?.informationInputs?.inputs[index].label.toLocaleLowerCase()
+
+                if (!key) return
+
+                customerData[key] = ref.current.value
+            })
+        }
+
+        // Temp solution, needs to be fixed
+        setCustomerData(customerData as CustomerData)
         setView('pay')
     }
 
@@ -84,7 +97,25 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
 
             await axios.post(`${backendRoute}/public`, payload)
 
-            setCustomerData({ name: name, email: email })
+
+            const customerData: { [key: string]: any } = {
+                name: name,
+                email: email
+            }
+
+            if (refArray.length > 0 && context?.informationInputs?.inputs) {
+                refArray.forEach((ref, index) => {
+                    if (!ref.current) return
+                    const key = context?.informationInputs?.inputs[index].label.toLocaleLowerCase()
+
+                    if (!key) return
+
+                    customerData[key] = ref.current.value
+                })
+            }
+
+            // Temp solution, needs to be fixed
+            setCustomerData(customerData as CustomerData)
             setIsLoading(false)
             setView('confirmation') // Trigger the confirmation view
             return

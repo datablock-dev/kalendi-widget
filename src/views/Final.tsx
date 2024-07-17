@@ -27,7 +27,7 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
         if(context && context.onSuccess){
             // Add data callback here
             
-            //context.onSuccess()
+            return context.onSuccess(context.customerData)
         }
     }, [context])
 
