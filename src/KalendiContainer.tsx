@@ -119,7 +119,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
 
     return (
         <div 
-            className="flex fixed items-center justify-center top-[0px] left-[0px] w-[100vw] h-[100vh] z-10000"
+            className="flex fixed items-center justify-center top-[0px] left-[0px] w-[100vw] h-[100vh] z-9999999"
             style={{position: 'fixed'}}
         >
             <div
