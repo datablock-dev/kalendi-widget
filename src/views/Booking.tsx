@@ -32,8 +32,6 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
     const nameRef = useRef<null | HTMLInputElement>(null)
     const emailRef = useRef<null | HTMLInputElement>(null)
 
-    const refArray: RefObject<null | HTMLInputElement>[] = []
-
     const service = services.find((item) => item.service_id === selectedService)
     const user = data.find((item) => item.user_id === selectedUser)
 
@@ -51,14 +49,16 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             email: email
         }
 
-        if (refArray.length > 0 && context?.informationInputs?.inputs) {
-            refArray.forEach((ref, index) => {
-                if (!ref.current) return
+        const inputs = document.querySelectorAll('input')
+
+        if (inputs.length > 0 && context?.informationInputs?.inputs) {
+            inputs.forEach((ref, index) => {
+                if (!ref) return
                 const key = context?.informationInputs?.inputs[index].label.toLocaleLowerCase()
 
                 if (!key) return
 
-                customerData[key] = ref.current.value
+                customerData[key] = ref.value
             })
         }
 
@@ -103,14 +103,15 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 email: email
             }
 
-            if (refArray.length > 0 && context?.informationInputs?.inputs) {
-                refArray.forEach((ref, index) => {
-                    if (!ref.current) return
+            const inputs = document.querySelectorAll('input')
+            if (inputs.length > 0 && context?.informationInputs?.inputs) {
+                inputs.forEach((ref, index) => {
+                    if (!ref) return
                     const key = context?.informationInputs?.inputs[index].label.toLocaleLowerCase()
 
                     if (!key) return
 
-                    customerData[key] = ref.current.value
+                    customerData[key] = ref.value
                 })
             }
 
@@ -132,22 +133,23 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
         if (!isEmail(email)) return setIsClickable(false)
         if (name.length < 2) return setIsClickable(false)
 
-        if (refArray.length > 0) {
+        const inputs = document.querySelectorAll('input')
+        if (inputs.length > 0) {
             let passed = true
-            refArray.forEach((ref, index) => {
-                if (!ref.current) return setIsClickable(false)
+            inputs.forEach((ref, index) => {
+                if (!ref) return setIsClickable(false)
 
                 const validator = context?.informationInputs?.inputs[index].validator
 
-                if (validator && !validator(ref.current.value)) {
-                    ref.current.classList.add('border-[#ae2f2f]')
-                    ref.current.classList.remove('border-[1px]')
-                    ref.current.classList.add('border-[2px]')
+                if (validator && !validator(ref.value)) {
+                    ref.classList.add('border-[#ae2f2f]')
+                    ref.classList.remove('border-[1px]')
+                    ref.classList.add('border-[2px]')
                     passed = false
                 } else {
-                    ref.current.classList.remove('border-[#ae2f2f]')
-                    ref.current.classList.remove('border-[2px]')
-                    ref.current.classList.add('border-[1px]')
+                    ref.classList.remove('border-[#ae2f2f]')
+                    ref.classList.remove('border-[2px]')
+                    ref.classList.add('border-[1px]')
                 }
             })
 
@@ -240,13 +242,10 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 <div className="grid grid-cols-[repeat(2,calc(50%_-_5px))] gap-[10px] mt-[20px] kalendi-sd:flex kalendi-sd:flex-col kalendi-sd:gap-[10px]">
                     {
                         context.informationInputs.inputs.map((input, index) => {
-                            const ref = useRef(null)
-                            refArray.push(ref)
                             return (
                                 <Input
                                     label={input.label}
                                     key={index}
-                                    forwardRef={ref}
                                     note={input.note}
                                     onChangeCallBack={changeEvent}
                                 />
