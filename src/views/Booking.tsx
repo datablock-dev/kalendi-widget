@@ -49,8 +49,8 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             email: email
         }
 
-        const inputs = document.querySelectorAll('input')
-
+        const inputs = document.querySelector('.kalendi-widget-wrapper')?.querySelectorAll('input')
+        if(!inputs) return
         if (inputs.length > 0 && context?.informationInputs?.inputs) {
             inputs.forEach((ref, index) => {
                 if (!ref) return
@@ -106,7 +106,8 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 email: email
             }
 
-            const inputs = document.querySelectorAll('input')
+            const inputs = document.querySelector('.kalendi-widget-wrapper')?.querySelectorAll('input')
+            if(!inputs) return
             if (inputs.length > 0 && context?.informationInputs?.inputs) {
                 inputs.forEach((ref, index) => {
                     if (!ref) return
@@ -138,7 +139,8 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
         if (!isEmail(email)) return setIsClickable(false)
         if (name.length < 2) return setIsClickable(false)
 
-        const inputs = document.querySelectorAll('input')
+        const inputs = document.querySelector('.kalendi-widget-wrapper')?.querySelectorAll('input')
+        if(!inputs) return
         if (inputs.length > 0) {
             let passed = true
             inputs.forEach((ref, index) => {
