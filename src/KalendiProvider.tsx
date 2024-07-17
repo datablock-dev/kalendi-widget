@@ -2,20 +2,10 @@
 
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { KalendiContainer } from "./KalendiContainer";
-import { PaymentConnector } from "./types";
-
-// Define the context type
-interface KalendiContext {
-    isKalendiVisible: boolean
-    setIsKalendiVisible: React.Dispatch<React.SetStateAction<boolean>>
-    user_id: string | undefined
-    setUserID: React.Dispatch<React.SetStateAction<string | undefined>>
-    service_id: string | undefined
-    setServiceID: React.Dispatch<React.SetStateAction<string | undefined>>
-}
+import { PaymentConnector, Terms, KalendiContextInterface, InformationInputs } from "./types";
 
 // Create the context
-export const KalendiContext = createContext<KalendiContext | null>(null);
+export const KalendiContext = createContext<KalendiContextInterface | null>(null);
 
 interface KalendiProvider {
     children: React.ReactNode
@@ -25,21 +15,35 @@ interface KalendiProvider {
     header?: string
     // Stripe
     paymentConnector?: PaymentConnector
+    // Terms
+    terms?: Terms
+    // Additional inputs
+    informationInputs?: InformationInputs
+
+    // CallBacks
+    onError?: (e: Error) => any
+    onSuccess?: (e: any) => any
 }
 
 // Define the provider component
-export default function KalendiProvider({ children, backendRoute, user_id, service_id, header, paymentConnector }: KalendiProvider){
+export default function KalendiProvider({ children, backendRoute, user_id, service_id, header, paymentConnector, terms, informationInputs, onError, onSuccess }: KalendiProvider){
     const [isKalendiVisible, setIsKalendiVisible] = useState<boolean>(false)
     const [userID, setUserID] = useState<string | undefined>(user_id)
     const [serviceID, setServiceID] = useState<string | undefined>(service_id)
 
-    const context: KalendiContext = {
+    const context: KalendiContextInterface = {
         isKalendiVisible: isKalendiVisible, 
         setIsKalendiVisible: setIsKalendiVisible,
         user_id: userID, 
         setUserID: setUserID,
         service_id: serviceID,
-        setServiceID: setServiceID
+        setServiceID: setServiceID,
+        // Misc
+        terms: terms,
+        informationInputs: informationInputs,
+        // Callbacks
+        onError: onError,
+        onSuccess: onSuccess
     }
 
     useEffect(() => {

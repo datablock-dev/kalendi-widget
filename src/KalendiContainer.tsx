@@ -1,23 +1,26 @@
 'use client';
 
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import KalendiNavbar from "./components/KalendiNavbar";
 import KalendiViewer from "./components/KalendiViewer";
 import CloseIcon from '@mui/icons-material/Close';
 import { Options, Services, Users, Data, PaymentConnector, CustomerData } from './types';
 import { Dayjs } from 'dayjs';
+import axios, { AxiosResponse } from "axios";
+import { KalendiContext } from "./KalendiProvider";
 
 interface KalendiContainerProps {
     backendRoute: string
     user_id?: string
     service_id?: string
     header?: string
-    closeCallback?: (e?: any) => any
+    closeCallback: (e?: any) => any
     // Styling
     paymentConnector?: PaymentConnector
 }
 
 export function KalendiContainer({ backendRoute, user_id, service_id, closeCallback, header, paymentConnector }: KalendiContainerProps) {
+    const context = useContext(KalendiContext)
     const [services, setServices] = useState<null | Services[]>(null)
     const [users, setUsers] = useState<null | false | Users[]>(null)
     const [userServices, setUserServices] = useState(null)
@@ -78,10 +81,16 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
 
             if (!urlString) return
 
-            const res = await fetch(urlString, { method: 'GET', })
-            const data = await res.json() as Data[]
-            setData(data)
+            const { data } = await axios.get(urlString) as AxiosResponse<Data[]>
 
+            if(data.length === 0){
+                const error = new Error("No service/employee combinations found. Please check that you have configured everything right in Kalendi")
+                context?.onError && context.onError(error)
+                console.error(error)
+                return closeCallback()
+            }
+
+            setData(data)
             // Set services
             const serviceSet = new Set<string>()
             const serviceArray = new Array()

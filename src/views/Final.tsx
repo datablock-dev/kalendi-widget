@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction, useContext, useEffect } from "react"
 import { Dayjs } from "dayjs"
 import { CustomerData, Data, Options, Services } from "../types"
 import ImageIcon from '@mui/icons-material/Image';
+import { KalendiContext } from "../KalendiProvider";
 
 interface Final {
     backendRoute: string
@@ -16,10 +17,19 @@ interface Final {
 }
 
 export default function Final({ backendRoute, data, services, selectedUser, selectedService, selectedDate, customerData }: Final) {
+    const context = useContext(KalendiContext)
     const service = services.find((item) => item.service_id === selectedService)
     const user = data.find((item) => item.user_id === selectedUser)
 
     if (!service || !user) return <div>Error...</div>
+
+    useEffect(() => {
+        if(context && context.onSuccess){
+            // Add data callback here
+            
+            //context.onSuccess()
+        }
+    }, [context])
 
     return (
         <div className="w-[100%] h-[100%] flex flex-col">

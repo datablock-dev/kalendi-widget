@@ -43,6 +43,21 @@ export type TimeBoxMinutes =
 
 export type TimeBox = `${TimeBoxHours}:${TimeBoxMinutes}`
 
+export interface KalendiContextInterface {
+    isKalendiVisible: boolean
+    setIsKalendiVisible: React.Dispatch<React.SetStateAction<boolean>>
+    user_id: string | undefined
+    setUserID: React.Dispatch<React.SetStateAction<string | undefined>>
+    service_id: string | undefined
+    setServiceID: React.Dispatch<React.SetStateAction<string | undefined>>
+    terms?: Terms
+    // Additional inputs
+    informationInputs?: InformationInputs
+    // Callbacks
+    onError?: (e: Error) => any
+    onSuccess?: (e: any) => any
+}
+
 export interface CustomerData {
     name: string
     email: string
@@ -236,3 +251,23 @@ export interface StripePaymentIntent {
     transfer_data: null,
     transfer_group: null
 }
+
+export interface Terms {
+    url: string
+}
+
+export interface InformationInputs {
+    inputs: InformationInputsCriterion[]
+}
+
+export interface InformationInputsCriterion {
+    type: InformationInputType
+    length: InformationInputLength
+    label: string
+    placeholder?: string
+    note?: string
+    validator?: (e: any) => boolean
+}
+
+export type InformationInputType = 'number' | 'string'
+export type InformationInputLength = number

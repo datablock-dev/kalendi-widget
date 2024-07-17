@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useRef, useState } from "react"
+import React, { Dispatch, RefObject, SetStateAction, useContext, useRef, useState } from "react"
 import { Dayjs } from "dayjs"
 import { CustomerData, Data, Options, Services } from "../types"
 import { isEmail } from "validator"
@@ -6,6 +6,7 @@ import Input from "../components/Input"
 import Button from "../components/Button"
 import ImageIcon from '@mui/icons-material/Image';
 import axios from "axios"
+import { KalendiContext } from "../KalendiProvider"
 
 export interface ConfirmBookingView {
     backendRoute: string
@@ -23,6 +24,7 @@ export interface ConfirmBookingView {
 }
 
 export default function ConfirmBookingView({ backendRoute, data, services, selectedUser, selectedService, selectedDate, setView, customerData, setCustomerData, hasPaymentConnector }: ConfirmBookingView) {
+    const context = useContext(KalendiContext)
     const [isClickable, setIsClickable] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -30,12 +32,14 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
     const nameRef = useRef<null | HTMLInputElement>(null)
     const emailRef = useRef<null | HTMLInputElement>(null)
 
+    const refArray: RefObject<null | HTMLInputElement>[] = []
+
     const service = services.find((item) => item.service_id === selectedService)
     const user = data.find((item) => item.user_id === selectedUser)
 
     if (!service || !user) return <div>Error...</div>
 
-    function goToPayment(){
+    function goToPayment() {
         if (!nameRef.current || !emailRef.current) return setIsClickable(false)
         const name = nameRef.current.value
         const email = emailRef.current.value
@@ -52,7 +56,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
 
     async function bookRequest() {
         try {
-            if(!service) return
+            if (!service) return
             if (!nameRef.current || !emailRef.current) return setIsClickable(false)
             const name = nameRef.current.value
             const email = emailRef.current.value
@@ -77,7 +81,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                     email: email
                 }
             }
-            
+
             await axios.post(`${backendRoute}/public`, payload)
 
             setCustomerData({ name: name, email: email })
@@ -97,15 +101,36 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
         if (!isEmail(email)) return setIsClickable(false)
         if (name.length < 2) return setIsClickable(false)
 
+        if (refArray.length > 0) {
+            let passed = true
+            refArray.forEach((ref, index) => {
+                if (!ref.current) return setIsClickable(false)
 
-        setIsClickable(true)
+                const validator = context?.informationInputs?.inputs[index].validator
+
+                if (validator && !validator(ref.current.value)) {
+                    ref.current.classList.add('border-[#ae2f2f]')
+                    ref.current.classList.remove('border-[1px]')
+                    ref.current.classList.add('border-[2px]')
+                    passed = false
+                } else {
+                    ref.current.classList.remove('border-[#ae2f2f]')
+                    ref.current.classList.remove('border-[2px]')
+                    ref.current.classList.add('border-[1px]')
+                }
+            })
+
+            return setIsClickable(passed)
+        } else {
+            return setIsClickable(true)
+        }
     }
 
     // This function determines the sort of action when button is clicked
-    function buttonCallback(){
+    function buttonCallback() {
         const servicePrice = data.find((item) => item.service_id === selectedService)?.service_price
-        
-        if(hasPaymentConnector && servicePrice !== 0){
+
+        if (hasPaymentConnector && servicePrice !== 0) {
             return {
                 callBack: goToPayment,
                 text: 'Pay'
@@ -141,7 +166,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                                 />
                                 :
                                 <div className="image-round text-[12px] flex items-center justify-center">
-                                    <ImageIcon sx={{fill: "#000"}}/>
+                                    <ImageIcon sx={{ fill: "#000" }} />
                                 </div>
                         }
                         <span className="text-[#000]">{service.service_name}</span>
@@ -179,6 +204,40 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                     defaultValue={customerData ? customerData.email : undefined}
                 />
             </div>
+            {
+                context?.informationInputs &&
+                <div className="grid grid-cols-[repeat(2,calc(50%_-_5px))] gap-[10px] mt-[20px] kalendi-sd:flex kalendi-sd:flex-col kalendi-sd:gap-[10px]">
+                    {
+                        context.informationInputs.inputs.map((input, index) => {
+                            const ref = useRef(null)
+                            refArray.push(ref)
+                            return (
+                                <Input
+                                    label={input.label}
+                                    key={index}
+                                    forwardRef={ref}
+                                    note={input.note}
+                                    onChangeCallBack={changeEvent}
+                                />
+                            )
+                        })
+                    }
+                </div>
+            }
+            {
+                context?.terms &&
+                <p className="text-[12px] mt-[10px]">
+                    By proceeding, you confirm that you have read and agree to the terms and conditions of purchase, including product details, pricing, payment obligations, and refund policies. If you do not agree, do not continue. Your participation signifies acceptance of these
+                    <a
+                        className="ml-[4px] font-[600]"
+                        href={context.terms.url}
+                        target="_blank"
+                    >
+                        terms
+                    </a>
+                    .
+                </p>
+            }
             <Button
                 text={buttonCallback().text}
                 callBack={buttonCallback().callBack}

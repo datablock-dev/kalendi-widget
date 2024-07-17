@@ -176,10 +176,11 @@ function Checkout({ backendRoute, paymentIntent, setView, customerData, data, se
 
     return (
         <form
-            className="flex flex-col gap-[14px] w-[100%] overflow-y-auto"
+            className="flex flex-col gap-[14px] max-w-[100%] overflow-y-auto"
             onSubmit={pay}
         >
             <PaymentElement
+                className="w-[98%] mx-auto"
                 id="payment-element"
             />
             <Button

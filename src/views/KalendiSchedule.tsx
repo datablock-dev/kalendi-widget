@@ -374,7 +374,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                                         </div>
                                     }
                                     {
-                                        ((isNonBookable || availableSlots.length === 0) && index === 2) &&
+                                        (isNonBookable && availableSlots.length === 0 && index === 2) &&
                                         <div 
                                             className="bg-[#1890ff] text-[#fff] px-[12px] py-[8px] rounded-[3px] border-[1px] hover:cursor-pointer hover:brightness-80 absolute bottom-[50%]"
                                             onClick={nextAvailableTime}
