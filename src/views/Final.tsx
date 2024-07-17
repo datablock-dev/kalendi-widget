@@ -21,8 +21,6 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
     const service = services.find((item) => item.service_id === selectedService)
     const user = data.find((item) => item.user_id === selectedUser)
 
-    if (!service || !user) return <div>Error...</div>
-
     useEffect(() => {
         if(context && context.onSuccess){
             // Add data callback here
@@ -30,6 +28,8 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
             return context.onSuccess(context.customerData)
         }
     }, [context])
+
+    if (!service || !user) return <div>Error...</div>
 
     return (
         <div className="w-[100%] h-[100%] flex flex-col">
