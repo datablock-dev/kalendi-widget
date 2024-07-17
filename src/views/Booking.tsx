@@ -61,8 +61,8 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             const name = nameRef.current.value
             const email = emailRef.current.value
 
-            if (!isEmail(email)) return alert('Please provide a valid email address')
-            if (name.length < 2) return alert('Please provide a valid name value')
+            if (!isEmail(email)) return context?.onError ? context.onError(new Error('Please provide a valid email address')) : alert('Please provide a valid email address')
+            if (name.length < 2) return context?.onError ? context.onError(new Error('Please provide a valid name value')) : alert('Please provide a valid name value')
 
 
             setIsLoading(true)

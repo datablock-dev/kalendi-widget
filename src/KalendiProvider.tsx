@@ -2,7 +2,8 @@
 
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { KalendiContainer } from "./KalendiContainer";
-import { PaymentConnector, Terms, KalendiContextInterface, InformationInputs } from "./types";
+import { PaymentConnector, Terms, KalendiContextInterface, InformationInputs, CustomerData } from "./types";
+import { Dayjs } from "dayjs";
 
 // Create the context
 export const KalendiContext = createContext<KalendiContextInterface | null>(null);
@@ -19,7 +20,6 @@ interface KalendiProvider {
     terms?: Terms
     // Additional inputs
     informationInputs?: InformationInputs
-
     // CallBacks
     onError?: (e: Error) => any
     onSuccess?: (e: any) => any
@@ -31,6 +31,12 @@ export default function KalendiProvider({ children, backendRoute, user_id, servi
     const [userID, setUserID] = useState<string | undefined>(user_id)
     const [serviceID, setServiceID] = useState<string | undefined>(service_id)
 
+    // Selection states
+    const [selectedService, setSelectedService] = useState<null | string>(service_id || null)
+    const [selectedUser, setSelectedUser] = useState<null | string>(user_id || null) // The user_id
+    const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null)
+    const [customerData, setCustomerData] = useState<null | CustomerData>(null)
+
     const context: KalendiContextInterface = {
         isKalendiVisible: isKalendiVisible, 
         setIsKalendiVisible: setIsKalendiVisible,
@@ -38,6 +44,8 @@ export default function KalendiProvider({ children, backendRoute, user_id, servi
         setUserID: setUserID,
         service_id: serviceID,
         setServiceID: setServiceID,
+        customerData: customerData,
+        setCustomerData: setCustomerData,
         // Misc
         terms: terms,
         informationInputs: informationInputs,

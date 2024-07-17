@@ -32,7 +32,6 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
     const [selectedService, setSelectedService] = useState<null | string>(service_id || null)
     const [selectedUser, setSelectedUser] = useState<null | string>(user_id || null) // The user_id
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null)
-    const [customerData, setCustomerData] = useState<null | CustomerData>(null)
 
     if (!backendRoute) throw new TypeError("backendRoute prop must be provided!")
 
@@ -147,7 +146,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
                     </svg>
                 }
                 {
-                    (!isLoading && data && services) &&
+                    (!isLoading && data && services && context) &&
                     <>
                         <KalendiNavbar
                             backendRoute={backendRoute}
@@ -167,8 +166,8 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
                             setView={setView}
                             paymentConnector={paymentConnector}
                             // CustomerData
-                            customerData={customerData}
-                            setCustomerData={setCustomerData}
+                            customerData={context.customerData}
+                            setCustomerData={context.setCustomerData}
                         />
                         <KalendiViewer
                             backendRoute={backendRoute}
@@ -184,8 +183,8 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
                             setSelectedDate={setSelectedDate}
                             paymentConnector={paymentConnector}
                             // CustomerData
-                            customerData={customerData}
-                            setCustomerData={setCustomerData}
+                            customerData={context.customerData}
+                            setCustomerData={context.setCustomerData}
                         />
                     </>
                 }

@@ -1,4 +1,5 @@
 import { Dayjs } from "dayjs"
+import { Dispatch, SetStateAction } from "react"
 
 export type Options = 
     | "service" 
@@ -50,6 +51,9 @@ export interface KalendiContextInterface {
     setUserID: React.Dispatch<React.SetStateAction<string | undefined>>
     service_id: string | undefined
     setServiceID: React.Dispatch<React.SetStateAction<string | undefined>>
+    customerData: CustomerData | null
+    setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
+    // Misc
     terms?: Terms
     // Additional inputs
     informationInputs?: InformationInputs
