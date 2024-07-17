@@ -54,11 +54,14 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
         if (inputs.length > 0 && context?.informationInputs?.inputs) {
             inputs.forEach((ref, index) => {
                 if (!ref) return
-                const key = context?.informationInputs?.inputs[index].label.toLocaleLowerCase()
 
-                if (!key) return
-
-                customerData[key] = ref.value
+                if (index > 1){
+                    const key = context?.informationInputs?.inputs[index - 2].label.toLocaleLowerCase()
+    
+                    if (!key) return
+    
+                    customerData[key] = ref.value
+                }
             })
         }
 
@@ -107,11 +110,13 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             if (inputs.length > 0 && context?.informationInputs?.inputs) {
                 inputs.forEach((ref, index) => {
                     if (!ref) return
-                    const key = context?.informationInputs?.inputs[index].label.toLocaleLowerCase()
-
-                    if (!key) return
-
-                    customerData[key] = ref.value
+                    if (index > 1){
+                        const key = context?.informationInputs?.inputs[index - 2].label.toLocaleLowerCase()
+    
+                        if (!key) return
+    
+                        customerData[key] = ref.value
+                    }
                 })
             }
 
@@ -139,17 +144,19 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             inputs.forEach((ref, index) => {
                 if (!ref) return setIsClickable(false)
 
-                const validator = context?.informationInputs?.inputs[index].validator
-
-                if (validator && !validator(ref.value)) {
-                    ref.classList.add('border-[#ae2f2f]')
-                    ref.classList.remove('border-[1px]')
-                    ref.classList.add('border-[2px]')
-                    passed = false
-                } else {
-                    ref.classList.remove('border-[#ae2f2f]')
-                    ref.classList.remove('border-[2px]')
-                    ref.classList.add('border-[1px]')
+                if (index > 1){
+                    const validator = context?.informationInputs?.inputs[index - 2].validator
+    
+                    if (validator && !validator(ref.value)) {
+                        ref.classList.add('border-[#ae2f2f]')
+                        ref.classList.remove('border-[1px]')
+                        ref.classList.add('border-[2px]')
+                        passed = false
+                    } else {
+                        ref.classList.remove('border-[#ae2f2f]')
+                        ref.classList.remove('border-[2px]')
+                        ref.classList.add('border-[1px]')
+                    }
                 }
             })
 
