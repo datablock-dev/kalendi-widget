@@ -24,13 +24,13 @@ export default function Input({ label, type, onChangeCallBack, forwardRef, defau
             />
             {
                 note &&
-                <p className="text-[12px]">
+                <p className="text-[12px] mt-[-4px]">
                     {note}
                 </p>
             }
             {
                 error &&
-                <p className="text-[12px] text-[#ae2f2f]">
+                <p className="text-[12px] text-[#ae2f2f] mt-[-4px]">
                     {error}
                 </p>
             }

@@ -201,6 +201,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 <div className="flex flex-row items-center gap-[10px]">
                     <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">{selectedDate.format('YYYY-MM-DD')}</span>
                     <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">{selectedDate.format('HH:mm')}</span>
+                    <span>-</span>
                     <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">{selectedDate.add(service.service_time_block, 'minutes').format('HH:mm')}</span>
                 </div>
             </div>
