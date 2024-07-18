@@ -1,11 +1,12 @@
 'use client';
 
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useContext } from "react";
 import { Dayjs } from "dayjs";
 import CategoryIcon from '@mui/icons-material/Category';
 import PersonIcon from '@mui/icons-material/Person';
 import { Options, Data, Services, Users, CustomerData, PaymentConnector } from "../types";
 import CloseIcon from '@mui/icons-material/Close';
+import { KalendiContext } from "../KalendiProvider";
 
 export interface KalendiNavbar {
     backendRoute: string
@@ -28,11 +29,21 @@ export interface KalendiNavbar {
 }
 
 export default function KalendiNavbar({ backendRoute, service_id, services, data, header, view, setView, selectedService, setSelectedService, selectedUser, setSelectedUser, selectedDate, users, paymentConnector, customerData, setCustomerData }: KalendiNavbar) {
+    const context = useContext(KalendiContext)
 
     return (
         <>
             <div className="w-[100%]">
-                <h3 className="font-[600] text-[24px] text-[#000] mb-[10px]">{header || "Book an Appointment"}</h3>
+                <h3 className="font-[600] text-[24px] text-[#000] mb-[10px]">
+                    {header && header}
+                    {
+                        !header &&
+                        <>
+                            { context?.locale === "en" && "Book an Appointment"}
+                            { context?.locale === "sv" && "Boka ett möte"}
+                        </>
+                    }
+                </h3>
                 <div className="flex flex-col">
                     <div className="flex flex-row items-center gap-[10px] flex-wrap">
                         {
@@ -69,7 +80,8 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                     onClick={() => { view !== 'service' ? setView('service') : undefined }}
                                     data-selected={view === "service" ? true : false}
                                 >
-                                    Services
+                                    { context?.locale === "en" &&  "Services" }
+                                    { context?.locale === "sv" &&  "Tjänster" }
                                 </div>
                                 {
                                     selectedService &&
@@ -78,7 +90,8 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         onClick={() => { view !== 'employee' ? setView('employee') : undefined }}
                                         data-selected={view === "employee" ? true : false}
                                     >
-                                        Employees
+                                        { context?.locale === "en" &&  "Employees" }
+                                        { context?.locale === "sv" &&  "Konsult" }
                                     </div>
                                 }
                                 {
@@ -88,7 +101,8 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         onClick={() => { view !== 'book' ? setView('book') : undefined }}
                                         data-selected={view === "book" ? true : false}
                                     >
-                                        Book
+                                        { context?.locale === "en" &&  "Book" }
+                                        { context?.locale === "sv" &&  "Boka" }
                                     </div>
                                 }
                                 {
@@ -98,7 +112,8 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         onClick={() => { view !== "date-selected" ? setView("date-selected") : undefined }}
                                         data-selected={view === "date-selected" ? true : false}
                                     >
-                                        Confirm Booking
+                                        { context?.locale === "en" &&  "Confirm Booking" }
+                                        { context?.locale === "sv" &&  "Bekfräfta Bokning" }
                                     </div>
                                 }
                                 {
@@ -108,7 +123,8 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         onClick={() => { view !== 'pay' ? setView('pay') : undefined }}
                                         data-selected={view === "pay" ? true : false}
                                     >
-                                        Pay
+                                        { context?.locale === "en" &&  "Pay" }
+                                        { context?.locale === "sv" &&  "Betala" }
                                     </div>
                                 }
                             </>

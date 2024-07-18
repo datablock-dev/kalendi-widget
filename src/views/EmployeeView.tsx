@@ -1,9 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { Data, Options, UserAvailabilityResponse } from "../types"
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react"
+import { Data, Locale, Options, UserAvailabilityResponse } from "../types"
 import PersonIcon from '@mui/icons-material/Person';
 import axios, { AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import { dateToTimestamp } from "../utils/time";
+import { KalendiContext } from "../KalendiProvider";
 
 export interface EmployeeView {
     backendRoute: string
@@ -21,6 +22,7 @@ interface AvailabilityObject {
 }
 
 export default function EmployeeView({ backendRoute, data, setView, selectedService, selectedUser, setSelectedUser }: EmployeeView) {
+    const context = useContext(KalendiContext)
     const [availability, setAvailability] = useState<null | false | AvailabilityObject[]>(null)
 
     useEffect(() => {
@@ -93,6 +95,7 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                                                 availability={availability}
                                                 employee={employee}
                                                 className="kalendi-md:hidden"
+                                                locale={context?.locale || 'en'}
                                             />
                                         </div>
                                     </div>
@@ -101,6 +104,7 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                                             availability={availability}
                                             employee={employee}
                                             className="kalendi-sd:hidden"
+                                            locale={context?.locale || 'en'}
                                         />
                                         <div
                                             className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer"
@@ -134,15 +138,19 @@ interface FirstAvilableSlot {
     availability: AvailabilityObject[] | null | false
     employee: Data
     className?: string
+    locale: Locale
 }
 
-function FirstAvilableSlot({ availability, employee, className }: FirstAvilableSlot){
+function FirstAvilableSlot({ availability, employee, className, locale }: FirstAvilableSlot){
     return(
         <>
         {
             (availability && availability.find((item) => item.user_id === employee.user_id)) ?
                 <div className={"flex kalendi-md:flex-row kalendi-md:items-center kalendi-md:gap-[6px] kalendi-sd:flex-col " + className}>
-                    <span className="h-fit">First available slot: </span>
+                    <span className="h-fit">
+                        { locale === "en" && "First available slot: " }
+                        { locale === "sv" && "Första tillgängliga tid: " }
+                    </span>
                     <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">
                         {availability.find((item) => item.user_id === employee.user_id)?.date}
                     </span>

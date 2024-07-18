@@ -1,11 +1,12 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react"
 import dayjs, { Dayjs } from "dayjs"
 import isBetween from "dayjs/plugin/isBetween"
 import weekOfYear from "dayjs/plugin/weekOfYear"
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { fixTimezoneTimestamp, months, weekDays } from "../utils/time";
-import { Options, WeekView, UserAvailability, EventResponse, UserAvailabilityResponse, Data, Services, TimeBox } from "../types";
+import { Options, WeekView, UserAvailability, EventResponse, UserAvailabilityResponse, Data, Services, TimeBox, Locale } from "../types";
+import { KalendiContext } from "../KalendiProvider";
 
 export interface KalendiSchedule {
     backendRoute: string
@@ -23,6 +24,7 @@ const timeBoxes = Array.from({ length: 24 }).map((_, index) => {
 }).flat(1)
 
 export default function KalendiSchedule({ backendRoute, data, services, selectedUser, selectedService, setView, setSelectedDate }: KalendiSchedule) {
+    const context = useContext(KalendiContext)
     dayjs.extend(isBetween)
     dayjs.extend(weekOfYear)
     const currentDate = dayjs()
@@ -37,13 +39,13 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
 
     useEffect(() => {
         if (!weekView) {
-            setWeekView(createWeekView(currentDate, weekMove))
+            setWeekView(createWeekView(currentDate, weekMove, context?.locale || 'en'))
         } else if (weekView) {
             if (userAvailability === null && selectedUser) {
                 fetchAvailability(weekView)
             } else if (weekMove !== weekView[0].weekFromCurrentWeek) {
-                setWeekView(createWeekView(currentDate, weekMove))
-                fetchAvailability(createWeekView(currentDate, weekMove))
+                setWeekView(createWeekView(currentDate, weekMove, context?.locale || 'en'))
+                fetchAvailability(createWeekView(currentDate, weekMove, context?.locale || 'en'))
             }
         }
 
@@ -207,14 +209,22 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                     data-selectable={weekMove > 0 ? true : false}
                     onClick={() => { changeWeek('left') }}
                 >
-                    <KeyboardArrowLeftIcon sx={{ fill: "#000" }} /> Previous Week
+                    <KeyboardArrowLeftIcon sx={{ fill: "#000" }} />
+                    <span>
+                        { context?.locale === "en" && "Previous Week" }
+                        { context?.locale === "sv" && "Förra Veckan" }
+                    </span>
                 </div>
                 <div
                     className="flex flex-row items-center gap-[6px] rounded-[3px] data-[selectable=true]:hover:cursor-pointer data-[selectable=false]:hover:cursor-not-allowed data-[selectable=true]:hover:bg-[#d4d4d4] border-[#787878] border-[1px] border-solid px-[12px] text-[#000] select-none"
                     data-selectable={weekMove < 10 ? true : false}
                     onClick={() => { changeWeek('right') }}
                 >
-                    Next Week <KeyboardArrowRightIcon sx={{ fill: "#000" }} />
+                    <span>
+                        { context?.locale === "en" && "Next Week " }
+                        { context?.locale === "sv" && "Nästa Vecka" }
+                    </span>
+                    <KeyboardArrowRightIcon sx={{ fill: "#000" }} />
                 </div>
             </div>
             {
@@ -368,10 +378,15 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                                             })
                                     }
                                     {
-                                        (!isNonBookable && availableSlots.length === 0 && !isBefore) &&
+                                        /*
+                                        (isNonBookable && availableSlots.length === 0 && !isBefore) &&
                                         <div className="flex justify-center">
-                                            <span className="text-wrap text-[#000] kalendi-sd:text-[14px] kalendi-sd:text-center select-none">No available slots</span>
+                                            <span className="text-wrap text-[#000] kalendi-sd:text-[14px] kalendi-sd:text-center select-none">
+                                                { context?.locale === "en" && "No available slots" }
+                                                { context?.locale === "sv" && "Inga tillgängliga tider" }
+                                            </span>
                                         </div>
+                                        */
                                     }
                                     {
                                         (isNonBookable && availableSlots.length === 0 && index === 2) &&
@@ -379,11 +394,14 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                                             className="bg-[#1890ff] text-[#fff] px-[12px] py-[8px] rounded-[3px] border-[1px] hover:cursor-pointer hover:brightness-80 absolute bottom-[50%]"
                                             onClick={nextAvailableTime}
                                         >
-                                            <span>Next available time</span>
+                                            <span>
+                                                { context?.locale === "en" && "Next available time" }
+                                                { context?.locale === "sv" && "Nästa tillgängliga tid" }
+                                            </span>
                                         </div>
                                     }
                                     {
-                                        isBefore &&
+                                        (isBefore || isNonBookable || availableSlots.length === 0) &&
                                         <div className="w-[calc(100%_-_2px)] h-[100%] bg-[repeating-linear-gradient(45deg,#606dbc,#606dbc_10px,#465298_10px,#465298_20px)] rounded-[3px]"></div>
                                     }
                                 </div>
@@ -396,7 +414,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
     )
 }
 
-function createWeekView(currentDate: Dayjs, weeksMove: number): WeekView[] {
+function createWeekView(currentDate: Dayjs, weeksMove: number, locale: Locale): WeekView[] {
     const currDate = dayjs(currentDate)
     const currentWeekDay = currDate.day()
 
@@ -414,10 +432,10 @@ function createWeekView(currentDate: Dayjs, weeksMove: number): WeekView[] {
             year: newValue.year(),
             month: newValue.month(),
             monthLeadingZero: newValue.month() + 1 >= 10 ? `${newValue.month() + 1}` : `0${newValue.month() + 1}`,
-            monthString: months[newValue.month()],
+            monthString: months(locale)[newValue.month()],
             daysInMonth: newValue.daysInMonth(),
             weekDay: newValue.day(),
-            weekDayString: weekDays[newValue.day()],
+            weekDayString: weekDays(locale)[newValue.day()],
             date: newValue,
             weekFromCurrentWeek: weeksMove
         })

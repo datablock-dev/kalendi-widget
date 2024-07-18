@@ -2,7 +2,7 @@
 
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { KalendiContainer } from "./KalendiContainer";
-import { PaymentConnector, Terms, KalendiContextInterface, InformationInputs, CustomerData } from "./types";
+import { PaymentConnector, Terms, KalendiContextInterface, InformationInputs, CustomerData, Locale } from "./types";
 import { Dayjs } from "dayjs";
 
 // Create the context
@@ -11,6 +11,7 @@ export const KalendiContext = createContext<KalendiContextInterface | null>(null
 interface KalendiProvider {
     children: React.ReactNode
     backendRoute: string
+    locale: Locale
     user_id?: string
     service_id?: string
     header?: string
@@ -26,7 +27,7 @@ interface KalendiProvider {
 }
 
 // Define the provider component
-export default function KalendiProvider({ children, backendRoute, user_id, service_id, header, paymentConnector, terms, informationInputs, onError, onSuccess }: KalendiProvider){
+export default function KalendiProvider({ children, backendRoute, locale, user_id, service_id, header, paymentConnector, terms, informationInputs, onError, onSuccess }: KalendiProvider){
     const [isKalendiVisible, setIsKalendiVisible] = useState<boolean>(false)
     const [userID, setUserID] = useState<string | undefined>(user_id)
     const [serviceID, setServiceID] = useState<string | undefined>(service_id)
@@ -38,6 +39,7 @@ export default function KalendiProvider({ children, backendRoute, user_id, servi
     const [customerData, setCustomerData] = useState<null | CustomerData>(null)
 
     const context: KalendiContextInterface = {
+        locale: locale,
         isKalendiVisible: isKalendiVisible, 
         setIsKalendiVisible: setIsKalendiVisible,
         user_id: userID, 

@@ -175,12 +175,18 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
         if (hasPaymentConnector && servicePrice !== 0) {
             return {
                 callBack: goToPayment,
-                text: 'Pay'
+                text: {
+                    en: 'Pay',
+                    sv: 'Betala'
+                }[context?.locale || 'en']
             }
         } else {
             return {
                 callBack: bookRequest,
-                text: 'Book'
+                text: {
+                    en: 'Book',
+                    sv: 'Boka'
+                }[context?.locale || 'en']
             }
         }
     }
@@ -188,7 +194,10 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
     return (
         <div className="w-[100%] h-[100%] flex flex-col">
             <div className="flex flex-row gap-[6px] items-center mb-[10px]">
-                <label className="font-[600] text-[#000]">Date:</label>
+                <label className="font-[600] text-[#000]">
+                    { context?.locale === "en" && "Date:" }
+                    { context?.locale === "sv" && "Datum:" }
+                </label>
                 <div className="flex flex-row items-center gap-[10px]">
                     <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">{selectedDate.format('YYYY-MM-DD')}</span>
                     <span className="bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid text-[#000]">{selectedDate.format('HH:mm')}</span>
@@ -197,7 +206,10 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             </div>
             <div className="flex flex-row flex-wrap gap-[10px]">
                 <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid kalendi-sd:w-[100%] kalendi-md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
-                    <label className="font-[600] text-[#000]">Service</label>
+                    <label className="font-[600] text-[#000]">
+                        { context?.locale === "en" && "Service" }
+                        { context?.locale === "sv" && "Tjänst" }
+                    </label>
                     <div className="flex flex-row items-center gap-[10px]">
                         {
                             service.service_image ?
@@ -215,7 +227,10 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                     </div>
                 </div>
                 <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid kalendi-sd:w-[100%] kalendi-md:w-[min(calc(50%_-_5px),500px)] py-[10px]">
-                    <label className="font-[600] text-[#000]">Employee</label>
+                    <label className="font-[600] text-[#000]">
+                        { context?.locale === "en" && "Employee" }
+                        { context?.locale === "sv" && "Konsult" }
+                    </label>
                     <div className="flex flex-row items-center gap-[10px]">
                         {
                             user.avatar ?
@@ -233,13 +248,19 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             </div>
             <div className="grid grid-cols-[repeat(2,calc(50%_-_5px))] gap-[10px] mt-[20px] kalendi-sd:flex kalendi-sd:flex-col kalendi-sd:gap-[10px]">
                 <Input
-                    label="Name"
+                    label={{
+                        en: "Name",
+                        sv: 'Namn'
+                    }[context?.locale || 'en']}
                     forwardRef={nameRef}
                     onChangeCallBack={changeEvent}
                     defaultValue={customerData ? customerData.name : undefined}
                 />
                 <Input
-                    label="Email"
+                    label={{
+                        en: "Email",
+                        sv: 'Email'
+                    }[context?.locale || 'en']}
                     type="Email"
                     forwardRef={emailRef}
                     onChangeCallBack={changeEvent}
@@ -266,13 +287,15 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             {
                 context?.terms &&
                 <p className="text-[12px] mt-[10px]">
-                    By proceeding, you confirm that you have read and agree to the terms and conditions of purchase, including product details, pricing, payment obligations, and refund policies. If you do not agree, do not continue. Your participation signifies acceptance of these
+                    { context.locale === "en" && "By proceeding, you confirm that you have read and agree to the terms and conditions of purchase, including product details, pricing, payment obligations, and refund policies. If you do not agree, do not continue. Your participation signifies acceptance of these" }
+                    { context.locale === "sv" && "Genom att fortsätta bekräftar du att du har läst och godkänner köpevillkoren, inklusive produktdetaljer, prissättning, betalningsskyldigheter och återbetalningspolicyer. Om du inte godkänner, fortsätt inte. Din medverkan innebär att du accepterar dessa" }
                     <a
                         className="ml-[4px] font-[600]"
                         href={context.terms.url}
                         target="_blank"
                     >
-                        terms
+                        { context.locale === "en" && "terms" }
+                        { context.locale === "sv" && "villkor" }
                     </a>
                     .
                 </p>

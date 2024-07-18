@@ -1,15 +1,14 @@
 'use client'
 
-import React, { Dispatch, FormEvent, SetStateAction, useEffect, useState } from "react"
-import ServiceItem from "../components/ServiceItem"
+import React, { Dispatch, FormEvent, SetStateAction, useContext, useEffect, useState } from "react"
 import { Options, Services, Data, PaymentConnector, StripePaymentIntent, CustomerData } from "../types"
-import { AddressElement, Elements, ExpressCheckoutElement, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
-import KalendiStripe from "../utils/connectors/stripe"
+import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js"
 import { formatMonetaryValue } from "../utils/string"
 import axios, { AxiosResponse } from "axios"
 import Button from "../components/Button"
 import { Dayjs } from "dayjs"
 import { loadStripe } from "@stripe/stripe-js"
+import { KalendiContext } from "../KalendiProvider"
 
 interface PaymentView {
     backendRoute: string
@@ -106,6 +105,7 @@ interface Checkout {
 }
 
 function Checkout({ backendRoute, paymentIntent, setView, customerData, data, services, selectedService, selectedDate, selectedUser }: Checkout) {
+    const context = useContext(KalendiContext)
     const [isClickable, setIsClickable] = useState<boolean>(true)
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -135,9 +135,15 @@ function Checkout({ backendRoute, paymentIntent, setView, customerData, data, se
             clientSecret
         })
             .then((res) => {
-                setIsLoading(false)
-                bookRequest()
-                setView('confirmation')
+                if(res.error){
+                    console.error(res.error)
+                    setIsLoading(false)
+                    context?.onError && context.onError(new Error(res.error.message))
+                } else {
+                    setIsLoading(false)
+                    bookRequest()
+                    setView('confirmation')
+                }
             })
             .catch((err) => {
                 setIsLoading(false)

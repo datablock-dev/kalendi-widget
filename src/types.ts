@@ -1,6 +1,7 @@
 import { Dayjs } from "dayjs"
 import { Dispatch, SetStateAction } from "react"
 
+export type Locale = 'en' | 'sv'
 export type Options = 
     | "service" 
     | "employee" 
@@ -45,6 +46,7 @@ export type TimeBoxMinutes =
 export type TimeBox = `${TimeBoxHours}:${TimeBoxMinutes}`
 
 export interface KalendiContextInterface {
+    locale: Locale
     isKalendiVisible: boolean
     setIsKalendiVisible: React.Dispatch<React.SetStateAction<boolean>>
     user_id: string | undefined

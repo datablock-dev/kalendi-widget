@@ -34,20 +34,29 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
     return (
         <div className="w-[100%] h-[100%] flex flex-col">
             <p className="whitespace-pre-line text-[18px] text-[#000]">
-                Dear <span className="font-[600] text-[#000]">{customerData.name}</span>,
+                { context?.locale === "en" && "Dear " }
+                { context?.locale === "sv" && "Kära " }
+                <span className="font-[600] text-[#000]">{customerData.name}</span>,
                 <br /><br />
-                We are thrilled to confirm that your booking has been successfully processed. Please review the details below to ensure that everything aligns with your request:
+                { context?.locale === "en" && "We are thrilled to confirm that your booking has been successfully processed. Please review the details below to ensure that everything aligns with your request:"}
+                { context?.locale === "sv" && "Vi är glada att bekräfta att din bokning har behandlats och gått igenom. Vänligen granska detaljerna nedan för att säkerställa att vi har fått rätt information från dig:"}
             </p>
             <div className="flex flex-col items-center mx-[20px]">
                 <div className="flex flex-row items-center gap-[10px]">
                     <span className="text-[#000] bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('YYYY-MM-DD')}</span>
                     <span className="text-[#000] bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.format('HH:mm')}</span>
-                    <span className="text-[#000]">to</span>
+                    <span className="text-[#000]">
+                        { context?.locale === "en" && "to" }
+                        { context?.locale === "sv" && "till" }
+                    </span>
                     <span className="text-[#000] bg-[#d4d4d4] rounded-[3px] px-[4px] py-[4px] border-[#7878785f] border-[1px] border-solid">{selectedDate.add(service.service_time_block, 'minutes').format('HH:mm')}</span>
                 </div>
                 <div className="flex flex-col flex-wrap gap-[10px] my-[10px] w-fit">
                     <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid kalendi-sd:w-[100%] kalendi-md:w-[300px] py-[10px]">
-                        <label className="font-[600] text-[#000]">Service</label>
+                        <label className="font-[600] text-[#000]">
+                            { context?.locale === "en" && "Service" }
+                            { context?.locale === "sv" && "Tjänst" }
+                        </label>
                         <div className="flex flex-row items-center gap-[10px]">
                             {
                                 service.service_image ?
@@ -65,7 +74,10 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
                         </div>
                     </div>
                     <div className="flex flex-col items-center rounded-[3px] border-[#787878] border-[1px] border-solid kalendi-sd:w-[100%] kalendi-md:w-[300px] py-[10px]">
-                        <label className="font-[600] text-[#000]">Employee</label>
+                        <label className="font-[600] text-[#000]">
+                            { context?.locale === "en" && "Employee" }
+                            { context?.locale === "sv" && "Konsult" }
+                        </label>
                         <div className="flex flex-row items-center gap-[10px]">
                             {
                                 user.avatar ?
@@ -82,11 +94,18 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
                     </div>
                 </div>
             </div>
-            <p className="text-[#000]">
-                A confirmation email has been sent to the email address provided during booking.<br />
-                If you do not see it in your inbox, please check your spam or junk folder.
+            <p className="text-[#000] whitespace-pre-line">
+                { context?.locale === "en" && 
+                    `A confirmation email has been sent to the email address provided during booking.
+                    If you do not see it in your inbox, please check your spam or junk folder.
 
-                Thank you for choosing our service. We look forward to serving you. If you have any questions or need further assistance, please feel free to reach out to us.
+                    Thank you for choosing our service. We look forward to serving you. If you have any questions or need further assistance, please feel free to reach out to us.` 
+                }
+                { context?.locale === "sv" && 
+                    `Ett bekräftelsemail har skickats till den e-postadress som angavs vid bokningen. Om du inte ser det i din inkorg, vänligen kontrollera din skräppost eller skräpmapp.
+
+                    Tack för att du valde oss, och vi ser fram emot att få hjälpa dig. Om du har några frågor eller behöver ytterligare assistans, hör gärna av dig till oss.` 
+                }
             </p>
         </div>
     )
