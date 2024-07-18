@@ -88,6 +88,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             }
 
             const payload = {
+                locale: context?.locale || 'en',
                 user_id: selectedUser,
                 service_id: selectedService,
                 from_timestamp: selectedDate.format('YYYY-MM-DD HH:mm:ss'),
