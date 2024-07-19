@@ -34,8 +34,8 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
     useEffect(() => {
         if (!weekView) {
             setWeekView(createWeekView(currentDate, weekMove, context?.locale || 'en'))
-        } else if (weekView) {
-            if (userAvailability === null && selectedUser) {
+        } else if (weekView && context?.availability) {
+            if (!context.availability.availability && selectedUser) {
                 fetchAvailability(weekView)
             } else if (weekMove !== weekView[0].weekFromCurrentWeek) {
                 setWeekView(createWeekView(currentDate, weekMove, context?.locale || 'en'))
@@ -43,7 +43,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
             }
         }
 
-    }, [currentDate, weekMove])
+    }, [currentDate, weekMove, context?.availability])
 
     if (!service) return <span>...</span>
 
