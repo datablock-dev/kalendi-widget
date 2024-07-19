@@ -5,7 +5,7 @@ import weekOfYear from "dayjs/plugin/weekOfYear"
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { months, weekDays } from "../utils/time";
-import { Options, WeekView, UserAvailability, UserAvailabilityResponse, Data, Services, TimeBox, Locale } from "../types";
+import { Options, WeekView, UserAvailabilityResponse, Data, Services, Locale } from "../types";
 import { KalendiContext } from "../KalendiProvider";
 import axios, { AxiosResponse } from "axios";
 
@@ -26,7 +26,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
     const currentDate = dayjs()
     const [weekMove, setWeekMove] = useState<number>(0)
     const [weekView, setWeekView] = useState<null | WeekView[]>(null)
-    const [userAvailability, setUserAvailability] = useState<UserAvailability | null | false>(null)
+    const [firstAvailableSlot, setFirstAvailableSlot] = useState<string | null>(null)
     const [weekToAvailability, setWeekToAvailability] = useState<null | [string, string]>(null)
 
     const service = services.find((item) => item.service_id === selectedService)
@@ -56,15 +56,14 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
             const dateTo = `${weekView[4].year}-${weekView[4].monthLeadingZero}-${weekView[4].dayOfMonthLeadingZero}`
             urlString = `${backendRoute}/public/availability/${selectedUser}/${service?.service_id}/${date_from || dateFrom}/${date_to || dateTo}/${new Date().getTimezoneOffset()}`
 
-            console.log(urlString)
-
             if (!urlString) return
             const { data } = await axios.get(urlString) as AxiosResponse<UserAvailabilityResponse>
             context?.availability.setAvailability(data.scheduleAvailability)
+            setFirstAvailableSlot(data.firstAvailableSlot)
+        
+            if(data.weekToAvailability) setWeekToAvailability(data.weekToAvailability)
+            if(data.firstAvailableSlot) setFirstAvailableSlot(data.firstAvailableSlot)
 
-            if(data.weekToAvailability){
-                setWeekToAvailability(data.weekToAvailability)
-            }
         } catch (error) {
             console.error(error)
         }
@@ -79,9 +78,10 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
     }
 
     async function nextAvailableTime(){
-        if(!weekToAvailability) return
+        if(!context?.availability.availability || !firstAvailableSlot) return
 
-        const weeksToMove = dayjs(weekToAvailability[0]).week() - currentDate.add(weekMove, 'week').week()
+        console.log(context.availability.availability)
+        const weeksToMove = dayjs(firstAvailableSlot).week() - currentDate.add(weekMove, 'week').week()
         setWeekMove(weekMove + weeksToMove)
     }
 
@@ -204,6 +204,7 @@ function createWeekView(currentDate: Dayjs, weeksMove: number, locale: Locale): 
     const currDate = dayjs(currentDate)
     const currentWeekDay = currDate.day()
 
+    // @ts-ignore
     const weekView = []
 
     const rollBack = currentWeekDay > 0 ? 1 - currDate.day() : -6
@@ -227,5 +228,6 @@ function createWeekView(currentDate: Dayjs, weeksMove: number, locale: Locale): 
         })
     })
 
+    // @ts-ignore
     return weekView
 }
