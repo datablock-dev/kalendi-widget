@@ -55,6 +55,10 @@ export interface KalendiContextInterface {
     setServiceID: React.Dispatch<React.SetStateAction<string | undefined>>
     customerData: CustomerData | null
     setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
+    availability: { 
+        availability: null | { [key: string]: ScheduleAvailability }
+        setAvailability: Dispatch<SetStateAction<null | { [key: string]: ScheduleAvailability }>>
+    }
     // Misc
     terms?: Terms
     // Additional inputs
@@ -133,13 +137,18 @@ export interface EventResponse {
 }
 
 export interface UserAvailabilityResponse {
-    availability: UserAvailability
-    events: EventResponse[]
-    bookings: CalendarItemPayload[]
+    //availability: UserAvailability
+    //events: EventResponse[]
+    //bookings: CalendarItemPayload[]
     service?: Services
     weekToAvailability: [string, string]
     user_id: string
     firstAvailableSlot: string | null
+    scheduleAvailability: { [key: string]: ScheduleAvailability } | null
+}
+
+export interface ScheduleAvailability {
+    [key: string]: string[]
 }
 
 export interface CalendarItem {

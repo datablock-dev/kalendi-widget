@@ -804,10 +804,6 @@ video {
   white-space: pre-line;
 }
 
-.text-wrap {
-  text-wrap: wrap;
-}
-
 .rounded-\[3px\] {
   border-radius: 3px;
 }
@@ -1053,14 +1049,6 @@ video {
 
   .kalendi-sd\:gap-\[10px\] {
     gap: 10px;
-  }
-
-  .kalendi-sd\:text-center {
-    text-align: center;
-  }
-
-  .kalendi-sd\:text-\[14px\] {
-    font-size: 14px;
   }
 }
 

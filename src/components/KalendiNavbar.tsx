@@ -101,8 +101,8 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         onClick={() => { view !== 'book' ? setView('book') : undefined }}
                                         data-selected={view === "book" ? true : false}
                                     >
-                                        { context?.locale === "en" &&  "Book" }
-                                        { context?.locale === "sv" &&  "Boka" }
+                                        { context?.locale === "en" &&  "Time Slots" }
+                                        { context?.locale === "sv" &&  "Tid" }
                                     </div>
                                 }
                                 {
@@ -113,7 +113,7 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         data-selected={view === "date-selected" ? true : false}
                                     >
                                         { context?.locale === "en" &&  "Confirm Booking" }
-                                        { context?.locale === "sv" &&  "Bekfräfta Bokning" }
+                                        { context?.locale === "sv" &&  "Dina uppgifter" }
                                     </div>
                                 }
                                 {

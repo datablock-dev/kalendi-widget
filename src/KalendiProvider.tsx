@@ -2,7 +2,7 @@
 
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import { KalendiContainer } from "./KalendiContainer";
-import { PaymentConnector, Terms, KalendiContextInterface, InformationInputs, CustomerData, Locale } from "./types";
+import { PaymentConnector, Terms, KalendiContextInterface, InformationInputs, CustomerData, Locale, ScheduleAvailability } from "./types";
 import { Dayjs } from "dayjs";
 
 // Create the context
@@ -37,6 +37,9 @@ export default function KalendiProvider({ children, backendRoute, locale, user_i
     const [selectedUser, setSelectedUser] = useState<null | string>(user_id || null) // The user_id
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null)
     const [customerData, setCustomerData] = useState<null | CustomerData>(null)
+    
+    // Data states
+    const [availability, setAvailability] = useState<null | { [key: string]: ScheduleAvailability }>(null)
 
     const context: KalendiContextInterface = {
         locale: locale,
@@ -48,12 +51,16 @@ export default function KalendiProvider({ children, backendRoute, locale, user_i
         setServiceID: setServiceID,
         customerData: customerData,
         setCustomerData: setCustomerData,
+        availability: {
+            availability: availability,
+            setAvailability: setAvailability
+        },
         // Misc
         terms: terms,
         informationInputs: informationInputs,
         // Callbacks
         onError: onError,
-        onSuccess: onSuccess
+        onSuccess: onSuccess,
     }
 
     useEffect(() => {

@@ -11,6 +11,8 @@ rollup.config.js
 bun.lockb
 /.storybook/
 /src/test/
+.eslintrc.cjs
+eslint.config.mjs
 
 # Index files
 ./index.d.ts
