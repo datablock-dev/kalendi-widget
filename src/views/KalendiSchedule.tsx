@@ -59,13 +59,6 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
             if (!urlString) return
             const { data } = await axios.get(urlString) as AxiosResponse<UserAvailabilityResponse>
             context?.availability.setAvailability(data.scheduleAvailability)
-            console.log(data.scheduleAvailability)
-
-            if (data.availability) {
-                setUserAvailability(data.availability)
-            } else {
-                setUserAvailability(false)
-            }
 
             if(data.weekToAvailability){
                 setWeekToAvailability(data.weekToAvailability)
