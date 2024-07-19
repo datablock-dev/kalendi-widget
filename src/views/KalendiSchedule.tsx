@@ -54,7 +54,9 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
 
             const dateFrom = `${weekView[0].year}-${weekView[0].monthLeadingZero}-${weekView[0].dayOfMonthLeadingZero}`
             const dateTo = `${weekView[4].year}-${weekView[4].monthLeadingZero}-${weekView[4].dayOfMonthLeadingZero}`
-            urlString = `${backendRoute}/public/availability/${selectedUser}/${service?.service_id}/${date_from || dateFrom}/${date_to || dateTo}`
+            urlString = `${backendRoute}/public/availability/${selectedUser}/${service?.service_id}/${date_from || dateFrom}/${date_to || dateTo}/${new Date().getTimezoneOffset()}`
+
+            console.log(urlString)
 
             if (!urlString) return
             const { data } = await axios.get(urlString) as AxiosResponse<UserAvailabilityResponse>
@@ -121,7 +123,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
             }
             <div className="w-[100%] h-[50px] grid week-grid overflow-y-auto">
                 {
-                    (weekView && userAvailability !== null) &&
+                    (weekView && context?.availability.availability) &&
                     weekView.map((day) => {
                         return (
                             <div

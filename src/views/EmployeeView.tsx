@@ -36,9 +36,9 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                 const date_from = dateToTimestamp(dayjs().day(1)).split(' ')[0]
                 const date_to = dateToTimestamp(dayjs().day(5)).split(' ')[0]
 
-                const promiseArray = new Array()
+                const promiseArray: Promise<AxiosResponse<UserAvailabilityResponse>>[] = []
                 users.forEach((user) => {
-                    const url = `${backendRoute}/public/availability/${user.user_id}/${selectedService}/${date_from}/${date_to}`
+                    const url = `${backendRoute}/public/availability/${user.user_id}/${selectedService}/${date_from}/${date_to}/${new Date().getTimezoneOffset()}`
                     promiseArray.push(axios.get(url))
                 })
 
