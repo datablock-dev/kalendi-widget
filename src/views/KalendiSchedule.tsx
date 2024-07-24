@@ -146,7 +146,8 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                     Object.keys(context.availability.availability[weekMove]).map((key, index) => {
                         if(!context.availability.availability) return
                         const availability = context.availability.availability[weekMove][key]
-
+                        const weekHasAvailableSlots = Object.values(context.availability.availability[weekMove]).map((item) => item.length).reduce((prev, next) => prev + next) > 0 ? true : false
+                        
                         return (
                             <div
                                 className="w-[100%] h-[100%] min-h-[100%] flex flex-col"
@@ -162,6 +163,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                                                 return (
                                                     <div
                                                         className="rounded-[3px] bg-[#fff] py-[4px] px-[4px] border-solid border-[#d4d4d4] border-[1px] hover:cursor-pointer hover:bg-[#e4e4e4]"
+                                                        data-timestamp={`${key} ${time}`}
                                                         key={key + time}
                                                         onClick={() => {
                                                             const timestamp = `${key} ${time}:00`
@@ -175,7 +177,7 @@ export default function KalendiSchedule({ backendRoute, data, services, selected
                                             })
                                     }
                                     {
-                                        (availability.length === 0 && index === 2) &&
+                                        (!weekHasAvailableSlots && index === 2) &&
                                         <div 
                                             className="bg-[#1890ff] text-[#fff] px-[12px] py-[8px] rounded-[3px] border-[1px] hover:cursor-pointer hover:brightness-80 absolute bottom-[50%]"
                                             onClick={nextAvailableTime}
