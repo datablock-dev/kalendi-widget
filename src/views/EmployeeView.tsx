@@ -3,7 +3,6 @@ import { Data, Locale, Options, UserAvailabilityResponse } from "../types"
 import PersonIcon from '@mui/icons-material/Person';
 import axios, { AxiosResponse } from "axios";
 import dayjs from "dayjs";
-import { dateToTimestamp } from "../utils/time";
 import { KalendiContext } from "../KalendiProvider";
 
 export interface EmployeeView {
@@ -33,8 +32,8 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
         async function fetchAvailability() {
             try {
                 const users = data.filter((item) => item.service_id === selectedService)
-                const date_from = dateToTimestamp(dayjs().day(1)).split(' ')[0]
-                const date_to = dateToTimestamp(dayjs().day(5)).split(' ')[0]
+                const date_from = dayjs().day(1).format('YYYY-MM-DD')
+                const date_to = dayjs().day(5).format('YYYY-MM-DD')
 
                 const promiseArray: Promise<AxiosResponse<UserAvailabilityResponse>>[] = []
                 users.forEach((user) => {
@@ -52,6 +51,9 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                     }
                 })
 
+                res.forEach((response) => {
+                    console.log(response)
+                })
                 setAvailability(availabilityData)
             } catch (error) {
                 console.error(error)

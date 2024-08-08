@@ -1,4 +1,4 @@
-import React, { Dispatch, RefObject, SetStateAction, useContext, useRef, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useRef, useState } from "react"
 import { Dayjs } from "dayjs"
 import { CustomerData, Data, Options, Services } from "../types"
 import { isEmail } from "validator"
@@ -294,6 +294,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                     <a
                         className="ml-[4px] font-[600]"
                         href={context.terms.url}
+                        rel="noreferrer"
                         target="_blank"
                     >
                         { context.locale === "en" && "terms" }

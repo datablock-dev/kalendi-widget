@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react"
 import KalendiNavbar from "./components/KalendiNavbar";
 import KalendiViewer from "./components/KalendiViewer";
 import CloseIcon from '@mui/icons-material/Close';
-import { Options, Services, Users, Data, PaymentConnector, CustomerData } from './types';
+import { Options, Services, Users, Data, PaymentConnector } from './types';
 import { Dayjs } from 'dayjs';
 import axios, { AxiosResponse } from "axios";
 import { KalendiContext } from "./KalendiProvider";
@@ -23,7 +23,6 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
     const context = useContext(KalendiContext)
     const [services, setServices] = useState<null | Services[]>(null)
     const [users, setUsers] = useState<null | false | Users[]>(null)
-    const [userServices, setUserServices] = useState(null)
     const [data, setData] = useState<null | false | Data[]>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [view, setView] = useState<Options | null>('service')

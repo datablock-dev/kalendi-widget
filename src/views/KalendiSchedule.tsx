@@ -19,7 +19,7 @@ export interface KalendiSchedule {
     setSelectedDate: Dispatch<SetStateAction<Dayjs | null>>
 }
 
-export default function KalendiSchedule({ backendRoute, data, services, selectedUser, selectedService, setView, setSelectedDate }: KalendiSchedule) {
+export default function KalendiSchedule({ backendRoute, services, selectedUser, selectedService, setView, setSelectedDate }: KalendiSchedule) {
     const context = useContext(KalendiContext)
     dayjs.extend(isBetween)
     dayjs.extend(weekOfYear)
@@ -206,8 +206,7 @@ function createWeekView(currentDate: Dayjs, weeksMove: number, locale: Locale): 
     const currDate = dayjs(currentDate)
     const currentWeekDay = currDate.day()
 
-    // @ts-ignore
-    const weekView = []
+    const weekView: WeekView[] = []
 
     const rollBack = currentWeekDay > 0 ? 1 - currDate.day() : -6
     const mondayOfWeek = currDate.add(rollBack, 'day').add(weeksMove, 'week')
@@ -230,6 +229,5 @@ function createWeekView(currentDate: Dayjs, weeksMove: number, locale: Locale): 
         })
     })
 
-    // @ts-ignore
     return weekView
 }

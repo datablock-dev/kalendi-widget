@@ -44,18 +44,6 @@ export function timestampToString(timestamp: Dayjs, locale: Locale): string{
     return `${day} of ${month} ${year} at ${dateTime}`
 }
 
-export function dateToTimestamp(date: Dayjs){
-    const year = date.year()
-    const month = date.month() < 9 ? `0${date.month() + 1}` : date.month() + 1
-    const day = date.date() < 9 ? `0${date.date()}` : date.date()
-
-    const hour = date.hour() < 9 ? `0${date.hour()}` : date.hour()
-    const minute = date.minute() < 9 ? `0${date.minute()}` : date.minute()
-    const second = date.second() < 9 ? `0${date.second()}` : date.second()
-
-    return `${year}-${month}-${day} ${hour}:${minute}:${second}`
-}
-
 function switchOrdinalNumbers(day: number){
     switch(day){
         case 1:

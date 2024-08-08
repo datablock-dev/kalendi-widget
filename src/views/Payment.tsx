@@ -169,7 +169,9 @@ function Checkout({ backendRoute, paymentIntent, setView, customerData, data, se
                 customer: {
                     name: customerData.name,
                     email: customerData.email
-                }
+                },
+                paymentIntent: paymentIntent.id,
+                utc_offset: new Date().getTimezoneOffset()
             }
 
             await axios.post(`${backendRoute}/public`, payload)
