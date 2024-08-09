@@ -126,7 +126,7 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
                     </div>
                 </div>
             }
-            <div className="w-[100%] h-[50px] grid week-grid overflow-y-auto">
+            <div className="w-[100%] h-[50px] grid overflow-y-auto grid-cols-[repeat(5,calc(100%/5))]">
                 {
                     (weekView && context?.availability.availability) &&
                     weekView.map((day) => {
@@ -145,7 +145,7 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
                     })
                 }
             </div>
-            <div className="w-[100%] h-[calc(100%_-_100px)] grid week-grid overflow-y-auto relative">
+            <div className="w-[100%] h-[calc(100%_-_100px)] grid grid-cols-[repeat(5,calc(100%/5))] overflow-y-auto relative">
                 {
                     (context?.availability.availability && context.availability.availability[weekMove] && weekView) &&
                     Object.keys(context.availability.availability[weekMove]).map((key, index) => {

@@ -121,9 +121,10 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
         <div 
             className="flex fixed items-center justify-center top-[0px] left-[0px] w-[100vw] h-[100vh] z-[9999999]"
             style={{position: 'fixed'}}
+            id="kalendi-widget-wrapper"
         >
             <div
-                className="kalendi-widget-wrapper"
+                className="absolute z-[10001] kalendi-md:top-[20px] kalendi-sd:top-[0px] kalendi-sd:left-[0px] shadow-[0_20px_20px_0_rgba(0,0,0,.25)] min-h-[100px] min-w-[200px] h-[400px] max-h-[200px] rounded-[3px] border-[1px] border-solid border-[#787878] transition-[max-height,max-width] duration-[800ms] ease bg-[#fff] flex flex-col data-[loading=false]:items-center data-[loading=false]:max-h-[90vh] kalendi-sd:data-[loading=false]:max-h-[100dvh] data-[loading=false]:h-[calc(90vh_-_100px)] kalendi-sd:data-[loading=false]:h-[100dvh] data-[loading=false]:w-[min(1000px,90vw)] kalendi-sd:data-[loading=false]:w-[100vw] data-[loading=false]:max-w-[min(1000px,90vw)] kalendi-sd:data-[loading=false]:max-w-[100vw] data-[loading=false]:p-[20px] data-[loading=true]:justify-center data-[loading=true]:items-center data-[loading=true]:max-w-[200px]"
                 data-loading={isLoading}
             >
                 <div 

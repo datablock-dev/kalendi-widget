@@ -61,12 +61,12 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
                             {
                                 service.service_image ?
                                     <img
-                                        className="image-round"
+                                        className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#b2b2b2]"
                                         src={service.service_image ? `${backendRoute}/upload/${service.service_image}` : ""}
                                         alt="service_image"
                                     />
                                     :
-                                    <div className="image-round text-[12px] flex items-center justify-center">
+                                    <div className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#b2b2b2] text-[12px] flex items-center justify-center">
                                         <ImageIcon sx={{fill: "#000"}}/>
                                     </div>
                             }
@@ -82,12 +82,12 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
                             {
                                 user.avatar ?
                                     <img
-                                        className="image-round"
+                                        className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#b2b2b2]"
                                         src={user.avatar ? `${backendRoute}/upload/${user.avatar}` : ""}
                                         alt="user_avatar"
                                     />
                                     :
-                                    <div className="image-round text-[12px] flex items-center justify-center text-[#000]">N/A</div>
+                                    <div className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#b2b2b2] text-[12px] flex items-center justify-center text-[#000]">N/A</div>
                             }
                             <span className="text-[#000]">{user.firstname} {user.lastname}</span>
                         </div>

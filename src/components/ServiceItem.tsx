@@ -16,10 +16,10 @@ export default function ServiceItem({ service, backendRoute, selectedService, se
 
     return (
         <div
-            className="list-item justify-between"
+            className="flex flex-row items-center gap-[10px] rounded-[3px] border-solid border-[1px] border-[#787878] py-[6px] px-[12px] bg-[#fff] justify-between"
             key={service.service_id}
         >
-            <div className="flex flex-row items-center gap-[10px]">
+            <div className="flex flex-row items-center gap-[10px] w-[100%]">
                 {
                     service.service_image ?
                         <img
@@ -32,13 +32,13 @@ export default function ServiceItem({ service, backendRoute, selectedService, se
                             <ImageIcon sx={{ fill: "#000" }}/>
                         </div>
                 }
-                <div className="flex flex-col">
-                    <span className="text-[#000] font-[600]">{service.service_name}</span>
+                <div className="flex flex-col w-[calc(100%_-_60px)]">
+                    <span className="text-[#000] font-[600] leading-[18px]">{service.service_name}</span>
                     <span className="text-[#4f4f4f] text-[14px]">{formatMonetaryValue(service.service_price || 0, ' ')} {service.service_currency}</span>
                 </div>
             </div>
             <div
-                className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] data-[selected=true]:border-[#141414] hover:bg-[#d4d4d4] hover:cursor-pointer"
+                className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] data-[selected=true]:border-[#141414] hover:bg-[#d4d4d4] hover:cursor-pointer min-w-[20px] min-h-[20px]"
                 data-selected={selectedService === service.service_id ? true : false}
                 onClick={() => {
                     if(selectedService === service.service_id){

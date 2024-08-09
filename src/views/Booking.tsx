@@ -49,7 +49,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
             email: email
         }
 
-        const inputs = document.querySelector('.kalendi-widget-wrapper')?.querySelectorAll('input')
+        const inputs = document.querySelector('#kalendi-widget-wrapper')?.querySelectorAll('input')
         if(!inputs) return
         if (inputs.length > 0 && context?.informationInputs?.inputs) {
             inputs.forEach((ref, index) => {
@@ -106,7 +106,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                 email: email
             }
 
-            const inputs = document.querySelector('.kalendi-widget-wrapper')?.querySelectorAll('input')
+            const inputs = document.querySelector('#kalendi-widget-wrapper')?.querySelectorAll('input')
             if(!inputs) return
             if (inputs.length > 0 && context?.informationInputs?.inputs) {
                 inputs.forEach((ref, index) => {
@@ -139,7 +139,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
         if (!isEmail(email)) return setIsClickable(false)
         if (name.length < 2) return setIsClickable(false)
 
-        const inputs = document.querySelector('.kalendi-widget-wrapper')?.querySelectorAll('input')
+        const inputs = document.querySelector('#kalendi-widget-wrapper')?.querySelectorAll('input')
         if(!inputs) return
         if (inputs.length > 0) {
             let passed = true
@@ -215,12 +215,12 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                         {
                             service.service_image ?
                                 <img
-                                    className="image-round"
+                                    className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#b2b2b2]"
                                     src={service.service_image ? `${backendRoute}/upload/${service.service_image}` : ""}
                                     alt="service_image"
                                 />
                                 :
-                                <div className="image-round text-[12px] flex items-center justify-center">
+                                <div className="text-[12px] flex items-center justify-center w-[50px] h-[50px] rounded-[50%] object-cover bg-[#b2b2b2]">
                                     <ImageIcon sx={{ fill: "#000" }} />
                                 </div>
                         }
@@ -236,12 +236,14 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                         {
                             user.avatar ?
                                 <img
-                                    className="image-round"
+                                    className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#b2b2b2]"
                                     src={user.avatar ? `${backendRoute}/upload/${user.avatar}` : ""}
                                     alt="user_avatar"
                                 />
                                 :
-                                <div className="image-round text-[12px] flex items-center justify-center text-[#000]">N/A</div>
+                                <div className="text-[12px] flex items-center justify-center text-[#000] w-[50px] h-[50px] rounded-[50%] object-cover bg-[#b2b2b2]">
+                                    N/A
+                                </div>
                         }
                         <span className="text-[#000]">{user.firstname} {user.lastname}</span>
                     </div>

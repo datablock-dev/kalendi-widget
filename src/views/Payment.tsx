@@ -156,10 +156,8 @@ function Checkout({ backendRoute, paymentIntent, setView, customerData, data, se
         
         stripe.confirmPayment({
             redirect: 'if_required',
-            // `elements` instance used to create the Express Checkout Element
-            elements,
-            // `clientSecret` from the created PaymentIntent
-            clientSecret
+            elements: elements, // `elements` instance used to create the Express Checkout Element
+            clientSecret: clientSecret // `clientSecret` from the created PaymentIntent
         })
         .then(async (res) => {
             if(res.error){
