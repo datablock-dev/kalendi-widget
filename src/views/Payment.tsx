@@ -7,7 +7,7 @@ import { formatMonetaryValue } from "../utils/string"
 import axios, { AxiosResponse } from "axios"
 import Button from "../components/Button"
 import { Dayjs } from "dayjs"
-import { loadStripe } from "@stripe/stripe-js"
+import { loadStripe, StripeError } from "@stripe/stripe-js"
 import { KalendiContext } from "../KalendiProvider"
 
 interface PaymentView {
@@ -41,6 +41,7 @@ export default function PaymentView({ backendRoute, selectedDate, customerData, 
                     employee_id: selectedUser,
                     service_id: selectedService,
                     from_timestamp: selectedDate.format('YYYY-MM-DD HH:mm:ss'),
+                    utc_offset: new Date().getTimezoneOffset(),
                     customer_email: data.find((item: any) => item.user_id === selectedUser)?.email
                 }
 
@@ -129,6 +130,30 @@ function Checkout({ backendRoute, paymentIntent, setView, customerData, data, se
 
         const clientSecret = paymentIntent.client_secret as string
 
+        try {
+            const response = await stripe.confirmPayment({
+                redirect: 'if_required',
+                // `elements` instance used to create the Express Checkout Element
+                elements,
+                // `clientSecret` from the created PaymentIntent
+                clientSecret
+            })
+
+            console.log(response)
+            setIsLoading(false)
+            await bookRequest()
+            setView('confirmation')
+        } catch (error) {
+            setIsLoading(false)
+
+            console.error(error)
+            if(context?.onError){
+                //context.onError(new Error(error))
+                context.onError(new Error("Error occurred with payments"))
+            }
+        }
+
+        
         stripe.confirmPayment({
             redirect: 'if_required',
             // `elements` instance used to create the Express Checkout Element
@@ -136,21 +161,22 @@ function Checkout({ backendRoute, paymentIntent, setView, customerData, data, se
             // `clientSecret` from the created PaymentIntent
             clientSecret
         })
-            .then((res) => {
-                if(res.error){
-                    console.error(res.error)
-                    setIsLoading(false)
-                    context?.onError && context.onError(new Error(res.error.message))
-                } else {
-                    setIsLoading(false)
-                    bookRequest()
-                    setView('confirmation')
-                }
-            })
-            .catch((err) => {
+        .then(async (res) => {
+            if(res.error){
+                console.error(res.error)
                 setIsLoading(false)
-                console.error(err.message)
-            })
+                context?.onError && context.onError(new Error(res.error.message))
+            } else {
+                setIsLoading(false)
+                await bookRequest()
+                setView('confirmation')
+            }
+        })
+        .catch((err) => {
+            setIsLoading(false)
+            console.error(err.message)
+        })
+        
     }
 
     async function bookRequest() {
@@ -176,7 +202,8 @@ function Checkout({ backendRoute, paymentIntent, setView, customerData, data, se
                 utc_offset: new Date().getTimezoneOffset()
             }
 
-            await axios.post(`${backendRoute}/public`, payload)
+            const res = await axios.post(`${backendRoute}/public`, payload)
+            console.log(res)
             setIsLoading(false)
             setView('confirmation') // Trigger the confirmation view
             return
