@@ -50,9 +50,9 @@ export interface KalendiContextInterface {
     isKalendiVisible: boolean
     setIsKalendiVisible: React.Dispatch<React.SetStateAction<boolean>>
     user_id: string | undefined
-    setUserID: React.Dispatch<React.SetStateAction<string | null>>
+    setUserID: React.Dispatch<React.SetStateAction<string | undefined>>
     service_id: string | undefined
-    setServiceID: React.Dispatch<React.SetStateAction<string | null>>
+    setServiceID: React.Dispatch<React.SetStateAction<string | undefined>>
     customerData: CustomerData | null
     setCustomerData: Dispatch<SetStateAction<CustomerData | null>>
     availability: { 

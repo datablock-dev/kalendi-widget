@@ -85,6 +85,7 @@
     "build:storybook": "storybook build",
     "build:rollup": "bunx tailwindcss -i ./src/tailwind.css -o ./src/tailwind.css -m && rollup -c",
     "build": "bunx tailwindcss -i ./src/input.tailwind.css -o ./src/tailwind.css && tsc",
-    "style": "bunx tailwindcss -i ./src/input.tailwind.css -o ./src/tailwind.css --watch"
+    "style": "bunx tailwindcss -i ./src/input.tailwind.css -o ./src/tailwind.css --watch",
+    "lint": "bunx eslint"
   }
 }

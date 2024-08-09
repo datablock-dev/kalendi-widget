@@ -7,7 +7,7 @@ import prompts from "prompts"
 process.on("SIGINT", () => process.exit(0))
 process.on("SIGTERM", () => process.exit(0))
 
-const pathArray: string[] = new Array()
+const pathArray: string[] = []
 const add = new Command()
 
 add.name("add")
