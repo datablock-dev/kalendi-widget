@@ -43,7 +43,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
     useEffect(() => {
         if (users === null && data) {
             const uniqueUserSet = new Set<string>()
-            const uniqueUserArray = new Array()
+            const uniqueUserArray: Users[] = []
 
             data.forEach((item) => {
                 if (!uniqueUserSet.has(item.user_id)) {
@@ -91,7 +91,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
             setData(data)
             // Set services
             const serviceSet = new Set<string>()
-            const serviceArray = new Array()
+            const serviceArray: Services[] = []
             data.forEach((item) => {
                 if (!serviceSet.has(item.service_id)) {
                     serviceArray.push({
@@ -100,7 +100,8 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
                         service_name: item.service_name,
                         service_price: item.service_price,
                         service_currency: item.service_currency,
-                        service_time_block: item.service_time_block
+                        service_time_block: item.service_time_block,
+                        service_url: item.service_url
                     })
                     serviceSet.add(item.service_id)
                 }

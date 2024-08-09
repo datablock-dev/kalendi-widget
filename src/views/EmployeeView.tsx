@@ -67,7 +67,7 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
     function employeeSelect(user_id: string){
         if(selectedUser === user_id){
             setSelectedUser(null)
-            context?.setUserID(null)
+            context?.setUserID(undefined)
         } else {
             setSelectedUser(user_id)
             context?.setUserID(user_id)

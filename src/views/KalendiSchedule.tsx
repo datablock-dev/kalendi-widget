@@ -27,17 +27,18 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
     const [weekMove, setWeekMove] = useState<number>(0)
     const [weekView, setWeekView] = useState<null | WeekView[]>(null)
     const [firstAvailableSlot, setFirstAvailableSlot] = useState<string | null>(null)
-    const [weekToAvailability, setWeekToAvailability] = useState<null | [string, string]>(null)
+    //const [weekToAvailability, setWeekToAvailability] = useState<null | [string, string]>(null)
 
     const service = services.find((item) => item.service_id === selectedService)
 
     useEffect(() => {
-        if(weekView){
-            console.log(weekMove, weekView[0].weekFromCurrentWeek, selectedService, context?.service_id, selectedUser, context?.user_id)
-        }
+        fetchAvailability(createWeekView(currentDate, weekMove, context?.locale || 'en'))
+    }, [])
+
+    useEffect(() => {
         if (!weekView) {
             setWeekView(createWeekView(currentDate, weekMove, context?.locale || 'en'))
-        } else if (weekView && context?.availability) {
+        } else if (weekView && context?.availability !== undefined) {
             if (!context.availability.availability && selectedUser) {
                 fetchAvailability(weekView)
             } else if (weekMove !== weekView[0].weekFromCurrentWeek || selectedService !== context?.service_id || selectedUser !== context?.user_id) {
@@ -46,25 +47,28 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
             }
         }
 
-    }, [currentDate, weekMove, context?.availability, context?.user_id, context?.service_id, weekMove, selectedService, selectedUser])
+    }, [currentDate, weekMove, context?.availability.availability, context?.user_id, context?.service_id, weekMove, selectedService, selectedUser])
 
     if (!service) return <span>...</span>
 
-    async function fetchAvailability(weekView: WeekView[], date_from: string | null = null, date_to: string | null = null) {
+    async function fetchAvailability(weekView: WeekView[], date_from: string | null = null, date_to: string | null = null) {        
         try {
             let urlString: null | string = null
-            if (!selectedUser || !weekView) return
+            if ((!selectedUser && !context?.user_id) || !weekView) return
 
             const dateFrom = `${weekView[0].year}-${weekView[0].monthLeadingZero}-${weekView[0].dayOfMonthLeadingZero}`
             const dateTo = `${weekView[4].year}-${weekView[4].monthLeadingZero}-${weekView[4].dayOfMonthLeadingZero}`
-            urlString = `${backendRoute}/public/availability/${selectedUser}/${service?.service_id}/${date_from || dateFrom}/${date_to || dateTo}/${new Date().getTimezoneOffset()}`
+            urlString = `${backendRoute}/public/availability/${selectedUser || context?.user_id}/${service?.service_id}/${date_from || dateFrom}/${date_to || dateTo}/${new Date().getTimezoneOffset()}`
 
-            if (!urlString) return
+            if (!urlString){
+                console.error("URL String missing!")
+                return
+            }
             const { data } = await axios.get(urlString) as AxiosResponse<UserAvailabilityResponse>
-            context?.availability.setAvailability(structuredClone(data.scheduleAvailability))
+            context?.availability.setAvailability(data.scheduleAvailability)
             setFirstAvailableSlot(data.firstAvailableSlot)
         
-            if(data.weekToAvailability) setWeekToAvailability(data.weekToAvailability)
+            //if(data.weekToAvailability) setWeekToAvailability(data.weekToAvailability)
             if(data.firstAvailableSlot) setFirstAvailableSlot(data.firstAvailableSlot)
 
         } catch (error) {
@@ -82,8 +86,6 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
 
     async function nextAvailableTime(){
         if(!context?.availability.availability || !firstAvailableSlot) return
-
-        console.log(context.availability.availability)
         const weeksToMove = dayjs(firstAvailableSlot).week() - currentDate.add(weekMove, 'week').week()
         setWeekMove(weekMove + weeksToMove)
     }
@@ -147,7 +149,6 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
                 {
                     (context?.availability.availability && context.availability.availability[weekMove] && weekView) &&
                     Object.keys(context.availability.availability[weekMove]).map((key, index) => {
-                        console.log(context.availability.availability)
                         if(!context.availability.availability) return
                         const availability = context.availability.availability[weekMove][key]
                         const weekHasAvailableSlots = Object.values(context.availability.availability[weekMove]).map((item) => item.length).reduce((prev, next) => prev + next) > 0 ? true : false

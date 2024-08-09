@@ -43,7 +43,7 @@ export default function ServiceItem({ service, backendRoute, selectedService, se
                 onClick={() => {
                     if(selectedService === service.service_id){
                         setSelectedService(null)
-                        context?.setServiceID(null)
+                        context?.setServiceID(undefined)
                     } else {
                         setSelectedService(service.service_id)
                         context?.setServiceID(service.service_id)

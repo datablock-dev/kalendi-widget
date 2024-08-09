@@ -60,6 +60,10 @@ export default function KalendiProvider({ children, backendRoute, locale, user_i
     }
 
     useEffect(() => {
+        console.log(availability, context.availability.availability)
+    }, [context.availability.availability])
+
+    useEffect(() => {
         if(isKalendiVisible){
             document.body.style.overflow = "hidden"
             window.addEventListener('keydown', escapeClick)
