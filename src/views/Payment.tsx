@@ -38,7 +38,9 @@ export default function PaymentView({ backendRoute, selectedDate, customerData, 
             try {
                 const url = new URL(backendRoute + "/public/payment-intent")
                 const payload = {
+                    employee_id: selectedUser,
                     service_id: selectedService,
+                    from_timestamp: selectedDate.format('YYYY-MM-DD HH:mm:ss'),
                     customer_email: data.find((item: any) => item.user_id === selectedUser)?.email
                 }
 

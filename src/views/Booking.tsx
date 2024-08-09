@@ -101,7 +101,6 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
 
             await axios.post(`${backendRoute}/public`, payload)
 
-
             const customerData: { [key: string]: any } = {
                 name: name,
                 email: email
