@@ -32,18 +32,21 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
     const service = services.find((item) => item.service_id === selectedService)
 
     useEffect(() => {
+        if(weekView){
+            console.log(weekMove, weekView[0].weekFromCurrentWeek, selectedService, context?.service_id, selectedUser, context?.user_id)
+        }
         if (!weekView) {
             setWeekView(createWeekView(currentDate, weekMove, context?.locale || 'en'))
         } else if (weekView && context?.availability) {
             if (!context.availability.availability && selectedUser) {
                 fetchAvailability(weekView)
-            } else if (weekMove !== weekView[0].weekFromCurrentWeek) {
+            } else if (weekMove !== weekView[0].weekFromCurrentWeek || selectedService !== context?.service_id || selectedUser !== context?.user_id) {
                 setWeekView(createWeekView(currentDate, weekMove, context?.locale || 'en'))
                 fetchAvailability(createWeekView(currentDate, weekMove, context?.locale || 'en'))
             }
         }
 
-    }, [currentDate, weekMove, context?.availability])
+    }, [currentDate, weekMove, context?.availability, context?.user_id, context?.service_id, weekMove, selectedService, selectedUser])
 
     if (!service) return <span>...</span>
 
@@ -58,7 +61,7 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
 
             if (!urlString) return
             const { data } = await axios.get(urlString) as AxiosResponse<UserAvailabilityResponse>
-            context?.availability.setAvailability(data.scheduleAvailability)
+            context?.availability.setAvailability(structuredClone(data.scheduleAvailability))
             setFirstAvailableSlot(data.firstAvailableSlot)
         
             if(data.weekToAvailability) setWeekToAvailability(data.weekToAvailability)
@@ -144,6 +147,7 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
                 {
                     (context?.availability.availability && context.availability.availability[weekMove] && weekView) &&
                     Object.keys(context.availability.availability[weekMove]).map((key, index) => {
+                        console.log(context.availability.availability)
                         if(!context.availability.availability) return
                         const availability = context.availability.availability[weekMove][key]
                         const weekHasAvailableSlots = Object.values(context.availability.availability[weekMove]).map((item) => item.length).reduce((prev, next) => prev + next) > 0 ? true : false

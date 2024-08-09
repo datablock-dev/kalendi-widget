@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction, useContext } from "react"
 import ImageIcon from '@mui/icons-material/Image';
 import { Options, Services } from "../types"
 import { formatMonetaryValue } from "../utils/string";
+import { KalendiContext } from "../KalendiProvider";
 export interface ServiceItem {
     service: Services
     backendRoute: string
@@ -11,6 +12,8 @@ export interface ServiceItem {
 }
 
 export default function ServiceItem({ service, backendRoute, selectedService, setSelectedService, setView }: ServiceItem){    
+    const context = useContext(KalendiContext)
+
     return (
         <div
             className="list-item justify-between"
@@ -40,8 +43,10 @@ export default function ServiceItem({ service, backendRoute, selectedService, se
                 onClick={() => {
                     if(selectedService === service.service_id){
                         setSelectedService(null)
+                        context?.setServiceID(null)
                     } else {
                         setSelectedService(service.service_id)
+                        context?.setServiceID(service.service_id)
                         setView('employee')
                     }
                 }}

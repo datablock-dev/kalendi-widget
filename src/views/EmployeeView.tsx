@@ -64,6 +64,18 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
         console.log(availability)
     }, [availability])
 
+    function employeeSelect(user_id: string){
+        if(selectedUser === user_id){
+            setSelectedUser(null)
+            context?.setUserID(null)
+        } else {
+            setSelectedUser(user_id)
+            context?.setUserID(user_id)
+        }
+        
+        setView('book')
+    }
+
     return (
         <div>
             <div className="flex flex-col list">
@@ -111,21 +123,13 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                                         <div
                                             className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer"
                                             data-selected={selectedUser === employee.user_id ? true : false}
-                                            onClick={() => {
-                                                // Clear other settings that occurs after user selection
-                                                selectedUser === employee.user_id ? setSelectedUser(null) : setSelectedUser(employee.user_id)
-                                                setView('book')
-                                            }}
+                                            onClick={() => { employeeSelect(employee.user_id) }}
                                         />
                                     </div>
                                     <div
                                         className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] hover:bg-[#d4d4d4] hover:cursor-pointer kalendi-md:hidden"
                                         data-selected={selectedUser === employee.user_id ? true : false}
-                                        onClick={() => {
-                                            // Clear other settings that occurs after user selection
-                                            selectedUser === employee.user_id ? setSelectedUser(null) : setSelectedUser(employee.user_id)
-                                            setView('book')
-                                        }}
+                                        onClick={() => { employeeSelect(employee.user_id) }}
                                     />
                                 </div>
                             )
