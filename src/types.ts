@@ -66,6 +66,7 @@ export interface KalendiContextInterface {
     // Callbacks
     onError?: (e: Error) => any
     onSuccess?: (e: any) => any
+    errorState: null | string
 }
 
 export interface CustomerData {

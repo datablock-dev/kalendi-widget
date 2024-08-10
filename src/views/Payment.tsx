@@ -129,30 +129,6 @@ function Checkout({ backendRoute, paymentIntent, setView, customerData, data, se
         }
 
         const clientSecret = paymentIntent.client_secret as string
-
-        try {
-            const response = await stripe.confirmPayment({
-                redirect: 'if_required',
-                // `elements` instance used to create the Express Checkout Element
-                elements,
-                // `clientSecret` from the created PaymentIntent
-                clientSecret
-            })
-
-            console.log(response)
-            setIsLoading(false)
-            await bookRequest()
-            setView('confirmation')
-        } catch (error) {
-            setIsLoading(false)
-
-            console.error(error)
-            if(context?.onError){
-                //context.onError(new Error(error))
-                context.onError(new Error("Error occurred with payments"))
-            }
-        }
-
         
         stripe.confirmPayment({
             redirect: 'if_required',
@@ -160,14 +136,18 @@ function Checkout({ backendRoute, paymentIntent, setView, customerData, data, se
             clientSecret: clientSecret // `clientSecret` from the created PaymentIntent
         })
         .then(async (res) => {
+            console.log(res)
+
             if(res.error){
                 console.error(res.error)
                 setIsLoading(false)
                 context?.onError && context.onError(new Error(res.error.message))
-            } else {
+            } else if(res.paymentIntent.status === "succeeded") {
                 setIsLoading(false)
                 await bookRequest()
                 setView('confirmation')
+            } else {
+                console.log(res.paymentIntent)
             }
         })
         .catch((err) => {

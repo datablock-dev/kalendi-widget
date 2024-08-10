@@ -8,6 +8,7 @@ import { Options, Services, Users, Data, PaymentConnector } from './types';
 import { Dayjs } from 'dayjs';
 import axios, { AxiosResponse } from "axios";
 import { KalendiContext } from "./KalendiProvider";
+import Notification from "./components/Notification";
 
 interface KalendiContainerProps {
     backendRoute: string
@@ -189,6 +190,7 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
                         />
                     </>
                 }
+                <Notification/>
             </div>
             <a 
                 className='absolute bottom-[10px]'

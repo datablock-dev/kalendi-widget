@@ -30,6 +30,7 @@ export default function KalendiProvider({ children, backendRoute, locale, user_i
     const [isKalendiVisible, setIsKalendiVisible] = useState<boolean>(false)
     const [userID, setUserID] = useState<string | undefined>(user_id)
     const [serviceID, setServiceID] = useState<string | undefined>(service_id)
+    const [errorState, setErrorState] = useState<null | Error>(null)
 
     // Selection states
     const [customerData, setCustomerData] = useState<null | CustomerData>(null)
@@ -55,13 +56,19 @@ export default function KalendiProvider({ children, backendRoute, locale, user_i
         terms: terms,
         informationInputs: informationInputs,
         // Callbacks
-        onError: onError,
+        onError: errorCallback,
         onSuccess: onSuccess,
+        errorState: errorState
     }
 
+
     useEffect(() => {
-        console.log(availability, context.availability.availability)
-    }, [context.availability.availability])
+        if(errorState){
+            setTimeout(() => {
+                setErrorState(null)
+            }, 4000)
+        }
+    }, [errorState])
 
     useEffect(() => {
         if(isKalendiVisible){
@@ -84,6 +91,14 @@ export default function KalendiProvider({ children, backendRoute, locale, user_i
             setIsKalendiVisible(false)
         }
     }, [isKalendiVisible])
+
+    function errorCallback(error: Error){
+        if(onError){
+            onError(error)
+        }
+
+        setErrorState(error)
+    }
 
     return (
         <KalendiContext.Provider value={context}>
