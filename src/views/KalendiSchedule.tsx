@@ -85,6 +85,7 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
     }
 
     async function nextAvailableTime(){
+        console.log(context?.availability.availability, firstAvailableSlot)
         if(!context?.availability.availability || !firstAvailableSlot) return
         const weeksToMove = dayjs(firstAvailableSlot).week() - currentDate.add(weekMove, 'week').week()
         setWeekMove(weekMove + weeksToMove)
