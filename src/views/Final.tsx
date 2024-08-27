@@ -1,8 +1,8 @@
-import React, { Dispatch, SetStateAction, useContext, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { Dayjs } from "dayjs"
-import { CustomerData, Data, Options, Services } from "../types"
-import ImageIcon from '@mui/icons-material/Image';
+import { CustomerData, Data, Services } from "../types"
 import { KalendiContext } from "../KalendiProvider";
+import Icons from "../components/Icons";
 
 interface Final {
     backendRoute: string
@@ -67,7 +67,7 @@ export default function Final({ backendRoute, data, services, selectedUser, sele
                                     />
                                     :
                                     <div className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#b2b2b2] text-[12px] flex items-center justify-center">
-                                        <ImageIcon sx={{fill: "#000"}}/>
+                                        <Icons className="size-[24px] fill-[#000]" icon="image"/>
                                     </div>
                             }
                             <span className="text-[#000]">{service.service_name}</span>

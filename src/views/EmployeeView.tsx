@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react"
 import { Data, Locale, Options, UserAvailabilityResponse } from "../types"
-import PersonIcon from '@mui/icons-material/Person';
 import axios, { AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import { KalendiContext } from "../KalendiProvider";
+import Icons from "../components/Icons";
 
 export interface EmployeeView {
     backendRoute: string
@@ -99,7 +99,7 @@ export default function EmployeeView({ backendRoute, data, setView, selectedServ
                                                 />
                                                 :
                                                 <div className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#d4d4d4] text-[12px] flex items-center justify-center">
-                                                    <PersonIcon sx={{ fill: "#000" }} />
+                                                    <Icons className="size-[24px] fill-[#000]" icon="person" />
                                                 </div>
                                         }
                                         <div className="flex flex-col">

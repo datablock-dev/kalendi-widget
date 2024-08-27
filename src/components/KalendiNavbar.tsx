@@ -2,11 +2,9 @@
 
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import { Dayjs } from "dayjs";
-import CategoryIcon from '@mui/icons-material/Category';
-import PersonIcon from '@mui/icons-material/Person';
 import { Options, Data, Services, Users, CustomerData, PaymentConnector } from "../types";
-import CloseIcon from '@mui/icons-material/Close';
 import { KalendiContext } from "../KalendiProvider";
+import Icons from "./Icons";
 
 export interface KalendiNavbar {
     backendRoute: string
@@ -39,8 +37,8 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                     {
                         !header &&
                         <>
-                            { context?.locale === "en" && "Book an Appointment"}
-                            { context?.locale === "sv" && "Boka ett möte"}
+                            {context?.locale === "en" && "Book an Appointment"}
+                            {context?.locale === "sv" && "Boka ett möte"}
                         </>
                     }
                 </h3>
@@ -49,7 +47,7 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                         {
                             (selectedService && view !== "confirmation") &&
                             <div className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] select-none data-[selected=true]:bg-[#d4d4d4] max-w-fit flex flex-row gap-[10px] items-center">
-                                <CategoryIcon sx={{fill: "#000"}}/>
+                                <Icons className="!size-[24px] fill-[#000]" icon="category"/>
                                 <span className="text-[#000]">{services.find((item) => item.service_id === selectedService)?.service_name}</span>
                                 <div
                                     className="w-[20px] h-[20px] flex items-center justify-center rounded-[50%] hover:bg-[#d4d4d4] hover:cursor-pointer"
@@ -59,14 +57,14 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         setView('service')
                                     }}
                                 >
-                                    <CloseIcon sx={{fill: "#000"}} fontSize={"small"} />
+                                    <Icons className="!size-[14px] fill-[#000]" icon="close"/>
                                 </div>
                             </div>
                         }
                         {
                             (selectedUser && users && view !== "confirmation") &&
                             <div className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] select-none data-[selected=true]:bg-[#d4d4d4] max-w-fit flex flex-row gap-[10px] items-center">
-                                <PersonIcon sx={{fill: "#000"}}/>
+                                <Icons className="!size-[24px] fill-[#000]" icon="person"/>
                                 <span className="text-[#000]">{users.find((item) => item.user_id === selectedUser)?.firstname} {users.find((item) => item.user_id === selectedUser)?.lastname}</span>
                             </div>
                         }
@@ -80,8 +78,8 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                     onClick={() => { view !== 'service' ? setView('service') : undefined }}
                                     data-selected={view === "service" ? true : false}
                                 >
-                                    { context?.locale === "en" &&  "Services" }
-                                    { context?.locale === "sv" &&  "Tjänster" }
+                                    {context?.locale === "en" && "Services"}
+                                    {context?.locale === "sv" && "Tjänster"}
                                 </div>
                                 {
                                     selectedService &&
@@ -90,8 +88,8 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         onClick={() => { view !== 'employee' ? setView('employee') : undefined }}
                                         data-selected={view === "employee" ? true : false}
                                     >
-                                        { context?.locale === "en" &&  "Employees" }
-                                        { context?.locale === "sv" &&  "Konsult" }
+                                        {context?.locale === "en" && "Employees"}
+                                        {context?.locale === "sv" && "Konsult"}
                                     </div>
                                 }
                                 {
@@ -101,8 +99,8 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         onClick={() => { view !== 'book' ? setView('book') : undefined }}
                                         data-selected={view === "book" ? true : false}
                                     >
-                                        { context?.locale === "en" &&  "Time Slots" }
-                                        { context?.locale === "sv" &&  "Tid" }
+                                        {context?.locale === "en" && "Time Slots"}
+                                        {context?.locale === "sv" && "Tid"}
                                     </div>
                                 }
                                 {
@@ -112,19 +110,19 @@ export default function KalendiNavbar({ backendRoute, service_id, services, data
                                         onClick={() => { view !== "date-selected" ? setView("date-selected") : undefined }}
                                         data-selected={view === "date-selected" ? true : false}
                                     >
-                                        { context?.locale === "en" &&  "Confirm Booking" }
-                                        { context?.locale === "sv" &&  "Dina uppgifter" }
+                                        {context?.locale === "en" && "Confirm Booking"}
+                                        {context?.locale === "sv" && "Dina uppgifter"}
                                     </div>
                                 }
                                 {
-                                    (selectedDate && selectedService && selectedUser && customerData && paymentConnector?.key ) &&
+                                    (selectedDate && selectedService && selectedUser && customerData && paymentConnector?.key) &&
                                     <div
                                         className="rounded-[3px] border-solid border-[#787878] border-[1px] py-[4px] px-[12px] hover:cursor-pointer hover:bg-[#d4d4d4] select-none data-[selected=true]:bg-[#d4d4d4] text-[#000]"
                                         onClick={() => { view !== 'pay' ? setView('pay') : undefined }}
                                         data-selected={view === "pay" ? true : false}
                                     >
-                                        { context?.locale === "en" &&  "Pay" }
-                                        { context?.locale === "sv" &&  "Betala" }
+                                        {context?.locale === "en" && "Pay"}
+                                        {context?.locale === "sv" && "Betala"}
                                     </div>
                                 }
                             </>

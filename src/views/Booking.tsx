@@ -4,9 +4,9 @@ import { CustomerData, Data, Options, Services } from "../types"
 import { isEmail } from "validator"
 import Input from "../components/Input"
 import Button from "../components/Button"
-import ImageIcon from '@mui/icons-material/Image';
 import axios from "axios"
 import { KalendiContext } from "../KalendiProvider"
+import Icons from "../components/Icons"
 
 export interface ConfirmBookingView {
     backendRoute: string
@@ -221,7 +221,7 @@ export default function ConfirmBookingView({ backendRoute, data, services, selec
                                 />
                                 :
                                 <div className="text-[12px] flex items-center justify-center w-[50px] h-[50px] rounded-[50%] object-cover bg-[#b2b2b2]">
-                                    <ImageIcon sx={{ fill: "#000" }} />
+                                    <Icons className="size-[24px] fill-[#000]" icon="image" />
                                 </div>
                         }
                         <span className="text-[#000]">{service.service_name}</span>

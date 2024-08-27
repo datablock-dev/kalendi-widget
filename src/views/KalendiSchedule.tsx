@@ -2,12 +2,11 @@ import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from
 import dayjs, { Dayjs } from "dayjs"
 import isBetween from "dayjs/plugin/isBetween"
 import weekOfYear from "dayjs/plugin/weekOfYear"
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { months, weekDays } from "../utils/time";
 import { Options, WeekView, UserAvailabilityResponse, Data, Services, Locale } from "../types";
 import { KalendiContext } from "../KalendiProvider";
 import axios, { AxiosResponse } from "axios";
+import Icons from "../components/Icons";
 
 export interface KalendiSchedule {
     backendRoute: string
@@ -95,11 +94,11 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
         <div className="h-[100%] w-[100%]">
             <div className="flex flex-row justify-between w-[100%] h-[40px] mb-[10px]">
                 <div
-                    className="flex flex-row items-center gap-[6px] rounded-[3px] data-[selectable=true]:hover:cursor-pointer data-[selectable=false]:hover:cursor-not-allowed border-[#787878] border-[1px] border-solid px-[12px] text-[#000] select-none"
+                    className="flex flex-row items-center gap-[6px] rounded-[3px] data-[selectable=true]:hover:bg-[#d4d4d4]  data-[selectable=true]:hover:cursor-pointer data-[selectable=false]:hover:cursor-not-allowed border-[#787878] border-[1px] border-solid px-[12px] text-[#000] select-none"
                     data-selectable={weekMove > 0 ? true : false}
                     onClick={() => { changeWeek('left') }}
                 >
-                    <KeyboardArrowLeftIcon sx={{ fill: "#000" }} />
+                    <Icons className="size-[24px] fill-[#000] rotate-[-180deg]" icon="arrow"/>
                     <span>
                         { context?.locale === "en" && "Previous Week" }
                         { context?.locale === "sv" && "Förra Veckan" }
@@ -114,7 +113,7 @@ export default function KalendiSchedule({ backendRoute, services, selectedUser, 
                         { context?.locale === "en" && "Next Week " }
                         { context?.locale === "sv" && "Nästa Vecka" }
                     </span>
-                    <KeyboardArrowRightIcon sx={{ fill: "#000" }} />
+                    <Icons className="size-[24px] fill-[#000]" icon="arrow"/>
                 </div>
             </div>
             {

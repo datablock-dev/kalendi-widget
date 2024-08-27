@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction, useContext } from "react"
-import ImageIcon from '@mui/icons-material/Image';
 import { Options, Services } from "../types"
 import { formatMonetaryValue } from "../utils/string";
 import { KalendiContext } from "../KalendiProvider";
+import Icons from "./Icons";
 export interface ServiceItem {
     service: Services
     backendRoute: string
@@ -11,7 +11,7 @@ export interface ServiceItem {
     setView: Dispatch<SetStateAction<Options | null>>
 }
 
-export default function ServiceItem({ service, backendRoute, selectedService, setSelectedService, setView }: ServiceItem){    
+export default function ServiceItem({ service, backendRoute, selectedService, setSelectedService, setView }: ServiceItem) {
     const context = useContext(KalendiContext)
 
     return (
@@ -29,7 +29,10 @@ export default function ServiceItem({ service, backendRoute, selectedService, se
                         />
                         :
                         <div className="w-[50px] h-[50px] rounded-[50%] object-cover bg-[#d4d4d4] text-[12px] flex items-center justify-center">
-                            <ImageIcon sx={{ fill: "#000" }}/>
+                            <Icons
+                                className="!size-[30px] fill-[#000]"
+                                icon="image"
+                            />
                         </div>
                 }
                 <div className="flex flex-col w-[calc(100%_-_60px)]">
@@ -41,7 +44,7 @@ export default function ServiceItem({ service, backendRoute, selectedService, se
                 className="rounded-[50%] h-[20px] w-[20px] border-[#787878] border-[1px] data-[selected=true]:bg-[#50913b] data-[selected=true]:border-[#141414] hover:bg-[#d4d4d4] hover:cursor-pointer min-w-[20px] min-h-[20px]"
                 data-selected={selectedService === service.service_id ? true : false}
                 onClick={() => {
-                    if(selectedService === service.service_id){
+                    if (selectedService === service.service_id) {
                         setSelectedService(null)
                         context?.setServiceID(undefined)
                     } else {

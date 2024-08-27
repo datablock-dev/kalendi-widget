@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { KalendiContext } from "../KalendiProvider"
-import { Error } from "@mui/icons-material"
+import Icons from "./Icons"
 
 export default function Notification() {
     const context = useContext(KalendiContext)
@@ -23,7 +23,7 @@ export default function Notification() {
             data-visible={context?.errorState ? true : false}
         >
             <div>
-                <Error/>
+                <Icons className="size-[24px] fill-[#000]" icon="error" />
             </div>
             <p>
                 {message}

@@ -3,12 +3,12 @@
 import React, { useContext, useEffect, useState } from "react"
 import KalendiNavbar from "./components/KalendiNavbar";
 import KalendiViewer from "./components/KalendiViewer";
-import CloseIcon from '@mui/icons-material/Close';
 import { Options, Services, Users, Data, PaymentConnector } from './types';
 import { Dayjs } from 'dayjs';
 import axios, { AxiosResponse } from "axios";
 import { KalendiContext } from "./KalendiProvider";
 import Notification from "./components/Notification";
+import Icons from "./components/Icons";
 
 interface KalendiContainerProps {
     backendRoute: string
@@ -132,7 +132,10 @@ export function KalendiContainer({ backendRoute, user_id, service_id, closeCallb
                     className='absolute flex justify-center items-center right-[20px] top-[20px] rounded-[50%] w-[30px] h-[30px] hover:cursor-pointer hover:opacity-80 hover:bg-[#d4d4d4]'
                     onClick={closeCallback}
                 >
-                    <CloseIcon sx={{fill: "#000"}}/>
+                    <Icons 
+                        className="!size-[30px] fill-[#000]"
+                        icon="close"
+                    />
                 </div>
                 {
                     isLoading &&
